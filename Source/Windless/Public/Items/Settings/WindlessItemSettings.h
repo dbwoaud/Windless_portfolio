@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
 #include "WindlessItemSettings.generated.h"
 
 class UDataTable;
+class AWorldItem;
 
 UCLASS(config = Game, defaultconfig, meta = (DisplayName = "Item"))
 class WINDLESS_API UWindlessItemSettings : public UDeveloperSettings
@@ -16,6 +17,9 @@ public:
 
 	UPROPERTY(config, EditAnywhere, Category = "Database")
 	TArray<TSoftObjectPtr<UDataTable>> itemDataTables; // 아이템 원본 데이터 테이블 목록
+
+	UPROPERTY(config, EditAnywhere, Category = "Debug")
+	TSoftClassPtr<AWorldItem> debugWorldItemClass; // 디버그로 생성할 필드 아이템 클래스
 
 	static const UWindlessItemSettings* Get() { return GetDefault<UWindlessItemSettings>(); }
 };

@@ -27,13 +27,8 @@
 #include "Components/PlayerStaggerComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Enemy/EnemyRespawnSubsystem.h"
-#include "Enemy/Enemy.h"
-#include "Enemy/AI/EnemyAIDataValidation.h"
-#include "EngineUtils.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "NavigationSystem.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/PlayerCameraManager.h" 
@@ -42,7 +37,6 @@
 #include "Items/Soul.h"
 #include "Items/Treasure.h"
 #include "Items/DropItem.h"
-#include "Items/WorldItem.h" 
 #include "Items/Weapons/Weapon.h"
 #include "Animation/AnimMontage.h"
 #include "HUD/WindlessHUD.h"
@@ -58,10 +52,6 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Save/WindlessSaveSubsystem.h"
 #include "Level/StorageContainer.h"
-#include "Level/RespawnDirector.h"  
-#include "Level/SavePointSubsystem.h"
-#include "Level/Landmarks/LandmarkSubsystem.h"
-#include "Level/SoulMarkerSubsystem.h"
 
 AWindlessCharacter::AWindlessCharacter()
 {
@@ -137,26 +127,9 @@ AWindlessCharacter::AWindlessCharacter()
 void AWindlessCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (!debugExec.IsEmpty())
-	{
-		const FString command = MoveTemp(debugExec);
-		debugExec.Reset();
-		if (APlayerController* pc = Cast<APlayerController>(GetController()))
-		{
-			pc->ConsoleCommand(command);
-		}
-	}
-	if (bDebugToggleInventory)
-	{
-		bDebugToggleInventory = false;
-		ToggleInventory();
-	}
-
 	HandleStamina(DeltaTime);
 	HandleBodyRegen(DeltaTime);
 	HandleChaos(DeltaTime);
-	UpdateLastSafeGround(DeltaTime);
 	HandleLegFractureInjury(DeltaTime);
 	RefreshQuickSlotCooldownUI();
 	HandleAirRotationLock();
@@ -167,9 +140,6 @@ void AWindlessCharacter::Tick(float DeltaTime)
 void AWindlessCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-#if !UE_BUILD_SHIPPING
-	PlayerInputComponent->BindKey(EKeys::Tilde, IE_Pressed, this, &AWindlessCharacter::ToggleDebugSpeed); // 콘솔 키는 F10으로 옮김 (Config/DefaultInput.ini)
-#endif
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(movementAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Move);
@@ -700,37 +670,12 @@ bool AWindlessCharacter::IsAlive()
 void AWindlessCharacter::DieByFall()
 {
 	UE_LOG(LogWindless, Log, TEXT("[낙사] 플레이어 낙사"));
-	bDiedByFall = true;
 	ForceDeath();
-}
-
-void AWindlessCharacter::UpdateLastSafeGround(float DeltaTime)
-{
-	safeGroundCheckTimer -= DeltaTime;
-	if (safeGroundCheckTimer > 0.f)
-		return;
-	safeGroundCheckTimer = 0.2f;
-
-	const UCharacterMovementComponent* movement = GetCharacterMovement();
-	if (!IsAlive() || !movement || !movement->IsMovingOnGround())
-		return;
-
-	/* 발밑이 내비 위일 때만 기억 (내비는 가장자리에서 안쪽으로 들어와 있어 낭떠러지 끝은 빠진다) */
-	const UCapsuleComponent* capsule = GetCapsuleComponent();
-	const FVector feet = GetActorLocation() - FVector(0.f, 0.f, capsule ? capsule->GetScaledCapsuleHalfHeight() : 0.f);
-	UNavigationSystemV1* nav = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
-	FNavLocation navLocation;
-	if (nav && nav->ProjectPointToNavigation(feet, navLocation, FVector(30.f, 30.f, 100.f)))
-	{
-		lastSafeGroundLocation = GetActorLocation();
-		bHasSafeGround = true;
-	}
 }
 
 void AWindlessCharacter::Revive()
 {
 	bIsDead = false;
-	bDiedByFall = false;
 	Tags.Remove(FName("Dead"));
 	ClearDodgeState();
 	if (staggerComponent)
@@ -1162,428 +1107,14 @@ float AWindlessCharacter::PlayerToughness() const
 	return GetTenacity();
 }
 
-void AWindlessCharacter::InvAdd(const FString& itemId, int32 count)
-{
-	if (debugComponent)
-		debugComponent->InvAdd(itemId, count);
-}
-
-void AWindlessCharacter::InvEquip(const FString& itemId, int32 slot)
-{
-	if (debugComponent)
-		debugComponent->InvEquip(itemId, slot);
-}
-
-void AWindlessCharacter::InvUnequip(int32 slot)
-{
-	if (debugComponent)
-		debugComponent->InvUnequip(slot);
-}
-
-void AWindlessCharacter::InvUse(const FString& itemId)
-{
-	if (debugComponent)
-		debugComponent->InvUse(itemId);
-}
-
-void AWindlessCharacter::InvDur(int32 slot, float amount)
-{
-	if (debugComponent)
-		debugComponent->InvDur(slot, amount);
-}
-
-void AWindlessCharacter::InvMove(int32 uid, int32 x, int32 y, bool bRot)
-{
-	if (debugComponent)
-		debugComponent->InvMove(uid, x, y, bRot);
-}
-
-void AWindlessCharacter::InvPrint()
-{
-	if (debugComponent)
-		debugComponent->InvPrint();
-}
-
-void AWindlessCharacter::InvStats()
-{
-	if (debugComponent)
-		debugComponent->InvStats();
-}
-
-void AWindlessCharacter::InvHurt(int32 part, float amount)
-{
-	if (debugComponent)
-		debugComponent->InvHurt(part, amount);
-}
-
-void AWindlessCharacter::InvInjure(int32 part, int32 injury)
-{
-	if (debugComponent)
-		debugComponent->InvInjure(part, injury);
-}
-
-void AWindlessCharacter::InvSaveZone(bool bActive)
-{
-	if (debugComponent)
-		debugComponent->InvSaveZone(bActive);
-}
-
-void AWindlessCharacter::InvSplit(const FString& itemId, int32 amount)
-{
-	if (debugComponent)
-		debugComponent->InvSplit(itemId, amount);
-}
-
-void AWindlessCharacter::InvDrop(const FString& itemId, int32 quantity)
-{
-	if (debugComponent)
-		debugComponent->InvDrop(itemId, quantity);
-}
-
-void AWindlessCharacter::InvRepair(int32 slot, float amount)
-{
-	if (debugComponent)
-		debugComponent->InvRepair(slot, amount);
-}
-
-void AWindlessCharacter::InvSpawnWorld(const FString& itemId, int32 count)
-{
-	UWorld* world = GetWorld();
-	if (!world || !worldItemClass)
-		return;
-
-	const FVector spawnLocation = GetActorLocation() + GetActorForwardVector() * 200.f;
-	const FTransform spawnTransform(FRotator::ZeroRotator, spawnLocation);
-
-	AWorldItem* spawned = world->SpawnActorDeferred<AWorldItem>(worldItemClass, spawnTransform, this, this, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-
-	if (!spawned)
-		return;
-
-	spawned->InitializeItem(FName(*itemId), FMath::Max(1, count), -1.f);
-	UGameplayStatics::FinishSpawningActor(spawned, spawnTransform);
-
-}
-
-void AWindlessCharacter::InvLimit()
-{
-	if (debugComponent)
-		debugComponent->InvLimit();
-}
-
-void AWindlessCharacter::WLSave()
-{
-	RequestSave(FName(TEXT("Debug")), GetActorLocation(), GetActorRotation());
-}
-
-void AWindlessCharacter::WLLoad()
-{
-	if (UGameInstance* gameInstance = GetGameInstance())
-	{
-		if (UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>())
-			saveSubsystem->TryContinue(this);
-	}
-}
-
-void AWindlessCharacter::WLDeleteSave()
-{
-	if (UGameInstance* gameInstance = GetGameInstance())
-	{
-		if (UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>())
-			saveSubsystem->DeleteSaveData();
-	}
-}
-
-void AWindlessCharacter::WLSaveInfo()
-{
-	if (UGameInstance* gameInstance = GetGameInstance())
-	{
-		if (UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>())
-			saveSubsystem->PrintSaveInfo();
-	}
-}
-
-void AWindlessCharacter::WLSavePoints()
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (USavePointSubsystem* savePoints = world->GetSubsystem<USavePointSubsystem>())
-			savePoints->PrintDebugInfo();
-	}
-}
-
-void AWindlessCharacter::WLStorage()
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (USharedStorageSubsystem* storage = world->GetSubsystem<USharedStorageSubsystem>())
-			storage->PrintDebugInfo();
-	}
-}
-
-void AWindlessCharacter::InvHover(int32 x, int32 y)
-{
-	if (inventoryWidget && inventory)
-		inventoryWidget->BeginHoverInfo(inventory, inventory->FindInstanceUIDAtCell(x, y));
-}
-
-void AWindlessCharacter::WLMolt()
-{
-	if (!TryMolt())
-		UE_LOG(LogWindless, Warning, TEXT("[탈피] 실패 - 탈피석 부족 (보유 %d / 필요 %d)"),
-			attributes ? attributes->GetMoltStones() : 0,
-			attributes ? attributes->GetMoltCost() : 0);
-}
-
-void AWindlessCharacter::WLAddStone(int32 amount)
-{
-	if (attributes)
-		attributes->AddMoltStones(amount);
-}
-
-void AWindlessCharacter::WLRepairInfo()
-{
-	if (!repair)
-		return;
-
-	UE_LOG(LogWindless, Warning, TEXT("===== 수리도구 ====="));
-	for (const FRepairToolEntry& tool : repair->GetRepairTools())
-		UE_LOG(LogWindless, Warning, TEXT("%-16s 충전량 %.0f / %.0f"),
-			*tool.toolName.ToString(), tool.currentCharge, tool.maxCharge);
-
-	UE_LOG(LogWindless, Warning, TEXT("===== 수리 대상 ====="));
-	for (const FRepairTargetEntry& target : repair->GetRepairTargets())
-		UE_LOG(LogWindless, Warning, TEXT("[슬롯%d] %-16s 내구도 %.0f / %.0f (필요 %.0f)%s"),
-			(int32)target.slot, *target.equipmentName.ToString(),
-			target.currentDurability, target.maxDurability, target.requiredCharge,
-			target.bBroken ? TEXT(" [파괴]") : TEXT(""));
-}
-
-void AWindlessCharacter::WLCraftInfo()
-{
-	if (crafting)
-		crafting->PrintDebugInfo();
-}
-
-void AWindlessCharacter::WLCombat()
-{
-	UE_LOG(LogWindless, Warning, TEXT("[전투 상태] %s (남은 %.1f초)"),
-		IsInCombatState() ? TEXT("전투 중") : TEXT("해제"), GetTimeSinceLastDamage());
-
-	UE_LOG(LogWindless, Warning, TEXT("[전투 수치] 공격력(무기 제외)=%.1f | 스태미나 %.1f"),
-		GetAttackPower(), GetCurrentStamina());
-
-	auto logWeapon = [this](const TCHAR* handLabel, const AWeapon* weapon)
-		{
-			if (!weapon)
-			{
-				UE_LOG(LogWindless, Warning, TEXT("[무기] %s: 없음"), handLabel);
-				return;
-			}
-
-			const float attackPower = GetAttackPowerWith(weapon);
-			const FAttackSpec& light = weapon->GetAttackSpec(EAttackType::EAT_Light);
-			const FAttackSpec& heavy = weapon->GetAttackSpec(EAttackType::EAT_Heavy);
-			const FAttackSpec& jump = weapon->GetAttackSpec(EAttackType::EAT_Jump);
-			UE_LOG(LogWindless, Warning, TEXT("[무기] %s: %s 타입=%s | 공격력=%.1f (약 %.1f / 강 %.1f / 점프 %.1f) | 약(%.0f/%.0f) 강(%.0f/%.0f) 점프(%.0f/%.0f) [스태미나/충격량] | 가드수치=%.0f"),
-				handLabel, *weapon->GetName(), *UEnum::GetValueAsString(weapon->GetWeaponType()),
-				attackPower,
-				WindlessCombat::CalcHitDamage(attackPower, EAttackType::EAT_Light),
-				WindlessCombat::CalcHitDamage(attackPower, EAttackType::EAT_Heavy),
-				WindlessCombat::CalcHitDamage(attackPower, EAttackType::EAT_Jump),
-				light.staminaCost, light.impact, heavy.staminaCost, heavy.impact, jump.staminaCost, jump.impact,
-				weapon->GetGuardValue());
-		};
-
-	logWeapon(TEXT("왼손"), leftHandWeapon);
-	logWeapon(TEXT("오른손"), rightHandWeapon);
-
-	if (weaponLoadout)
-		weaponLoadout->PrintLoadoutDebug();
-}
-
-void AWindlessCharacter::WLChaos(float value)
-{
-	if (!attributes)
-		return;
-
-	attributes->DebugSetChaos(value);
-	UE_LOG(LogWindless, Warning, TEXT("[디버그] 혼돈 지정 %.1f (단계 %d)"), attributes->GetChaos(), (int32)attributes->GetChaosState());
-}
-
-void AWindlessCharacter::WLLandmarks()
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (ULandmarkSubsystem* landmarks = world->GetSubsystem<ULandmarkSubsystem>())
-			landmarks->PrintDebugInfo();
-	}
-}
-
-void AWindlessCharacter::WLSoulMarker()
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (USoulMarkerSubsystem* markers = world->GetSubsystem<USoulMarkerSubsystem>())
-			markers->PrintDebugInfo();
-	}
-}
-
-void AWindlessCharacter::WLSpawners()
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (UEnemyRespawnSubsystem* respawn = world->GetSubsystem<UEnemyRespawnSubsystem>())
-			respawn->PrintDebugInfo();
-	}
-}
-
-void AWindlessCharacter::WLRespawnEnemies(bool bIncludeAlive)
-{
-	if (UWorld* world = GetWorld())
-	{
-		if (UEnemyRespawnSubsystem* respawn = world->GetSubsystem<UEnemyRespawnSubsystem>())
-			respawn->RespawnAll(bIncludeAlive);
-	}
-}
-
-void AWindlessCharacter::WLEnemyData()
-{
-	/* 데이터 검사 */
-	int32 archetypeCount = 0;
-	int32 attackCount = 0;
-	const FEnemyAIValidationResult result = EnemyAIDataValidation::ValidateAllTables(archetypeCount, attackCount);
-
-	const FString summary = FString::Printf(TEXT("[AI 검사] 원형 %d종 · 공격 %d종 - 에러 %d · 경고 %d"),
-		archetypeCount, attackCount, result.errors.Num(), result.warnings.Num());
-	UE_LOG(LogWindless, Log, TEXT("%s"), *summary);
-	for (const FString& error : result.errors)
-		UE_LOG(LogWindless, Error, TEXT("%s"), *error);
-	for (const FString& warning : result.warnings)
-		UE_LOG(LogWindless, Warning, TEXT("%s"), *warning);
-
-	/* 가장 가까운 적의 최종 값과 출처 */
-	AEnemy* nearest = nullptr;
-	float nearestDistSq = TNumericLimits<float>::Max();
-	for (TActorIterator<AEnemy> it(GetWorld()); it; ++it)
-	{
-		if (!it->GetProfile().IsValid())
-			continue;
-
-		const float distSq = FVector::DistSquared(it->GetActorLocation(), GetActorLocation());
-		if (distSq < nearestDistSq)
-		{
-			nearestDistSq = distSq;
-			nearest = *it;
-		}
-	}
-
-	TArray<FString> profileLines;
-	if (nearest)
-	{
-		profileLines.Add(FString::Printf(TEXT("[AI 프로필] %s (%.1fm)"), *nearest->GetName(), FMath::Sqrt(nearestDistSq) / 100.f));
-		profileLines.Append(EnemyAIProfile::DescribeLines(nearest->GetProfile()));
-	}
-	else
-	{
-		profileLines.Add(TEXT("[AI 프로필] 원형이 지정된 적이 없음"));
-	}
-	for (const FString& line : profileLines)
-		UE_LOG(LogWindless, Log, TEXT("%s"), *line);
-
-	/* 화면 표시 */
-	if (!GEngine)
-		return;
-
-	constexpr float ScreenDuration = 10.f;
-	constexpr int32 MaxScreenIssues = 12;
-	int32 key = 400;
-	int32 shownIssues = 0;
-
-	GEngine->AddOnScreenDebugMessage(key++, ScreenDuration, result.HasErrors() ? FColor::Red : FColor::Green, summary);
-
-	auto showIssue = [&](const FString& text, const FColor& color)
-		{
-			if (shownIssues >= MaxScreenIssues)
-				return;
-			GEngine->AddOnScreenDebugMessage(key++, ScreenDuration, color, text);
-			++shownIssues;
-		};
-	for (const FString& error : result.errors)
-		showIssue(error, FColor::Red);
-	for (const FString& warning : result.warnings)
-		showIssue(warning, FColor::Yellow);
-
-	const int32 totalIssues = result.errors.Num() + result.warnings.Num();
-	if (totalIssues > MaxScreenIssues)
-		GEngine->AddOnScreenDebugMessage(key++, ScreenDuration, FColor::Silver, FString::Printf(TEXT("... 외 %d건 (출력 로그 참고)"), totalIssues - MaxScreenIssues));
-
-	for (const FString& line : profileLines)
-		GEngine->AddOnScreenDebugMessage(key++, ScreenDuration, FColor::Cyan, line);
-}
-
-void AWindlessCharacter::WLStagger()
+bool AWindlessCharacter::ForceStrongStagger(const FVector& fromLocation)
 {
 	if (!IsAlive() || (staggerComponent && staggerComponent->IsStrongStaggered()))
-		return;
+		return false;
 
-	UE_LOG(LogWindless, Warning, TEXT("[디버그] 플레이어 강한 경직 시험"));
 	CancelCurrentAttack();
-	BeginStrongStagger(GetActorLocation() + GetActorForwardVector() * 100.f);
-}
-
-void AWindlessCharacter::WLSignal(const FString& signalName, float duration)
-{
-	if (!aiSignals)
-		return;
-
-	struct FSignalName { const TCHAR* name; EPlayerAIState state; };
-	static const FSignalName names[] = {
-		{ TEXT("attack"), EPlayerAIState::EPS_AttackBegin },
-		{ TEXT("whiff"),  EPlayerAIState::EPS_Whiff },
-		{ TEXT("item"),   EPlayerAIState::EPS_ItemUse },
-		{ TEXT("aim"),    EPlayerAIState::EPS_BowAim },
-		{ TEXT("guard"),  EPlayerAIState::EPS_GuardHold },
-	};
-
-	for (const FSignalName& entry : names)
-	{
-		if (signalName.Equals(entry.name, ESearchCase::IgnoreCase))
-		{
-			aiSignals->FakeSignal(entry.state, duration > 0.f ? duration : 1.5f);
-			return;
-		}
-	}
-
-	UE_LOG(LogWindless, Warning, TEXT("[AI 신호] 사용법: WLSignal attack | whiff | item | aim | guard"));
-}
-
-void AWindlessCharacter::WLForceCard(const FString& cardName)
-{
-	struct FCardName { const TCHAR* name; EEnemyCard card; };
-	static const FCardName names[] = {
-		{ TEXT("rest"),     EEnemyCard::EC_Rest },
-		{ TEXT("side"),     EEnemyCard::EC_SideStep },
-		{ TEXT("back"),     EEnemyCard::EC_BackOff },
-		{ TEXT("approach"), EEnemyCard::EC_Approach },
-	};
-
-	for (const FCardName& entry : names)
-	{
-		if (!cardName.Equals(entry.name, ESearchCase::IgnoreCase))
-			continue;
-
-		int32 count = 0;
-		for (TActorIterator<AEnemy> it(GetWorld()); it; ++it)
-		{
-			it->DebugForceNextCard(entry.card);
-			++count;
-		}
-		UE_LOG(LogWindless, Log, TEXT("[카드] 시험용 강제 카드 %s: 적 %d마리의 다음 선택"), entry.name, count);
-		return;
-	}
-
-	UE_LOG(LogWindless, Warning, TEXT("[카드] 사용법: WLForceCard rest | side | back | approach"));
+	BeginStrongStagger(fromLocation);
+	return true;
 }
 
 void AWindlessCharacter::BeginPlay()
@@ -1666,18 +1197,7 @@ void AWindlessCharacter::Sprint()
 		return;
 
 	bIsSprinting = true;
-	GetCharacterMovement()->MaxWalkSpeed = bDebugSpeed ? debugSprintSpeed : sprintSpeed;
-}
-
-void AWindlessCharacter::ToggleDebugSpeed()
-{
-	bDebugSpeed = !bDebugSpeed;
-	if (bIsSprinting && !bIsMounted) // 달리는 중이면 바로 반영
-		GetCharacterMovement()->MaxWalkSpeed = bDebugSpeed ? debugSprintSpeed : sprintSpeed;
-
-	UE_LOG(LogWindless, Log, TEXT("[디버그 속도] %s (달리기 %.1f cm/s)"), bDebugSpeed ? TEXT("켜짐") : TEXT("꺼짐"), bDebugSpeed ? debugSprintSpeed : sprintSpeed);
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(22, 2.f, FColor::Yellow, bDebugSpeed ? TEXT("Debug speed ON") : TEXT("Debug speed OFF"));
+	GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
 }
 
 void AWindlessCharacter::HandleSprintStamina(float DeltaTime)

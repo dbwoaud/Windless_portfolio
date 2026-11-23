@@ -1,4 +1,4 @@
-#include "Level/RespawnDirector.h"
+﻿#include "Level/RespawnDirector.h"
 #include "Level/SavePointSubsystem.h"
 #include "Level/SoulMarkerSubsystem.h"
 #include "Characters/WindlessCharacter.h"
@@ -51,7 +51,7 @@ void ARespawnDirector::HandlePlayerDeath()
 
 			UWorld* world = GetWorld();
 			if (USoulMarkerSubsystem* markers = world ? world->GetSubsystem<USoulMarkerSubsystem>() : nullptr)
-				markers->CreateMarker(playerCharacter->GetSoulMarkerLocation(), lostStones); // 낙사면 마지막으로 디딘 바닥
+				markers->CreateMarker(deathLocation, lostStones);
 
 			attributes->SpendMoltStones(lostStones);
 		}

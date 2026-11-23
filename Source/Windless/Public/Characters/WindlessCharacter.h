@@ -30,7 +30,6 @@ class UMaterialInterface;
 class UMaterialInstanceDynamic;
 class UInteractionWidget;
 class UDialogueComponent;
-class AWorldItem;
 class ADropItem;
 class UInventoryWidget;
 class UQuickSlotComponent;
@@ -180,12 +179,6 @@ public:
 	bool IsInventoryOpen() const; // 인벤토리 UI가 열려 있는지 확인하는 함수
 	void CloseInventoryFromUI(); // 가방 위젯이 Tab을 받았을 때 가방을 닫는 함수
 
-	UPROPERTY(EditAnywhere, Category = "Debug")
-	bool bDebugToggleInventory = false; // 켜면 다음 틱에 가방을 여닫고 스스로 꺼진다(키 입력 없이 UI를 캡처할 때 쓴다)
-
-	UPROPERTY(EditAnywhere, Category = "Debug")
-	FString debugExec; // 채우면 다음 틱에 콘솔 명령으로 돌리고 스스로 비운다(에디터 콘솔을 쓸 수 없을 때)
-
 
 	/* 아이템 시스템 */
 	UFUNCTION(BlueprintCallable, Category = "Item")
@@ -249,119 +242,7 @@ public:
 	virtual FStaggerStatus GetStaggerStatus() const override; // 경직 상태 정보를 반환하는 함수
 	FStaggerStatus PlayerStagger() const; // 플레이어 경직 상태를 반환하는 함수
 	float PlayerToughness() const; // 플레이어 강인도를 반환하는 함수
-
-
-	/* 디버그용 */
-	UFUNCTION(Exec) 
-	void InvAdd(const FString& itemId, int32 count = 1);
-
-	UFUNCTION(Exec) 
-	void InvEquip(const FString& itemId, int32 slot = 0);
-
-	UFUNCTION(Exec) 
-	void InvUnequip(int32 slot);
-
-	UFUNCTION(Exec) 
-	void InvUse(const FString& itemId);
-
-	UFUNCTION(Exec) 
-	void InvDur(int32 slot, float amount);
-
-	UFUNCTION(Exec) 
-	void InvMove(int32 uid, int32 x, int32 y, bool bRot);
-
-	UFUNCTION(Exec) 
-	void InvPrint();
-
-	UFUNCTION(Exec)
-	void InvStats();
-
-	UFUNCTION(Exec)
-	void InvHurt(int32 part, float amount);
-
-	UFUNCTION(Exec)
-	void InvInjure(int32 part, int32 injury);
-
-	UFUNCTION(Exec)
-	void InvSaveZone(bool bActive);
-
-	UFUNCTION(Exec)
-	void InvSplit(const FString& itemId, int32 amount);
-
-	UFUNCTION(Exec)
-	void InvDrop(const FString& itemId, int32 quantity);
-
-	UFUNCTION(Exec)
-	void InvRepair(int32 slot, float amount);
-
-	UFUNCTION(Exec)
-	void InvSpawnWorld(const FString& itemId, int32 count = 1);
-
-	UFUNCTION(Exec)
-	void InvLimit();
-
-	UFUNCTION(Exec)
-	void WLSave();
-
-	UFUNCTION(Exec)
-	void WLLoad();
-
-	UFUNCTION(Exec)
-	void WLDeleteSave();
-
-	UFUNCTION(Exec)
-	void WLSaveInfo();
-
-	UFUNCTION(Exec)
-	void WLSavePoints();
-
-	UFUNCTION(Exec)
-	void WLStorage();
-
-	UFUNCTION(Exec)
-	void WLMolt();
-
-	UFUNCTION(Exec)
-	void InvHover(int32 x, int32 y); // 열린 가방에서 그 칸의 아이템 설명을 띄운다(마우스 없이 UI를 볼 때)
-
-	UFUNCTION(Exec)
-	void WLAddStone(int32 amount);
-
-	UFUNCTION(Exec)
-	void WLRepairInfo();
-
-	UFUNCTION(Exec)
-	void WLCraftInfo();
-
-	UFUNCTION(Exec)
-	void WLCombat();
-
-	UFUNCTION(Exec)
-	void WLChaos(float value);
-
-	UFUNCTION(Exec)
-	void WLLandmarks();
-
-	UFUNCTION(Exec)
-	void WLSoulMarker();
-
-	UFUNCTION(Exec)
-	void WLSpawners();
-
-	UFUNCTION(Exec)
-	void WLRespawnEnemies(bool bIncludeAlive = false);
-
-	UFUNCTION(Exec)
-	void WLEnemyData();
-
-	UFUNCTION(Exec)
-	void WLStagger();
-
-	UFUNCTION(Exec)
-	void WLSignal(const FString& signalName, float duration);
-
-	UFUNCTION(Exec)
-	void WLForceCard(const FString& cardName);
+	bool ForceStrongStagger(const FVector& fromLocation); // 강한 경직을 강제하는 함수
 
 
 	/* 델리게이트 */
@@ -392,7 +273,6 @@ protected:
 	void Sprint(); // 플레이어 캐릭터 달리기 입력 시 실행되는 함수
 	void HandleSprintStamina(float DeltaTime); // 플레이어 캐릭터 달리기 상태 일 때, 스태미나를 처리하는 함수 
 	void StopSprinting(); // 플레이어 캐릭터 달리기 정지 시 실행되는 함수
-	void ToggleDebugSpeed(); // ` 키: 디버그 속도를 켜고 끄는 함수
 	void ToggleCrouch(); // 플레이어 캐릭터 숙이기 입력 시 실행되는 함수
 	void LockAirRotation(); // 공중 회전을 잠그는 함수
 	void UnlockAirRotation(); // 공중 회전 잠금을 해제하는 함수
@@ -612,9 +492,6 @@ protected:
 	TSubclassOf<ADropItem> dropItemClass; // 버린 아이템 액터 클래스
 
 	UPROPERTY(EditAnywhere, Category = "Item|Drop")
-	TSubclassOf<AWorldItem> worldItemClass; // 필드 아이템 액터 클래스
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop")
 	TObjectPtr<UAnimMontage> dropMontage; // 버리기 애니메이션 몽타주
 
 	UPROPERTY(EditAnywhere, Category = "Item|Drop", meta = (ClampMin = "0.0"))
@@ -772,11 +649,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float sprintSpeed = 500.f; // 달리기 속도 (기준치수표 7.1 D1)
 
-	UPROPERTY(EditAnywhere, Category = Movement)
-	float debugSprintSpeed = 2293.6f; // 디버그 속도. ` 키로 켜면 달리기가 이 속도가 된다 (Shipping 빌드에는 키가 없음)
-
-	bool bDebugSpeed = false; // 디버그 속도가 켜져 있는지
-
 	bool bIsSprinting = false; // 달리기 중인지 확인하는 변수
 
 	UPROPERTY(EditAnywhere, Category = "Movement|Air")
@@ -851,13 +723,6 @@ private:
 	int32 lightZoneCount = 0; // 현재 겹친 빛 볼륨 수 (EnterLightZone으로 들어온 것)
 
 	TArray<TWeakObjectPtr<const class AChaosZoneVolume>> chaosZones; // 현재 겹친 빛/어둠 볼륨
-
-	/* 낙사 회수 표식 */
-	void UpdateLastSafeGround(float DeltaTime); // 마지막으로 디딘 안전한 바닥을 기억하는 함수
-	FVector lastSafeGroundLocation = FVector::ZeroVector; // 마지막으로 디딘 안전한 바닥 (내비 위)
-	bool bHasSafeGround = false; // 안전한 바닥을 기억한 적 있는지 여부
-	bool bDiedByFall = false;    // 낙사로 죽었는지 여부
-	float safeGroundCheckTimer = 0.f; // 바닥 확인 간격 타이머
 
 	float collapse2UnlockTimer = 0.f; // 붕괴2 강제 락온 해제 누적 타이머
 
@@ -967,8 +832,6 @@ public:
 	FORCEINLINE UPlayerStaggerComponent* GetStaggerComponent() const { return staggerComponent; }
 	FORCEINLINE bool IsGuarding() const { return combat && combat->IsGuarding(); }
 	FORCEINLINE bool IsGuardOnLeftHand() const { return combat && combat->IsGuardOnLeftHand(); }
-	// 탈피석 회수 표식을 둘 위치를 반환하는 함수 (낙사면 마지막으로 디딘 바닥, 아니면 사망 지점)
-	FORCEINLINE FVector GetSoulMarkerLocation() const { return (bDiedByFall && bHasSafeGround) ? lastSafeGroundLocation : GetActorLocation(); }
 	UFUNCTION(BlueprintPure, Category = "Death")
 	FORCEINLINE bool IsDead() const { return bIsDead; }
 };

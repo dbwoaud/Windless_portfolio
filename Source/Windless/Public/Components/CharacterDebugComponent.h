@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -8,7 +8,6 @@ class UEnhancedInputComponent;
 class UInputAction;
 class UAttributeComponent;
 class UBodyPartComponent;
-class UInventoryComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class WINDLESS_API UCharacterDebugComponent : public UActorComponent
@@ -17,104 +16,50 @@ class WINDLESS_API UCharacterDebugComponent : public UActorComponent
 
 public:	
 	UCharacterDebugComponent();
-	void BindDebugInputs(UEnhancedInputComponent* enhancedInputComponent); // µğ¹ö±×¿ë ÀÔ·Â ¾×¼ÇÀ» ÇÒ´çÇÏ´Â ÇÔ¼ö
-
-
-	/* ½ºÅ×ÀÌÅÍ½º ½Ã½ºÅÛ */
-	UFUNCTION()
-	void InvStats(); // ½ºÅ×ÀÌÅÍ½º¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-
-	/* ºÎÀ§ ½Ã½ºÅÛ */
-	UFUNCTION()
-	void InvHurt(int32 part, float amount);// ºÎÀ§¿¡ µ¥¹ÌÁö¸¦ ÀÔÈ÷´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvInjure(int32 part, int32 injury); // ºÎÀ§¿¡ ºÎ»óÀ» È®Á¤ ¹ßµ¿½ÃÅ°´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvSaveZone(bool bActive); // ¼¼ÀÌºê Æ÷ÀÎÆ® ±¸¿ª »óÅÂ¸¦ Åä±ÛÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-
-	/* ÀÎº¥Åä¸® ½Ã½ºÅÛ */
-	UFUNCTION()
-	void InvAdd(const FString& itemId, int32 count = 1); // ¾ÆÀÌÅÛÀ» È¹µæÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvEquip(const FString& itemId, int32 slot = 0); // Àåºñ ½½·ÔÀ» ÁöÁ¤ÇÏ¿© Àåºñ¸¦ ÀåÂøÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvUnequip(int32 slot); // Àåºñ ½½·ÔÀ» ÇØÁ¦ÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvUse(const FString& itemId); // ¼Òºñ ¾ÆÀÌÅÛÀ» »ç¿ëÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvDur(int32 slot, float amount); // ÀåºñÀÇ ³»±¸µµ¸¦ °¨¼Ò½ÃÅ°´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvRepair(int32 slot, float amount); // ÀåºñÀÇ ³»±¸µµ¸¦ ¼ö¸®ÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvMove(int32 uid, int32 x, int32 y, bool bRot); // ÀÎº¥Åä¸® ³» ¾ÆÀÌÅÛÀ» ÀÌµ¿/È¸Àü½ÃÅ°´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvPrint(); // ÀÎº¥Åä¸®¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvSplit(const FString& itemId, int32 amount); // ¾ÆÀÌÅÛÀ» ³ª´©´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvDrop(const FString& itemId, int32 quantity); // ¾ÆÀÌÅÛÀ» ¹ö¸®´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UFUNCTION()
-	void InvLimit(); // ¼ÒÁö °³¼ö Á¦ÇÑ ÇöÈ²À» Ãâ·ÂÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
+	void BindDebugInputs(UEnhancedInputComponent* enhancedInputComponent); // ë””ë²„ê·¸ìš© ì…ë ¥ ì•¡ì…˜ì„ í• ë‹¹í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
 private:	
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY()
-	UAttributeComponent* ownerAttributes = nullptr; // °°Àº ¾×ÅÍÀÇ ¼Ó¼º ÄÄÆ÷³ÍÆ®
-
-	UPROPERTY()
-	UBodyPartComponent* ownerBodyParts = nullptr; // °°Àº ¾×ÅÍÀÇ ºÎÀ§ ÄÄÆ÷³ÍÆ®
+	UAttributeComponent* ownerAttributes = nullptr; // ê°™ì€ ì•¡í„°ì˜ ì†ì„± ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY()
-	UInventoryComponent* ownerInventory = nullptr; // °°Àº ¾×ÅÍÀÇ ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ®
+	UBodyPartComponent* ownerBodyParts = nullptr; // ê°™ì€ ì•¡í„°ì˜ ë¶€ìœ„ ì»´í¬ë„ŒíŠ¸
 
 
-	/* È¥µ· ½Ã½ºÅÛ */
-	void DebugRecoverChaos(); // Á¤½Å·ÂÀ» È¸º¹ÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-	void DebugLoseChaos(); // Á¤½Å·ÂÀ» °¨¼Ò½ÃÅ°´Â ÇÔ¼ö(µğ¹ö±×¿ë)
+	/* í˜¼ëˆ ì‹œìŠ¤í…œ */
+	void DebugRecoverChaos(); // ì •ì‹ ë ¥ì„ íšŒë³µí•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
+	void DebugLoseChaos(); // ì •ì‹ ë ¥ì„ ê°ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug Input|Chaos")
-	UInputAction* recoverChaosAction; // Á¤½Å·Â È¸º¹ ÀÔ·Â ¾×¼Ç(µğ¹ö±×¿ë)
+	UInputAction* recoverChaosAction; // ì •ì‹ ë ¥ íšŒë³µ ì…ë ¥ ì•¡ì…˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug Input|Chaos")
-	UInputAction* loseChaosAction;    // Á¤½Å·Â °¨¼Ò ÀÔ·Â ¾×¼Ç(µğ¹ö±×¿ë)
+	UInputAction* loseChaosAction;    // ì •ì‹ ë ¥ ê°ì†Œ ì…ë ¥ ì•¡ì…˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug|Chaos")
-	float chaosDebugStep = 20.f; // Á¤½Å·Â µğ¹ö±× 1È¸ Áõ°¨·®
+	float chaosDebugStep = 20.f; // ì •ì‹ ë ¥ ë””ë²„ê·¸ 1íšŒ ì¦ê°ëŸ‰
 
 
-	/* ºÎÀ§ ½Ã½ºÅÛ */
-	void DebugDamageSelectedPart(); // ¼±ÅÃ ºÎÀ§¿¡ ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-	void DebugCyclePart(); // ´ë¹ÌÁö Àû¿ë ºÎÀ§¸¦ ¼øÈ¯ ¼±ÅÃÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-	void DebugHealAllParts(); // ¸ğµç ºÎÀ§¸¦ È¸º¹ÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
-
-	UPROPERTY(EditAnywhere, Category = "Debug Input|BodyPart")
-	UInputAction* damagePartAction; // ¼±ÅÃ ºÎÀ§ ´ë¹ÌÁö Àû¿ë ÀÔ·Â ¾×¼Ç(µğ¹ö±×¿ë)
+	/* ë¶€ìœ„ ì‹œìŠ¤í…œ */
+	void DebugDamageSelectedPart(); // ì„ íƒ ë¶€ìœ„ì— ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
+	void DebugCyclePart(); // ëŒ€ë¯¸ì§€ ì ìš© ë¶€ìœ„ë¥¼ ìˆœí™˜ ì„ íƒí•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
+	void DebugHealAllParts(); // ëª¨ë“  ë¶€ìœ„ë¥¼ íšŒë³µí•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug Input|BodyPart")
-	UInputAction* cyclePartAction; // ´ë»ó ºÎÀ§ º¯°æ ÀÔ·Â ¾×¼Ç(µğ¹ö±×¿ë)
+	UInputAction* damagePartAction; // ì„ íƒ ë¶€ìœ„ ëŒ€ë¯¸ì§€ ì ìš© ì…ë ¥ ì•¡ì…˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug Input|BodyPart")
-	UInputAction* healPartsAction; // ÀüÃ¼ ºÎÀ§ È¸º¹ ÀÔ·Â ¾×¼Ç(µğ¹ö±×¿ë)
+	UInputAction* cyclePartAction; // ëŒ€ìƒ ë¶€ìœ„ ë³€ê²½ ì…ë ¥ ì•¡ì…˜(ë””ë²„ê·¸ìš©)
+
+	UPROPERTY(EditAnywhere, Category = "Debug Input|BodyPart")
+	UInputAction* healPartsAction; // ì „ì²´ ë¶€ìœ„ íšŒë³µ ì…ë ¥ ì•¡ì…˜(ë””ë²„ê·¸ìš©)
 
 	UPROPERTY(EditAnywhere, Category = "Debug|BodyPart")
-	float partDamageStep = 25.f; // ºÎÀ§ µğ¹ö±× 1È¸ ´ë¹ÌÁö·®
+	float partDamageStep = 25.f; // ë¶€ìœ„ ë””ë²„ê·¸ 1íšŒ ëŒ€ë¯¸ì§€ëŸ‰
 
-	int32 selectedPart = 1; // ÇöÀç ¼±ÅÃµÈ µğ¹ö±× ºÎÀ§
+	int32 selectedPart = 1; // í˜„ì¬ ì„ íƒëœ ë””ë²„ê·¸ ë¶€ìœ„
 };

@@ -1,4 +1,4 @@
-#include "UI/MyItemContextMenuWidget.h"
+﻿#include "UI/MyItemContextMenuWidget.h"
 #include "UI/WindlessUIStyle.h"
 #include "UI/InventoryWidget.h"
 #include "Characters/WindlessCharacter.h"
@@ -280,3 +280,5 @@ void UMyItemContextMenuWidget::RequestItemCast(EBodyPart part)
 	const float castTime = owningInventory->GetItemCastTime(targetUID);
 	character->BeginItemCast(targetUID, part, castTime);
 }
+
+#undef LOCTEXT_NAMESPACE

@@ -13,8 +13,8 @@
 #include "Items/Storage/SharedStorageSubsystem.h"
 #include "WindlessCharacter.generated.h"
 
-class UInputMappingContext;
-class UInputAction;
+class UWindlessInputConfig;
+class UPlayerInputModeComponent;
 class UCameraComponent;
 class USpringArmComponent;
 class UGroomComponent;
@@ -252,18 +252,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	/* 입력 매핑 컨텍스트 */
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputMappingContext* WindlessContext; // 캐릭터 이동 입력 매핑 컨텍스트
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputMappingContext* dialogueContext; // 캐릭터 대화/연출 입력 매핑 컨텍스트
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputMappingContext* interactionContext; // 캐릭터 상호작용 입력 매핑 컨텍스트
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputMappingContext* inventoryContext; // 인벤토리 조작 입력 매핑 컨텍스트
+	/* 입력 설정 */
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	TObjectPtr<UWindlessInputConfig> inputConfig; // 입력 액션 설정 에셋
 
 
 	/* 이동 시스템 */
@@ -280,22 +271,6 @@ protected:
 	void RefreshRotationMode(); // 상태에 맞게 이동 회전 방식을 갱신하는 함수
 
 
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* movementAction; // 이동 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* lookAction; // 회전 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* sprintAction; // 달리기 입력 액션
-	
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* jumpAction; // 점프 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* crouchAction; // 숙이기 입력 액션 
-
-
 	/* 전투 시스템(공격) */
 	virtual void Attack() override; // 플레이어 캐릭터 좌 공격 입력 시 실행되는 함수
 	virtual void AttackEnd() override; // 공격 완료 시 실행되는 함수
@@ -308,19 +283,6 @@ protected:
 	void RightAttackHeld(); // 우 공격 버튼 유지 시 실행되는 함수
 	void LeftAttackReleased(); // 좌 공격 버튼 해제 시 실행되는 함수
 	void RightAttackReleased(); // 우 공격 버튼 해제 시 실행되는 함수
-
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* leftAttackAction; // 좌 공격 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* rightAttackAction; // 우 공격 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* leftStrongAttackAction; // 좌 강공격 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* rightStrongAttackAction; // 우 강공격 입력 액션
 
 	UPROPERTY(EditAnywhere, Category = "Combat", meta = (ClampMin = "0.0"))
 	float combatStateDuration = 8.f; // 피격 후 전투 상태 시간
@@ -369,9 +331,6 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void GetUpStart(); // 구르기 완료 시 실행되는 함수
 
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* dodgeAction; // 구르기 입력 액션 
-
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Dodge")
 	UAnimMontage* stepDodgeMontage = nullptr; // 락온 스텝 회피 몽타주
 
@@ -411,28 +370,16 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void FinishEquipping(); // 무기 장착 완료 시 실행되는 함수
 
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* equipAction; // 무기 장착 입력 액션
-
 
 	/* 전투 시스템(락온) */
 	void OnLockOnPressed(); // 플레이어 캐릭터 락온 입력 시 실행되는 함수
 	void OnSwitchTargetTriggered(const FInputActionValue& Value); // 플레이어 캐릭터 락온 타겟 변경 입력 시 실행되는 함수
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* lockOnAction; // 락온 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* switchTargetAction; // 락온 타겟 변경 입력 액션
 
 
 	/* 탈 것 시스템 */
 	void ToggleMount(); // 탈 것 토글키 입력 시 실행되는 함수
 	UFUNCTION()
 	void HandleMountPhaseChanged(EMountPhase phase); // 탈 것 단계 변화 시 실행되는 함수
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* mountAction; // 탈 것 토글 입력 액션
 
 
 	/* 혼돈 시스템 */
@@ -451,9 +398,6 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "BodyPart")
 	void OnEyeDamageChanged(bool bActive); // 안구 손상 부상 발생 시 호출되는 함수
 
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* bodyStatusToggleAction; // 부위 상태창 토글 입력 액션
-
 
 	/* 인벤토리 시스템 */
 	void ToggleInventory(); // 인벤토리 창을 토글하는 함수
@@ -463,9 +407,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UInventoryWidget> inventoryWidget = nullptr; // 현재 인벤토리 위젯 인스턴스
-
-	UPROPERTY(EditAnywhere, Category = Input) 
-	UInputAction* inventoryToggleAction; // 인벤토리 창 토글 입력 액션
 
 	
 	/* 아이템 시스템 */
@@ -509,9 +450,6 @@ protected:
 	void UpdateInteractionTarget(); // 현재 상호작용 가능한 대상, 상호작용 텍스트, 상호작용 입력 모드를 업데이트하는 함수
 	void InitializeInteractionText(); // 상호작용 텍스트 위젯을 초기화하는 함수
 
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* interactAction; // 상호작용 입력 액션
-
 	UPROPERTY(EditAnywhere, Category = "Interaction")
 	TSubclassOf<UInteractionWidget> interactionTargetClass; // 상호작용 텍스트 위젯 클래스
 
@@ -533,24 +471,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UQuickSlotComponent> quickSlots = nullptr; // 퀵슬롯 컴포넌트
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotRecoveryAction; // 회복 퀵슬롯 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotConsume1Action; // 소비1 슬롯 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotConsume2Action; // 소비2 슬롯 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotConsume3Action; // 소비3 슬롯 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotConsume4Action; // 소비4 슬롯 입력 액션
-
-	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* quickSlotCancelAction; // 퀵슬롯 취소 입력 액션
 
 
 	/* 정비 모드 시스템 */
@@ -623,6 +543,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = Combat)
 	UPlayerAISignal* aiSignals; // AI 신호 컴포넌트
+
+	UPROPERTY(VisibleAnywhere, Category = Input)
+	TObjectPtr<UPlayerInputModeComponent> inputMode; // 입력 모드 관리 컴포넌트
 
 
 	/* 캐시 변수 */
@@ -774,8 +697,6 @@ private:
 
 	UPROPERTY()
 	AActor* currentInteractable = nullptr; // 현재 상호작용 가능 대상
-
-	bool bInteractionContextActive = false; // 상호작용 입력 컨텍스트 활성 여부
 
 
 	/* 대화 시스템 */

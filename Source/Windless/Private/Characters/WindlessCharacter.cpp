@@ -25,8 +25,8 @@
 #include "Components/BowComponent.h"
 #include "Components/PlayerAISignal.h" 
 #include "Components/PlayerStaggerComponent.h"
+#include "Components/PlayerInputModeComponent.h"
 #include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -38,6 +38,7 @@
 #include "Items/Treasure.h"
 #include "Items/DropItem.h"
 #include "Items/Weapons/Weapon.h"
+#include "Input/WindlessInputConfig.h"
 #include "Animation/AnimMontage.h"
 #include "HUD/WindlessHUD.h"
 #include "HUD/WindlessOverlay.h"
@@ -122,6 +123,8 @@ AWindlessCharacter::AWindlessCharacter()
 	staggerComponent = CreateDefaultSubobject<UPlayerStaggerComponent>(TEXT("Stagger"));
 
 	aiSignals = CreateDefaultSubobject<UPlayerAISignal>(TEXT("AISignals"));
+
+	inputMode = CreateDefaultSubobject<UPlayerInputModeComponent>(TEXT("InputMode"));
 }
 
 void AWindlessCharacter::Tick(float DeltaTime)
@@ -140,117 +143,93 @@ void AWindlessCharacter::Tick(float DeltaTime)
 void AWindlessCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
-	{
-		EnhancedInputComponent->BindAction(movementAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Move);
-		EnhancedInputComponent->BindAction(movementAction, ETriggerEvent::Completed, this, &AWindlessCharacter::StopMoving);
-		EnhancedInputComponent->BindAction(lookAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Look);
-		EnhancedInputComponent->BindAction(sprintAction, ETriggerEvent::Started, this, &AWindlessCharacter::Sprint);
-		EnhancedInputComponent->BindAction(sprintAction, ETriggerEvent::Completed, this, &AWindlessCharacter::StopSprinting);
-		EnhancedInputComponent->BindAction(jumpAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Jump);
-		EnhancedInputComponent->BindAction(dodgeAction, ETriggerEvent::Started, this, &AWindlessCharacter::OnSpacePressed);
-		EnhancedInputComponent->BindAction(equipAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::EKeyPressed);
-		EnhancedInputComponent->BindAction(leftAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::Attack);
-		EnhancedInputComponent->BindAction(leftAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::LeftAttackHeld);
-		EnhancedInputComponent->BindAction(leftAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::LeftAttackReleased);
-		EnhancedInputComponent->BindAction(rightAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightAttack);
-		EnhancedInputComponent->BindAction(rightAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::RightAttackHeld);
-		EnhancedInputComponent->BindAction(rightAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::RightAttackReleased);
-		EnhancedInputComponent->BindAction(leftStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::LeftStrongAttack);
-		EnhancedInputComponent->BindAction(rightStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightStrongAttack);
-		EnhancedInputComponent->BindAction(crouchAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleCrouch);
-		EnhancedInputComponent->BindAction(lockOnAction, ETriggerEvent::Started, this, &AWindlessCharacter::OnLockOnPressed);
-		EnhancedInputComponent->BindAction(switchTargetAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::OnSwitchTargetTriggered);
-		EnhancedInputComponent->BindAction(mountAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleMount);
-		EnhancedInputComponent->BindAction(bodyStatusToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleBodyStatus);
-		EnhancedInputComponent->BindAction(inventoryToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleInventory);
-		EnhancedInputComponent->BindAction(interactAction, ETriggerEvent::Started, this, &AWindlessCharacter::Interact);
-		EnhancedInputComponent->BindAction(quickSlotRecoveryAction, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotRecovery);
-		EnhancedInputComponent->BindAction(quickSlotRecoveryAction, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotRecovery);
-		EnhancedInputComponent->BindAction(quickSlotConsume1Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume1);
-		EnhancedInputComponent->BindAction(quickSlotConsume1Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume1);
-		EnhancedInputComponent->BindAction(quickSlotConsume2Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume2);
-		EnhancedInputComponent->BindAction(quickSlotConsume2Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume2);
-		EnhancedInputComponent->BindAction(quickSlotConsume3Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume3);
-		EnhancedInputComponent->BindAction(quickSlotConsume3Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume3);
-		EnhancedInputComponent->BindAction(quickSlotConsume4Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume4);
-		EnhancedInputComponent->BindAction(quickSlotConsume4Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume4);
-		EnhancedInputComponent->BindAction(quickSlotCancelAction, ETriggerEvent::Started, this, &AWindlessCharacter::QuickSlotCancel);
 
-		if (debugComponent)
-			debugComponent->BindDebugInputs(EnhancedInputComponent);
+	UEnhancedInputComponent* enhancedInput = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
 
-		if (dialogueComponent)
-			dialogueComponent->BindDialogueInputs(EnhancedInputComponent);
-	}
+	if (debugComponent)
+		debugComponent->BindDebugInputs(enhancedInput);
+
+	if (dialogueComponent)
+		dialogueComponent->BindDialogueInputs(enhancedInput);
+
+	if (!inputConfig)
+		return;
+
+	const UWindlessInputConfig& input = *inputConfig;
+
+	/* 이동 */
+	enhancedInput->BindAction(input.movementAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Move);
+	enhancedInput->BindAction(input.movementAction, ETriggerEvent::Completed, this, &AWindlessCharacter::StopMoving);
+	enhancedInput->BindAction(input.lookAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Look);
+	enhancedInput->BindAction(input.sprintAction, ETriggerEvent::Started, this, &AWindlessCharacter::Sprint);
+	enhancedInput->BindAction(input.sprintAction, ETriggerEvent::Completed, this, &AWindlessCharacter::StopSprinting);
+	enhancedInput->BindAction(input.jumpAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::Jump);
+	enhancedInput->BindAction(input.crouchAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleCrouch);
+	enhancedInput->BindAction(input.dodgeAction, ETriggerEvent::Started, this, &AWindlessCharacter::OnSpacePressed);
+
+	/* 전투 */
+	enhancedInput->BindAction(input.equipAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::EKeyPressed);
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::Attack);
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::LeftAttackHeld);
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::LeftAttackReleased);
+	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightAttack);
+	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::RightAttackHeld);
+	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::RightAttackReleased);
+	enhancedInput->BindAction(input.leftStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::LeftStrongAttack);
+	enhancedInput->BindAction(input.rightStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightStrongAttack);
+	enhancedInput->BindAction(input.lockOnAction, ETriggerEvent::Started, this, &AWindlessCharacter::OnLockOnPressed);
+	enhancedInput->BindAction(input.switchTargetAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::OnSwitchTargetTriggered);
+
+	/* 상호작용 및 UI */
+	enhancedInput->BindAction(input.interactAction, ETriggerEvent::Started, this, &AWindlessCharacter::Interact);
+	enhancedInput->BindAction(input.mountAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleMount);
+	enhancedInput->BindAction(input.bodyStatusToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleBodyStatus);
+	enhancedInput->BindAction(input.inventoryToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleInventory);
+
+	/* 퀵슬롯 */
+	enhancedInput->BindAction(input.quickSlotRecoveryAction, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotRecovery);
+	enhancedInput->BindAction(input.quickSlotRecoveryAction, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotRecovery);
+	enhancedInput->BindAction(input.quickSlotConsume1Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume1);
+	enhancedInput->BindAction(input.quickSlotConsume1Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume1);
+	enhancedInput->BindAction(input.quickSlotConsume2Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume2);
+	enhancedInput->BindAction(input.quickSlotConsume2Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume2);
+	enhancedInput->BindAction(input.quickSlotConsume3Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume3);
+	enhancedInput->BindAction(input.quickSlotConsume3Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume3);
+	enhancedInput->BindAction(input.quickSlotConsume4Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume4);
+	enhancedInput->BindAction(input.quickSlotConsume4Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume4);
+	enhancedInput->BindAction(input.quickSlotCancelAction, ETriggerEvent::Started, this, &AWindlessCharacter::QuickSlotCancel);
 }
 
 void AWindlessCharacter::SetDialogueInputMode(bool bEnable)
 {
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if (!playerController)
-		return;
-
-	UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
-	if (!subsystem)
-		return;
-
-	if (bEnable) // 대화 모드 
+	if (bEnable) // 대화 모드
 	{
 		SetInteractionInputMode(false);
 		if (interactionWidget)
 			interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
 
-		subsystem->RemoveMappingContext(WindlessContext);
-		if (dialogueContext)
-			subsystem->AddMappingContext(dialogueContext, 1);
+		if (inputMode)
+			inputMode->SetMode(EPlayerInputMode::EPIM_Dialogue);
 
 		actionState = EActionState::EAS_Unoccupied;
-		UE_LOG(LogWindless, Log, TEXT("대화 모드 ON"));
 	}
 	else // 입력 모드
 	{
-		if (dialogueContext)
-			subsystem->RemoveMappingContext(dialogueContext);
-		subsystem->AddMappingContext(WindlessContext, 0);
+		if (inputMode)
+			inputMode->SetMode(EPlayerInputMode::EPIM_Gameplay);
 
 		UpdateInteractionTarget();
-		UE_LOG(LogWindless, Log, TEXT("[입력] 대화 모드 OFF"));
 	}
 }
 
 void AWindlessCharacter::SetInteractionInputMode(bool bEnable)
 {
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if (!playerController)
-		return;
-
-	UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
-	if (!subsystem || !interactionContext)
-		return;
-
-	if (bEnable && !bInteractionContextActive)
-	{
-		subsystem->AddMappingContext(interactionContext, 1);
-		bInteractionContextActive = true;
-	}
-	else if (!bEnable && bInteractionContextActive)
-	{
-		subsystem->RemoveMappingContext(interactionContext);
-		bInteractionContextActive = false;
-	}
+	if (inputMode)
+		inputMode->SetInteractionContextActive(bEnable);
 }
 
 void AWindlessCharacter::SetInventoryInputMode(bool bEnable)
 {
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if (!playerController)
-		return;
-
-	UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
-	if (!subsystem)
-		return;
-
 	if (bEnable) // 인벤토리 조작 모드
 	{
 		SetInteractionInputMode(false);
@@ -260,19 +239,17 @@ void AWindlessCharacter::SetInventoryInputMode(bool bEnable)
 		StopMoving();
 		StopSprinting();
 		StopGuard();
+
 		if (bow)
 			bow->CancelDraw(TEXT("인벤토리"));
 
-		subsystem->RemoveMappingContext(WindlessContext);
-		if (inventoryContext)
-			subsystem->AddMappingContext(inventoryContext, 1);
+		if (inputMode)
+			inputMode->SetMode(EPlayerInputMode::EPIM_Inventory);
 	}
 	else
 	{
-		if (inventoryContext)
-			subsystem->RemoveMappingContext(inventoryContext);
-
-		subsystem->AddMappingContext(WindlessContext, 0);
+		if (inputMode)
+			inputMode->SetMode(EPlayerInputMode::EPIM_Gameplay);
 	}
 }
 
@@ -1120,13 +1097,8 @@ bool AWindlessCharacter::ForceStrongStagger(const FVector& fromLocation)
 void AWindlessCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	if (APlayerController* playerController = Cast<APlayerController>(GetController()))
-	{
-		if (UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer()))
-		{
-			subsystem->AddMappingContext(WindlessContext, 0);
-		}
-	}
+	if (inputMode)
+		inputMode->Initialize(inputConfig);
 
 	Tags.Add(FName("EngagableTarget"));
 	InitializeWindlessOverlay();

@@ -1,4 +1,4 @@
-#include "Enemy/AI/EnemyReach.h"
+﻿#include "Enemy/AI/EnemyReach.h"
 
 bool EnemyReach::ShouldCheckPath(float distance, float heightDelta, float preferredRange, float heightLimit)
 {

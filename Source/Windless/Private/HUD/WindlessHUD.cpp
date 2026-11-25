@@ -1,4 +1,4 @@
-#include "HUD/WindlessHUD.h"
+ï»¿#include "HUD/WindlessHUD.h"
 #include "HUD/WindlessOverlay.h"
 
 void AWindlessHUD::BeginPlay()
@@ -10,8 +10,8 @@ void AWindlessHUD::BeginPlay()
 		APlayerController* controller = world->GetFirstPlayerController();
 		if (controller && windlessOverlayClass)
 		{
-			windlessOverlay = CreateWidget<UWindlessOverlay>(controller, windlessOverlayClass); // ¿À¹ö·¹ÀÌ À§Á¬À» »ı¼º
-			windlessOverlay->AddToViewport(); // ¿À¹ö·¹ÀÌ À§Á¬À» È­¸é¿¡ Ãß°¡
+			windlessOverlay = CreateWidget<UWindlessOverlay>(controller, windlessOverlayClass); // ì˜¤ë²„ë ˆì´ ìœ„ì ¯ì„ ìƒì„±
+			windlessOverlay->AddToViewport(); // ì˜¤ë²„ë ˆì´ ìœ„ì ¯ì„ í™”ë©´ì— ì¶”ê°€
 		}
 	}
 }

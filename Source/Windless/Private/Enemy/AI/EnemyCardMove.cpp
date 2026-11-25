@@ -1,4 +1,4 @@
-#include "Enemy/AI/EnemyCardMove.h"
+﻿#include "Enemy/AI/EnemyCardMove.h"
 
 FVector EnemyCardMove::GetCirclePoint(const FVector& center, const FVector& from, float radius, float stepDistance, float direction)
 {

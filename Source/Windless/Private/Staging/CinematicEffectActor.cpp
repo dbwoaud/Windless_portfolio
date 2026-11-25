@@ -1,4 +1,4 @@
-#include "Staging/CinematicEffectActor.h"
+﻿#include "Staging/CinematicEffectActor.h"
 #include "Windless/DebugMacro.h"
 #include "LevelSequenceActor.h"
 #include "LevelSequencePlayer.h"

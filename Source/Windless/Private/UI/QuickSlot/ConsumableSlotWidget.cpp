@@ -1,4 +1,4 @@
-#include "UI/QuickSlot/ConsumableSlotWidget.h"
+﻿#include "UI/QuickSlot/ConsumableSlotWidget.h"
 #include "UI/WindlessUIStyle.h"
 #include "UI/InventoryWidget.h"
 #include "UI/ItemDragDrop.h"

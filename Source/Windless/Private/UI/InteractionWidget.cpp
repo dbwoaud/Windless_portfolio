@@ -1,4 +1,4 @@
-#include "UI/InteractionWidget.h"
+﻿#include "UI/InteractionWidget.h"
 #include "Components/TextBlock.h"
 
 void UInteractionWidget::SetActionText(const FText& inActionText)

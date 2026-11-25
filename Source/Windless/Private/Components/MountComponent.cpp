@@ -1,4 +1,4 @@
-#include "Components/MountComponent.h"
+ï»¿#include "Components/MountComponent.h"
 #include "Mount/SnakeMount.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -69,7 +69,7 @@ void UMountComponent::OnMountEmerged()
 
 bool UMountComponent::CanMount() const
 {
-	if (!ownerCharacter || snakeMountClass == nullptr) //¼ÒÀ¯ÀÚ³ª Å» °ÍÀÌ ¾øÀ¸¸é ¹«½Ã
+	if (!ownerCharacter || snakeMountClass == nullptr) //ì†Œìœ ìžë‚˜ íƒˆ ê²ƒì´ ì—†ìœ¼ë©´ ë¬´ì‹œ
 		return false;
 
 	if (const UCharacterMovementComponent* movement = ownerCharacter->GetCharacterMovement())

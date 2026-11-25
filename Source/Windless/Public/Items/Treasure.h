@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Items.h"
@@ -9,14 +9,14 @@ class WINDLESS_API ATreasure : public AItems
 {
 	GENERATED_BODY()
 protected:
-	// ´Ù¸¥ ¾×ÅÍ¿Í overlapÀÌ ½ÃÀÛµÇ¾úÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö 
+	// ë‹¤ë¥¸ ì•¡í„°ì™€ overlapì´ ì‹œì‘ë˜ì—ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜ 
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Treasure Properties")
-	int32 gold; // °ñµåÀÇ °³¼ö
+	int32 gold; // ê³¨ë“œì˜ ê°œìˆ˜
 
 public:
-	/* º¯¼öÀÇ Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE int32 GetGold() const { return gold; }
 };

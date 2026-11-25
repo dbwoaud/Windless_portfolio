@@ -1,4 +1,4 @@
-#include "Staging/CameraShakeEffectActor.h"
+﻿#include "Staging/CameraShakeEffectActor.h"
 #include "Windless/DebugMacro.h"
 #include "Camera/CameraShakeBase.h"
 #include "GameFramework/PlayerController.h"

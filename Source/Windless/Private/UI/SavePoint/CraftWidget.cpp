@@ -1,4 +1,4 @@
-#include "UI/SavePoint/CraftWidget.h"
+﻿#include "UI/SavePoint/CraftWidget.h"
 #include "UI/SavePoint/CraftRecipeRowWidget.h"
 #include "Components/CraftingComponent.h"
 #include "Components/PanelWidget.h"

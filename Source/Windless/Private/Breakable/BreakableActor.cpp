@@ -1,4 +1,4 @@
-#include "Breakable/BreakableActor.h"
+ï»¿#include "Breakable/BreakableActor.h"
 #include "GeometryCollection/GeometryCollectionComponent.h"
 #include "Items/Treasure.h"
 #include "Components/CapsuleComponent.h"
@@ -11,13 +11,13 @@ ABreakableActor::ABreakableActor()
 	SetRootComponent(geometryCollection);
 
 	geometryCollection->SetGenerateOverlapEvents(true);
-	geometryCollection->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore); // ÆÄ±«µÈ Á¶°¢¿¡ ´ëÇØ Ä«¸Ş¶ó°¡ Ãæµ¹ ¹«½ÃÇÏµµ·Ï ¼³Á¤
-	geometryCollection->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore); // ÆÄ±«µÈ Á¶°¢¿¡ ´ëÇØ ÇÃ·¹ÀÌ¾î°¡ Ãæµ¹ ¹«½ÃÇÏµµ·Ï ¼³Á¤
+	geometryCollection->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore); // íŒŒê´´ëœ ì¡°ê°ì— ëŒ€í•´ ì¹´ë©”ë¼ê°€ ì¶©ëŒ ë¬´ì‹œí•˜ë„ë¡ ì„¤ì •
+	geometryCollection->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore); // íŒŒê´´ëœ ì¡°ê°ì— ëŒ€í•´ í”Œë ˆì´ì–´ê°€ ì¶©ëŒ ë¬´ì‹œí•˜ë„ë¡ ì„¤ì •
 
 	capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	capsule->SetupAttachment(GetRootComponent());
 	capsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore); 
-	capsule->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block); // ÆÄ±« °¡´ÉÇÑ °´Ã¼ÀÇ Ä¸½¶ Äİ¸®Àü¿¡ ´ëÇØ ÇÃ·¹ÀÌ¾î°¡ Ãæµ¹ ¸·È÷µµ·Ï ¼³Á¤ 
+	capsule->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block); // íŒŒê´´ ê°€ëŠ¥í•œ ê°ì²´ì˜ ìº¡ìŠ ì½œë¦¬ì „ì— ëŒ€í•´ í”Œë ˆì´ì–´ê°€ ì¶©ëŒ ë§‰íˆë„ë¡ ì„¤ì • 
 }
 
 void ABreakableActor::BeginPlay()
@@ -32,12 +32,12 @@ void ABreakableActor::Tick(float DeltaTime)
 
 void ABreakableActor::GetHit_Implementation(const FVector& impactPoint, AActor* hitter)
 {
-	if (bBroken) // ÀÌ¹Ì ÆÄ±«µÇ¾úÀ¸¸é ¹«½Ã
+	if (bBroken) // ì´ë¯¸ íŒŒê´´ë˜ì—ˆìœ¼ë©´ ë¬´ì‹œ
 		return;
 	
 	bBroken = true;
 	UWorld* world = GetWorld();
-	SpawnTreasureItem(world); // ±úÁø ÀÚ¸®¿¡ º¸¹° ¾ÆÀÌÅÛ »ı¼º
+	SpawnTreasureItem(world); // ê¹¨ì§„ ìë¦¬ì— ë³´ë¬¼ ì•„ì´í…œ ìƒì„±
 }
 
 void ABreakableActor::SpawnTreasureItem(UWorld* world)

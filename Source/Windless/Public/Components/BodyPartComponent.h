@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -18,174 +18,174 @@ class WINDLESS_API UBodyPartComponent : public UActorComponent
 public:	
 	UBodyPartComponent();
 
-	/* ÇÇ°İ Ã³¸® */
-	void ApplyHitToBone(FName boneName, float damage); // »À ÀÌ¸§À¸·Î ºÎÀ§¸¦ ÆÇÁ¤ÇÏ°í ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	void ApplyDamageToPart(EBodyPart part, float damage); // Æ¯Á¤ ºÎÀ§¿¡ Á÷Á¢ µ¥¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	void ApplyHitAtLocation(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage); // º»°ú °¡Àå °¡±î¿î ºÎÀ§¿¡ ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	EBodyPart GetClosestPart(const USkeletalMeshComponent* mesh, const FVector& impactPoint) const; // °¡Àå °¡±î¿î º»ÀÇ ºÎÀ§¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	FName GetClosestBone(const USkeletalMeshComponent* mesh, const FVector& impactPoint) const; // °¡Àå °¡±î¿î º»ÀÇ ÀÌ¸§ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	void CalculateIncomingDamage(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage, float baseInjuryChance); // 5´Ü°èÀÇ ÃÖÁ¾ ´ë¹ÌÁö¸¦ °è»êÇÏ´Â ÇÔ¼ö
-	void DisableAllParts(); // Ä³¸¯ÅÍ »ç¸Á ½Ã ¸ğµç ºÎÀ§¸¦ ÆÄ±«ÇÏ°í Ã¼·ÂÀ» 0À¸·Î ¸¸µå´Â ÇÔ¼ö
-	void TriggerInjury(EBodyPart part, EInjuryType injury); // ºÎÀ§¿¡ ºÎ»óÀ» ¹ßµ¿½ÃÅ°´Â ÇÔ¼ö
-	void TriggerBleeding(EBodyPart part); // ºÎÀ§¿¡ ÃâÇ÷ ¹ßµ¿À» ÇÏ°í ÃâÇ÷ Å¸ÀÌ¸Ó¸¦ ½ÃÀÛÇÏ´Â ÇÔ¼ö
+	/* í”¼ê²© ì²˜ë¦¬ */
+	void ApplyHitToBone(FName boneName, float damage); // ë¼ˆ ì´ë¦„ìœ¼ë¡œ ë¶€ìœ„ë¥¼ íŒì •í•˜ê³  ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void ApplyDamageToPart(EBodyPart part, float damage); // íŠ¹ì • ë¶€ìœ„ì— ì§ì ‘ ë°ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void ApplyHitAtLocation(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage); // ë³¸ê³¼ ê°€ì¥ ê°€ê¹Œìš´ ë¶€ìœ„ì— ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	EBodyPart GetClosestPart(const USkeletalMeshComponent* mesh, const FVector& impactPoint) const; // ê°€ì¥ ê°€ê¹Œìš´ ë³¸ì˜ ë¶€ìœ„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	FName GetClosestBone(const USkeletalMeshComponent* mesh, const FVector& impactPoint) const; // ê°€ì¥ ê°€ê¹Œìš´ ë³¸ì˜ ì´ë¦„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	void CalculateIncomingDamage(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage, float baseInjuryChance); // 5ë‹¨ê³„ì˜ ìµœì¢… ëŒ€ë¯¸ì§€ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	void DisableAllParts(); // ìºë¦­í„° ì‚¬ë§ ì‹œ ëª¨ë“  ë¶€ìœ„ë¥¼ íŒŒê´´í•˜ê³  ì²´ë ¥ì„ 0ìœ¼ë¡œ ë§Œë“œëŠ” í•¨ìˆ˜
+	void TriggerInjury(EBodyPart part, EInjuryType injury); // ë¶€ìœ„ì— ë¶€ìƒì„ ë°œë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
+	void TriggerBleeding(EBodyPart part); // ë¶€ìœ„ì— ì¶œí˜ˆ ë°œë™ì„ í•˜ê³  ì¶œí˜ˆ íƒ€ì´ë¨¸ë¥¼ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* »óÅÂ È®ÀÎ */
-	bool IsPartDisabled(EBodyPart part) const; // ÇØ´ç ºÎÀ§ÀÇ HP°¡ 0ÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsPartInjured(EBodyPart part, EInjuryType injury) const; // Æ¯Á¤ ºÎÀ§¿¡ Æ¯Á¤ ºÎ»óÀÌ È°¼ºÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsDeadByParts() const; // Ä³¸¯ÅÍ°¡ »ç¸Á »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasInjury(EInjuryType injury) const; // ºÎ»óÀÌ ¹ß»ıÇß´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasEyeDamage() const; // ¾È±¸ ¼Õ»óÀÌ ¹ß»ıÇß´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasArmFractureSide(EBodyPart arm) const; // Æ¯Á¤ ÆÈ¿¡ °ñÀıÀÌ ¹ß»ıÇß´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasLegFractureSide(EBodyPart legPart) const; // Æ¯Á¤ ´Ù¸®¿¡ °ñÀıÀÌ ¹ß»ıÇß´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool CanSprint() const; //  ÇÑ ´Ù¸® °ñÀı »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsCrawling() const; // ¾ç ´Ù¸® °ñÀı »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsBleeding() const; // °ú´ÙÃâÇ÷ ÁøÇà ÁßÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* ìƒíƒœ í™•ì¸ */
+	bool IsPartDisabled(EBodyPart part) const; // í•´ë‹¹ ë¶€ìœ„ì˜ HPê°€ 0ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsPartInjured(EBodyPart part, EInjuryType injury) const; // íŠ¹ì • ë¶€ìœ„ì— íŠ¹ì • ë¶€ìƒì´ í™œì„±ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsDeadByParts() const; // ìºë¦­í„°ê°€ ì‚¬ë§ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasInjury(EInjuryType injury) const; // ë¶€ìƒì´ ë°œìƒí–ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasEyeDamage() const; // ì•ˆêµ¬ ì†ìƒì´ ë°œìƒí–ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasArmFractureSide(EBodyPart arm) const; // íŠ¹ì • íŒ”ì— ê³¨ì ˆì´ ë°œìƒí–ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasLegFractureSide(EBodyPart legPart) const; // íŠ¹ì • ë‹¤ë¦¬ì— ê³¨ì ˆì´ ë°œìƒí–ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool CanSprint() const; //  í•œ ë‹¤ë¦¬ ê³¨ì ˆ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsCrawling() const; // ì–‘ ë‹¤ë¦¬ ê³¨ì ˆ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsBleeding() const; // ê³¼ë‹¤ì¶œí˜ˆ ì§„í–‰ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintPure, Category = "BodyPart")
-	bool IsPartInjuredAny(EBodyPart part) const; // ÇØ´ç ºÎÀ§¿¡ È°¼º ºÎ»óÀÌ ÇÏ³ª¶óµµ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	bool IsPartInjuredAny(EBodyPart part) const; // í•´ë‹¹ ë¶€ìœ„ì— í™œì„± ë¶€ìƒì´ í•˜ë‚˜ë¼ë„ ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ºÎ»ó 2Â÷ È¿°ú ÇÔ¼ö */
-	float GetLockOnRangeMultiplier() const; // ¾È±¸ ¼Õ»ó ¹ß»ı ½Ã ¶ô¿Â °Å¸® ¹èÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ë¶€ìƒ 2ì°¨ íš¨ê³¼ í•¨ìˆ˜ */
+	float GetLockOnRangeMultiplier() const; // ì•ˆêµ¬ ì†ìƒ ë°œìƒ ì‹œ ë½ì˜¨ ê±°ë¦¬ ë°°ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
-	float GetStaminaRegenMultiplier() const; // °¡½¿¿¡ È£Èí°ï¶õ ¹ß»ı ½Ã ½ºÅÂ¹Ì³ª È¸º¹¸¦ ´À¸®°Ô ÇÏ´Â ÇÔ¼ö
-	float GetActionDelayPenalty() const; // °¡½¿¿¡ È£Èí°ï¶õ ¹ß»ı ½Ã ¾×¼Ç °£ Ãß°¡ µô·¹ÀÌ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	float GetStaminaRegenMultiplier() const; // ê°€ìŠ´ì— í˜¸í¡ê³¤ë€ ë°œìƒ ì‹œ ìŠ¤íƒœë¯¸ë‚˜ íšŒë³µë¥¼ ëŠë¦¬ê²Œ í•˜ëŠ” í•¨ìˆ˜
+	float GetActionDelayPenalty() const; // ê°€ìŠ´ì— í˜¸í¡ê³¤ë€ ë°œìƒ ì‹œ ì•¡ì…˜ ê°„ ì¶”ê°€ ë”œë ˆì´ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
-	float GetAttackRateMultiplier() const; // ÀÏ¹İ °ø°İ ¼Óµµ¸¦ ¹İÈ¯ ÇÏ´Â ÇÔ¼ö
-	float GetStrongAttackTimeMultiplier() const; // °­°ø°İ ¼Óµµ¸¦ ¹İÈ¯ ÇÏ´Â ÇÔ¼ö
-	void OnOwnerDealtHit(EBodyPart attackingArm); // ÆÈ¿¡ °ñÀı ¹ß»ı ½Ã °ø°İ ½Ã¸¶´Ù ÇÃ·¹ÀÌ¾î »ı¸í·ÂÀ» °¨¼Ò½ÃÅ°´Â ÇÔ¼ö
+	float GetAttackRateMultiplier() const; // ì¼ë°˜ ê³µê²© ì†ë„ë¥¼ ë°˜í™˜ í•˜ëŠ” í•¨ìˆ˜
+	float GetStrongAttackTimeMultiplier() const; // ê°•ê³µê²© ì†ë„ë¥¼ ë°˜í™˜ í•˜ëŠ” í•¨ìˆ˜
+	void OnOwnerDealtHit(EBodyPart attackingArm); // íŒ”ì— ê³¨ì ˆ ë°œìƒ ì‹œ ê³µê²© ì‹œë§ˆë‹¤ í”Œë ˆì´ì–´ ìƒëª…ë ¥ì„ ê°ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜
 
-	float GetDodgeDistanceMultiplier() const; // ±¸¸£±â ÀÌµ¿ °Å¸® ¹èÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetMoveHpCost() const; // ÀÌµ¿/±¸¸£±â Áß ÃÊ´ç ÀÚÇØ HP¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	float GetDodgeDistanceMultiplier() const; // êµ¬ë¥´ê¸° ì´ë™ ê±°ë¦¬ ë°°ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetMoveHpCost() const; // ì´ë™/êµ¬ë¥´ê¸° ì¤‘ ì´ˆë‹¹ ìí•´ HPë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
-	void ApplyFlatDamage(EBodyPart part, float damage); // ºÎ»ó ÆÇÁ¤ ¾øÀÌ ºÎÀ§¿¡ Á÷Á¢ ´ë¹ÌÁö¸¦ Àû¿ë½ÃÅ°´Â ÇÔ¼ö(ÀÚÇØ/ÃâÇ÷)
-
-
-	/* È¸º¹ */
-	EBodyPart GetLowestHealthPart() const; // ÆÄ±«µÇÁö ¾ÊÀº ºÎÀ§ Áß Ã¼·Â ºñÀ²ÀÌ °¡Àå ³·Àº ºÎÀ§¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	bool HealPart(EBodyPart part, float amount); // Æ¯Á¤ ºÎÀ§ HP¸¦ È¸º¹ÇÏ´Â ÇÔ¼ö
-	void HealAllParts(); // ¼¼ÀÌºêÆ÷ÀÎÆ® µµ´Ş ½Ã ÀüÃ¼ ºÎÀ§¿Í ºÎ»óÀ» È¸º¹ÇÏ´Â ÇÔ¼ö
-	void RegenHealth(float deltaTime); // ¸Å ÇÁ·¹ÀÓ ºÎÀ§ »ı¸í·ÂÀ» ÀÚ¿¬ È¸º¹ÇÏ´Â ÇÔ¼ö
-	void CalculateFinalHealthRegenRate(); // ºÎÀ§º° ÃÖÁ¾ »ı¸í·Â º¯µ¿ ¼Óµµ¸¦ °è»êÇÏ´Â ÇÔ¼ö
-	bool CurePartInjury(EBodyPart part, EInjuryType injury); // Æ¯Á¤ ºÎÀ§ÀÇ Æ¯Á¤ ºÎ»óÀ» Ä¡À¯ÇÏ´Â ÇÔ¼ö
-	void SetSaveZoneActive(bool bActive); // ¼¼ÀÌºê Æ÷ÀÎÆ® ±¸¿ª ÁøÀÔ/ÀÌÅ» ½Ã È¸º¹ ¹èÀ²À» Åä±ÛÇÏ´Â ÇÔ¼ö
-	bool RevivePart(EBodyPart part, float healthRatio); // ÆÄ±«µÈ ºÎÀ§¸¦ ºÎÈ°½ÃÅ°´Â ÇÔ¼ö
+	void ApplyFlatDamage(EBodyPart part, float damage); // ë¶€ìƒ íŒì • ì—†ì´ ë¶€ìœ„ì— ì§ì ‘ ëŒ€ë¯¸ì§€ë¥¼ ì ìš©ì‹œí‚¤ëŠ” í•¨ìˆ˜(ìí•´/ì¶œí˜ˆ)
 
 
-	/* ¾ÆÀÌÅÛ È¿°ú */
+	/* íšŒë³µ */
+	EBodyPart GetLowestHealthPart() const; // íŒŒê´´ë˜ì§€ ì•Šì€ ë¶€ìœ„ ì¤‘ ì²´ë ¥ ë¹„ìœ¨ì´ ê°€ì¥ ë‚®ì€ ë¶€ìœ„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool HealPart(EBodyPart part, float amount); // íŠ¹ì • ë¶€ìœ„ HPë¥¼ íšŒë³µí•˜ëŠ” í•¨ìˆ˜
+	void HealAllParts(); // ì„¸ì´ë¸Œí¬ì¸íŠ¸ ë„ë‹¬ ì‹œ ì „ì²´ ë¶€ìœ„ì™€ ë¶€ìƒì„ íšŒë³µí•˜ëŠ” í•¨ìˆ˜
+	void RegenHealth(float deltaTime); // ë§¤ í”„ë ˆì„ ë¶€ìœ„ ìƒëª…ë ¥ì„ ìì—° íšŒë³µí•˜ëŠ” í•¨ìˆ˜
+	void CalculateFinalHealthRegenRate(); // ë¶€ìœ„ë³„ ìµœì¢… ìƒëª…ë ¥ ë³€ë™ ì†ë„ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	bool CurePartInjury(EBodyPart part, EInjuryType injury); // íŠ¹ì • ë¶€ìœ„ì˜ íŠ¹ì • ë¶€ìƒì„ ì¹˜ìœ í•˜ëŠ” í•¨ìˆ˜
+	void SetSaveZoneActive(bool bActive); // ì„¸ì´ë¸Œ í¬ì¸íŠ¸ êµ¬ì—­ ì§„ì…/ì´íƒˆ ì‹œ íšŒë³µ ë°°ìœ¨ì„ í† ê¸€í•˜ëŠ” í•¨ìˆ˜
+	bool RevivePart(EBodyPart part, float healthRatio); // íŒŒê´´ëœ ë¶€ìœ„ë¥¼ ë¶€í™œì‹œí‚¤ëŠ” í•¨ìˆ˜
+
+
+	/* ì•„ì´í…œ íš¨ê³¼ */
 	UFUNCTION(BlueprintCallable, Category = "BodyPart|Item")
-	void SetEquipmentMaxHealthBonus(EBodyPart part, float bonus); // ºÎÀ§ ÃÖ´ë Ã¼·Â Àåºñ º¸Á¤À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	void SetEquipmentMaxHealthBonus(EBodyPart part, float bonus); // ë¶€ìœ„ ìµœëŒ€ ì²´ë ¥ ì¥ë¹„ ë³´ì •ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Å»ÇÇ(·¹º§¾÷) */
+	/* íƒˆí”¼(ë ˆë²¨ì—…) */
 	UFUNCTION(BlueprintCallable, Category = "BodyPart|Level")
-	void ApplyLevelToParts(int32 level); // ·¹º§¿¡ ¸Â´Â ºÎÀ§ ÃÖ´ë Ã¼·ÂÀ» Àû¿ëÇÏ´Â ÇÔ¼ö
+	void ApplyLevelToParts(int32 level); // ë ˆë²¨ì— ë§ëŠ” ë¶€ìœ„ ìµœëŒ€ ì²´ë ¥ì„ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* µğ¹ö±× Ãâ·Â¿ë */
-	void PrintPartsDebug() const; // ºÎÀ§º° Ã¼·Â ÇöÈ²À» Ãâ·ÂÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
+	/* ë””ë²„ê·¸ ì¶œë ¥ìš© */
+	void PrintPartsDebug() const; // ë¶€ìœ„ë³„ ì²´ë ¥ í˜„í™©ì„ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
-	void BroadcastAllParts(); // Àü ºÎÀ§ »óÅÂ¸¦ broadcastÇÏ´Â ÇÔ¼ö
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
+	void BroadcastAllParts(); // ì „ ë¶€ìœ„ ìƒíƒœë¥¼ broadcastí•˜ëŠ” í•¨ìˆ˜
 	UPROPERTY(BlueprintAssignable, Category = "BodyPart")
-	FOnBodyPartChanged onBodyPartChanged; // ºÎÀ§ HP/ºÎ»ó/ÆÄ±« º¯°æ ½Ã broadcastÇÏ´Â µ¨¸®°ÔÀÌÆ®
+	FOnBodyPartChanged onBodyPartChanged; // ë¶€ìœ„ HP/ë¶€ìƒ/íŒŒê´´ ë³€ê²½ ì‹œ broadcastí•˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 
-	/* º¯¼ö Getter ÇÔ¼ö */
-	float GetTotalHealth() const; // Àü ºÎÀ§ ÇöÀç HP ÇÕÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetTotalMaxHealth() const; // Àü ºÎÀ§ ÃÖ´ë HP ÇÕÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetTotalHealthPercent() const; // Àü ºÎÀ§ ÇöÀç HP ºñÀ²À» ÆÛ¼¾Æ® ´ÜÀ§·Î ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ë³€ìˆ˜ Getter í•¨ìˆ˜ */
+	float GetTotalHealth() const; // ì „ ë¶€ìœ„ í˜„ì¬ HP í•©ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetTotalMaxHealth() const; // ì „ ë¶€ìœ„ ìµœëŒ€ HP í•©ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetTotalHealthPercent() const; // ì „ ë¶€ìœ„ í˜„ì¬ HP ë¹„ìœ¨ì„ í¼ì„¼íŠ¸ ë‹¨ìœ„ë¡œ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintPure, Category = "BodyPart")
-	float GetPartHealthPercent(EBodyPart part) const; // Æ¯Á¤ ºÎÀ§ÀÇ Ã¼·Â ºñÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-
-	UFUNCTION(BlueprintPure, Category = "BodyPart")
-	float GetPartHealth(EBodyPart part) const; // Æ¯Á¤ ºÎÀ§ÀÇ ÇöÀç Ã¼·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	float GetPartHealthPercent(EBodyPart part) const; // íŠ¹ì • ë¶€ìœ„ì˜ ì²´ë ¥ ë¹„ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintPure, Category = "BodyPart")
-	float GetPartMaxHealth(EBodyPart part) const; // Æ¯Á¤ ºÎÀ§ÀÇ ÃÖ´ë Ã¼·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	float GetPartHealth(EBodyPart part) const; // íŠ¹ì • ë¶€ìœ„ì˜ í˜„ì¬ ì²´ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+
+	UFUNCTION(BlueprintPure, Category = "BodyPart")
+	float GetPartMaxHealth(EBodyPart part) const; // íŠ¹ì • ë¶€ìœ„ì˜ ìµœëŒ€ ì²´ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	/* ºÎÀ§ ½Ã½ºÅÛ º¯¼ö */
+	/* ë¶€ìœ„ ì‹œìŠ¤í…œ ë³€ìˆ˜ */
 	UPROPERTY(VisibleInstanceOnly, Transient, Category = "BodyPart")
-	TMap<EBodyPart, FBodyPartState> bodyParts; // ºÎÀ§º° »óÅÂ ¸Ê
+	TMap<EBodyPart, FBodyPartState> bodyParts; // ë¶€ìœ„ë³„ ìƒíƒœ ë§µ
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart")
-	UDataTable* bodyPartData = nullptr; // ¸ğµç ºÎÀ§ÀÇ µ¥ÀÌÅÍ Å×ÀÌºí 
+	UDataTable* bodyPartData = nullptr; // ëª¨ë“  ë¶€ìœ„ì˜ ë°ì´í„° í…Œì´ë¸” 
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart")
-	TMap<FName, EBodyPart> boneToPartMap; // »À ÀÌ¸§°ú ½ÅÃ¼ ºÎÀ§¸¦ ¿¬°áÇÏ´Â ¸Ê
+	TMap<FName, EBodyPart> boneToPartMap; // ë¼ˆ ì´ë¦„ê³¼ ì‹ ì²´ ë¶€ìœ„ë¥¼ ì—°ê²°í•˜ëŠ” ë§µ
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Injury")
-	UDataTable* injuryDataTable = nullptr; // ºÎ»óº° 2Â÷ È¿°ú µ¥ÀÌÅÍ Å×ÀÌºí
+	UDataTable* injuryDataTable = nullptr; // ë¶€ìƒë³„ 2ì°¨ íš¨ê³¼ ë°ì´í„° í…Œì´ë¸”
 
 	UPROPERTY(Transient)
-	TMap<EInjuryType, FInjuryData> injuryCache; // ºÎ»óº° 2Â÷ È¿°ú¸¦ ÀúÀåÇÏ´Â º¯¼ö
+	TMap<EInjuryType, FInjuryData> injuryCache; // ë¶€ìƒë³„ 2ì°¨ íš¨ê³¼ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY()
-	UAttributeComponent* ownerAttributes = nullptr; // °°Àº ¾×ÅÍÀÇ ¼Ó¼º ÄÄÆ÷³ÍÆ®
+	UAttributeComponent* ownerAttributes = nullptr; // ê°™ì€ ì•¡í„°ì˜ ì†ì„± ì»´í¬ë„ŒíŠ¸
 
 
-	/* ÃÊ±âÈ­ ÇïÆÛ ÇÔ¼ö */
-	void InitializeBodyParts(); // bodyParts¸¦ ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	void InitializeBoneToPartMap(); // boneToPartMapÀ» ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö 
-	void InitializeInjuryCache(); // injuryCacheÀ» ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
+	/* ì´ˆê¸°í™” í—¬í¼ í•¨ìˆ˜ */
+	void InitializeBodyParts(); // bodyPartsë¥¼ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	void InitializeBoneToPartMap(); // boneToPartMapì„ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜ 
+	void InitializeInjuryCache(); // injuryCacheì„ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
 	
 
-	/* 5´Ü°èÀÇ ÃÖÁ¾ ´ë¹ÌÁö °è»ê ÇïÆÛ ÇÔ¼ö */
-	EBodyPart DrawDisturbedPart() const; // ¸Ó¸®¿Í ÆÄ±«µÈ ºÎÀ§¸¦ Á¦¿ÜÇÏ°í °¡ÁßÄ¡ ·ê·¿ÀÇ ºÎÀ§¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	void ApplyFinalDamage(EBodyPart part, float damage, float baseInjuryChance, bool bRollInjury); // ÃÖÁ¾ ´ë¹ÌÁö¿Í ºÎ»óÀ» ºÎÀ§¿¡ Àû¿ëÇÏ´Â ÇÔ¼ö
+	/* 5ë‹¨ê³„ì˜ ìµœì¢… ëŒ€ë¯¸ì§€ ê³„ì‚° í—¬í¼ í•¨ìˆ˜ */
+	EBodyPart DrawDisturbedPart() const; // ë¨¸ë¦¬ì™€ íŒŒê´´ëœ ë¶€ìœ„ë¥¼ ì œì™¸í•˜ê³  ê°€ì¤‘ì¹˜ ë£°ë ›ì˜ ë¶€ìœ„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	void ApplyFinalDamage(EBodyPart part, float damage, float baseInjuryChance, bool bRollInjury); // ìµœì¢… ëŒ€ë¯¸ì§€ì™€ ë¶€ìƒì„ ë¶€ìœ„ì— ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ºÎÀ§ ºÎ»ó */
-	void TryApplyInjury(FBodyPartState* state, EBodyPart part, float baseInjuryChance); // ºÎÀ§¿¡ ºÎ»ó ¹ßµ¿À» ½ÃµµÇÏ´Â ÇÔ¼ö
-	void ApplyInjuryEffect(const EInjuryType injury); // ºÎ»ó ¹ß»ı ½Ã Áï¹ß È¿°ú¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	void ApplySingleInjury(TFunctionRef<void(const FInjuryData&)> injuryData) const; // °°Àº Á¾·ùÀÇ ºÎ»ó¸¦ 1È¸¸¸ Àû¿ëÇÏµµ·Ï ¸·´Â ÇÔ¼ö
-	void TryTriggerBleeding(EBodyPart part, float partMaxHealth); // ºÎÀ§¿¡ ÃâÇ÷ ¹ßµ¿À» ½ÃµµÇÏ´Â ÇÔ¼ö
-	void ApplyBleed(); // ÃâÇ÷ÀÌ ¹ß»ıÇÑ ºÎÀ§¿¡ ÃâÇ÷ È¿°ú¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-
-	UPROPERTY(EditAnywhere, Category = "BodyPart|Bleeding")
-	float bleedDamage = 2.f; // ÃÊ´ç HP °¨¼Ò·®
+	/* ë¶€ìœ„ ë¶€ìƒ */
+	void TryApplyInjury(FBodyPartState* state, EBodyPart part, float baseInjuryChance); // ë¶€ìœ„ì— ë¶€ìƒ ë°œë™ì„ ì‹œë„í•˜ëŠ” í•¨ìˆ˜
+	void ApplyInjuryEffect(const EInjuryType injury); // ë¶€ìƒ ë°œìƒ ì‹œ ì¦‰ë°œ íš¨ê³¼ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void ApplySingleInjury(TFunctionRef<void(const FInjuryData&)> injuryData) const; // ê°™ì€ ì¢…ë¥˜ì˜ ë¶€ìƒë¥¼ 1íšŒë§Œ ì ìš©í•˜ë„ë¡ ë§‰ëŠ” í•¨ìˆ˜
+	void TryTriggerBleeding(EBodyPart part, float partMaxHealth); // ë¶€ìœ„ì— ì¶œí˜ˆ ë°œë™ì„ ì‹œë„í•˜ëŠ” í•¨ìˆ˜
+	void ApplyBleed(); // ì¶œí˜ˆì´ ë°œìƒí•œ ë¶€ìœ„ì— ì¶œí˜ˆ íš¨ê³¼ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Bleeding")
-	float bleedInterval = 1.f; // ÃâÇ÷ µ¥¹ÌÁö °£°İ(ÃÊ)
+	float bleedDamage = 2.f; // ì´ˆë‹¹ HP ê°ì†ŒëŸ‰
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Bleeding")
-	float bleedChance = 0.1f; // ÃâÇ÷ ¹ßµ¿ È®·ü
+	float bleedInterval = 1.f; // ì¶œí˜ˆ ë°ë¯¸ì§€ ê°„ê²©(ì´ˆ)
 
-	TSet<EBodyPart> bleedingParts;;// ÇöÀç ÃâÇ÷ ÁßÀÎ ºÎÀ§ ÁıÇÕ
+	UPROPERTY(EditAnywhere, Category = "BodyPart|Bleeding")
+	float bleedChance = 0.1f; // ì¶œí˜ˆ ë°œë™ í™•ë¥ 
 
-	FTimerHandle bleedTimer; // ÃâÇ÷ Å¸ÀÌ¸Ó
+	TSet<EBodyPart> bleedingParts;;// í˜„ì¬ ì¶œí˜ˆ ì¤‘ì¸ ë¶€ìœ„ ì§‘í•©
+
+	FTimerHandle bleedTimer; // ì¶œí˜ˆ íƒ€ì´ë¨¸
 
 
-	/* ºÎÀ§ ÆÄ±« */
-	void OnPartDisabled(EBodyPart part); // ºÎÀ§ ÆÄ±« ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+	/* ë¶€ìœ„ íŒŒê´´ */
+	void OnPartDisabled(EBodyPart part); // ë¶€ìœ„ íŒŒê´´ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Penalty")
-	float chestDisabledStaminaRegenMultiplier = 0.3f; // °¡½¿ ºÎÀ§ ÆÄ±« ½Ã Àû¿ëµÇ´Â ½ºÅÂ¹Ì³ª È¸º¹ ¹èÀ²
+	float chestDisabledStaminaRegenMultiplier = 0.3f; // ê°€ìŠ´ ë¶€ìœ„ íŒŒê´´ ì‹œ ì ìš©ë˜ëŠ” ìŠ¤íƒœë¯¸ë‚˜ íšŒë³µ ë°°ìœ¨
 	
 
-	/* È¸º¹ */
-	void ClearBleedingEffect(); // ÃâÇ÷ È¿°ú¸¦ Áö¿ì´Â ÇÔ¼ö
-	void ReviveDestroyedPartsInSaveZone(); // ¼¼ÀÌºêÆ÷ÀÎÆ® ±¸¿ª¿¡¼­ ÆÄ±« ºÎÀ§¸¦ º¹±¸ÇÏ´Â ÇÔ¼ö
+	/* íšŒë³µ */
+	void ClearBleedingEffect(); // ì¶œí˜ˆ íš¨ê³¼ë¥¼ ì§€ìš°ëŠ” í•¨ìˆ˜
+	void ReviveDestroyedPartsInSaveZone(); // ì„¸ì´ë¸Œí¬ì¸íŠ¸ êµ¬ì—­ì—ì„œ íŒŒê´´ ë¶€ìœ„ë¥¼ ë³µêµ¬í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Regen")
-	float saveZoneRegenRate = 7.5f; // ¼¼ÀÌºê Æ÷ÀÎÆ® ±ÙÃ³ »ı¸í·Â È¸º¹ ¼Óµµ
+	float saveZoneRegenRate = 7.5f; // ì„¸ì´ë¸Œ í¬ì¸íŠ¸ ê·¼ì²˜ ìƒëª…ë ¥ íšŒë³µ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "BodyPart|Regen", meta = (ClampMin = "0.01", ClampMax = "1.0"))
-	float saveZoneReviveHealthRatio = 0.1f; // ±¸¿ª¿¡¼­ ÆÄ±« ºÎÀ§ º¹±¸ ½Ã Ã¼·Â ºñÀ²
+	float saveZoneReviveHealthRatio = 0.1f; // êµ¬ì—­ì—ì„œ íŒŒê´´ ë¶€ìœ„ ë³µêµ¬ ì‹œ ì²´ë ¥ ë¹„ìœ¨
 
-	bool bSaveZoneActive = false; // ¼¼ÀÌºê Æ÷ÀÎÆ® ±¸¿ª ³» ¿©ºÎ
+	bool bSaveZoneActive = false; // ì„¸ì´ë¸Œ í¬ì¸íŠ¸ êµ¬ì—­ ë‚´ ì—¬ë¶€
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
-	void BroadcastPart(EBodyPart part); // ÇÑ ºÎÀ§ »óÅÂ¸¦ broadcastÇÏ´Â ÇÔ¼ö
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
+	void BroadcastPart(EBodyPart part); // í•œ ë¶€ìœ„ ìƒíƒœë¥¼ broadcastí•˜ëŠ” í•¨ìˆ˜
 
 public:
-	/* º¯¼ö Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE bool IsInSaveZone() const { return bSaveZoneActive; }
 
 };

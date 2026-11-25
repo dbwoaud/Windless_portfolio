@@ -1,4 +1,4 @@
-#include "Components/WeakPointRoll.h"
+﻿#include "Components/WeakPointRoll.h"
 #include "Enemy/AI/MonsterArchetypeRow.h"
 
 FWeakPointRule WindlessWeakPoint::MakeArchetypeRule(const FMonsterArchetypeRow& archetype)

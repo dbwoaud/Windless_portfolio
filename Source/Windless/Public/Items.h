@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -8,7 +8,7 @@ class USphereComponent;
 class UNiagaraComponent;
 class UNiagaraSystem;
 
-enum class EItemState : uint8 // ¾ÆÀÌÅÛ »óÅÂ¸¦ ¼³Á¤ÇÏ´Â Enum
+enum class EItemState : uint8 // ì•„ì´í…œ ìƒíƒœë¥¼ ì„¤ì •í•˜ëŠ” Enum
 {
 	EIS_Hovering,
 	EIS_Equipped
@@ -25,49 +25,49 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	// ´Ù¸¥ ¾×ÅÍ¿Í overlapÀÌ ½ÃÀÛµÇ¾úÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö 
+	// ë‹¤ë¥¸ ì•¡í„°ì™€ overlapì´ ì‹œì‘ë˜ì—ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜ 
 	UFUNCTION()
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	// ´Ù¸¥ ¾×ÅÍ¿Í overlapÀÌ ³¡³µÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö 
+	// ë‹¤ë¥¸ ì•¡í„°ì™€ overlapì´ ëë‚¬ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜ 
 	UFUNCTION()
 	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent* ItemMesh; // Á¤Àû ¸Ş½Ã
+	UStaticMeshComponent* ItemMesh; // ì •ì  ë©”ì‹œ
 
 	UPROPERTY(VisibleAnywhere)
-	USphereComponent* sphere; // Äİ¶óÀÌ´õ
+	USphereComponent* sphere; // ì½œë¼ì´ë”
 
 
-	/* »óÅÂ */
-	EItemState itemState = EItemState::EIS_Hovering; // ¾ÆÀÌÅÛ »óÅÂ
+	/* ìƒíƒœ */
+	EItemState itemState = EItemState::EIS_Hovering; // ì•„ì´í…œ ìƒíƒœ
 
 
-	/* ¿¬Ãâ */
-	virtual void SpawnPickupEffect(); // ÇÈ¾÷ VFX È¿°ú¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
-	virtual void SpawnPickupSound(); // ÇÈ¾÷ »ç¿îµå¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
+	/* ì—°ì¶œ */
+	virtual void SpawnPickupEffect(); // í”½ì—… VFX íš¨ê³¼ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
+	virtual void SpawnPickupSound(); // í”½ì—… ì‚¬ìš´ë“œë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintPure)
-	float TransformedSin(); // »çÀÎ ÇÔ¼ö
+	float TransformedSin(); // ì‚¬ì¸ í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere)
-	UNiagaraComponent* itemEffect; // ¾ÆÀÌÅÛ VFX
+	UNiagaraComponent* itemEffect; // ì•„ì´í…œ VFX
 
 	UPROPERTY(EditAnywhere)
-	USoundBase* pickupSound; // ¾ÆÀÌÅÛ ÇÈ¾÷ »ç¿îµå
+	USoundBase* pickupSound; // ì•„ì´í…œ í”½ì—… ì‚¬ìš´ë“œ
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters")
-	float amplitude = 0.25f; // »çÀÎ ÇÔ¼ö ÁøÆø
+	float amplitude = 0.25f; // ì‚¬ì¸ í•¨ìˆ˜ ì§„í­
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters")
-	float timeConstant = 5.f; // »çÀÎ ÇÔ¼ö ½Ã°£ »ó¼ö
+	float timeConstant = 5.f; // ì‚¬ì¸ í•¨ìˆ˜ ì‹œê°„ ìƒìˆ˜
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float runningTime; // ÇöÀç ½ÇÇà½Ã°£
+	float runningTime; // í˜„ì¬ ì‹¤í–‰ì‹œê°„
 
 	UPROPERTY(EditAnywhere)
-	UNiagaraSystem* pickupEffect; // ¾ÆÀÌÅÛ ÇÈ¾÷ VFX 
+	UNiagaraSystem* pickupEffect; // ì•„ì´í…œ í”½ì—… VFX 
 };

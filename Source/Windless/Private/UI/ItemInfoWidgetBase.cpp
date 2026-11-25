@@ -1,4 +1,4 @@
-#include "UI/ItemInfoWidgetBase.h"
+﻿#include "UI/ItemInfoWidgetBase.h"
 #include "UI/InventoryWidget.h"
 #include "Components/InventoryComponent.h"
 #include "Components/TextBlock.h"

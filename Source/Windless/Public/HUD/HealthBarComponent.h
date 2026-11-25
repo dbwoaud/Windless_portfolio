@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/WidgetComponent.h"
@@ -12,9 +12,9 @@ class WINDLESS_API UHealthBarComponent : public UWidgetComponent
 	GENERATED_BODY()
 
 public:
-	void SetHealthPercent(float percent); // ÆÛ¼¾Æ® ´ÜÀ§ ÇöÀç »ı¸í·ÂÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	void SetHealthPercent(float percent); // í¼ì„¼íŠ¸ ë‹¨ìœ„ í˜„ì¬ ìƒëª…ë ¥ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 private:
 	UPROPERTY()
-	UHealthBar* healthBarWidget; // Ã¼·Â¹Ù À§Á¬
+	UHealthBar* healthBarWidget; // ì²´ë ¥ë°” ìœ„ì ¯
 };

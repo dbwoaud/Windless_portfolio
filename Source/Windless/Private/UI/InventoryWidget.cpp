@@ -1,4 +1,4 @@
-#include "UI/InventoryWidget.h"
+﻿#include "UI/InventoryWidget.h"
 #include "UI/ItemSlotWidget.h"
 #include "UI/ItemDragDrop.h"
 #include "UI/EquipmentSlotWidget.h"

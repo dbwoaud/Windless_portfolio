@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Items.h"
@@ -17,23 +17,23 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
-	// ´Ù¸¥ ¾×ÅÍ¿Í overlapÀÌ ½ÃÀÛµÇ¾úÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö 
+	// ë‹¤ë¥¸ ì•¡í„°ì™€ overlapì´ ì‹œì‘ë˜ì—ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜ 
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 	
 private:
 	UPROPERTY(EditAnywhere, Category = "Soul Properties")
-	int32 souls; // ¼Ò¿ïÀÇ °³¼ö
+	int32 souls; // ì†Œìš¸ì˜ ê°œìˆ˜
 	
 
-	/* ¿¬Ãâ */
-	void MoveSoulToDesireZ(float DeltaTime); // ¸ñÇ¥ Z°ª±îÁö ¼Ò¿ïÀ» ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
+	/* ì—°ì¶œ */
+	void MoveSoulToDesireZ(float DeltaTime); // ëª©í‘œ Zê°’ê¹Œì§€ ì†Œìš¸ì„ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere)
-	float moveSpeed = -15.f; // ¼Ò¿ï ÇÏ°­ ¼Óµµ
-	double desiredZ; // ¸ñÇ¥ Z°ª
+	float moveSpeed = -15.f; // ì†Œìš¸ í•˜ê°• ì†ë„
+	double desiredZ; // ëª©í‘œ Zê°’
 
 public:
-	/* º¯¼öÀÇ Getter, Setter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter, Setter í•¨ìˆ˜ */
 	FORCEINLINE int32 GetSouls() const { return souls; }
 	FORCEINLINE void SetSouls(int32 numberOfSouls) { souls = numberOfSouls; }
 };

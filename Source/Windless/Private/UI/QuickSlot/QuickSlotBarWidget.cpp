@@ -1,4 +1,4 @@
-#include "UI/QuickSlot/QuickSlotBarWidget.h"
+﻿#include "UI/QuickSlot/QuickSlotBarWidget.h"
 #include "UI/QuickSlot/QuickSlotWidget.h"
 
 void UQuickSlotBarWidget::SetSlotDisplay(EQuickSlot quickSlot, UTexture2D* icon, const FText& label, int32 count)

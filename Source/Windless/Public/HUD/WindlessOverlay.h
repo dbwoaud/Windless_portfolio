@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Characters/BodyPartTypes.h"
@@ -19,97 +19,97 @@ class WINDLESS_API UWindlessOverlay : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	/* »ı¸í·Â */
-	void SetHealthBarPercent(float percent); // ÆÛ¼¾Æ® ´ÜÀ§ »ı¸í·Â ¹Ù¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ìƒëª…ë ¥ */
+	void SetHealthBarPercent(float percent); // í¼ì„¼íŠ¸ ë‹¨ìœ„ ìƒëª…ë ¥ ë°”ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ½ºÅÂ¹Ì³ª */
-	void SetStaminaBarPercent(float percent); // ÆÛ¼¾Æ® ´ÜÀ§ ½ºÅÂ¹Ì³ª ¹Ù¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void SetStaminaLockRatio(float ratio); // ½ºÅÂ¹Ì³ª Àá±İ ºñÀ²À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ìŠ¤íƒœë¯¸ë‚˜ */
+	void SetStaminaBarPercent(float percent); // í¼ì„¼íŠ¸ ë‹¨ìœ„ ìŠ¤íƒœë¯¸ë‚˜ ë°”ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void SetStaminaLockRatio(float ratio); // ìŠ¤íƒœë¯¸ë‚˜ ì ê¸ˆ ë¹„ìœ¨ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀçÈ­ */
-	void SetMoltStones(int32 moltStone); // ÇöÀç Å»ÇÇ¼®À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ì¬í™” */
+	void SetMoltStones(int32 moltStone); // í˜„ì¬ íƒˆí”¼ì„ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* È¥µ· ½Ã½ºÅÛ */
-	void SetChaosBarPercent(float percent); // ÆÛ¼¾Æ® ´ÜÀ§ È¥µ· °ÔÀÌÁö ¹Ù¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void SetChaosBarColor(EChaosState state); // È¥µ· ´Ü°è¿¡ µû¸¥ È¥µ· °ÔÀÌÁö »ö»óÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö 
+	/* í˜¼ëˆ ì‹œìŠ¤í…œ */
+	void SetChaosBarPercent(float percent); // í¼ì„¼íŠ¸ ë‹¨ìœ„ í˜¼ëˆ ê²Œì´ì§€ ë°”ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void SetChaosBarColor(EChaosState state); // í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ í˜¼ëˆ ê²Œì´ì§€ ìƒ‰ìƒì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜ 
 
 
-	/* ºÎÀ§ ½Ã½ºÅÛ */
-	void UpdateBodyPart(EBodyPart part, float percent, bool bInjured, bool bDisabled); // Æ¯Á¤ ºÎÀ§ÀÇ »óÅÂ¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö
-	void ToggleBodyStatus(); // ºÎÀ§ »óÅÂ UI¸¦ Åä±ÛÇÏ´Â ÇÔ¼ö 
-	void SetBodyStatusVisible(bool bVisible); // ºÎÀ§ »óÅÂ UI¸¦ È°¼ºÈ­/ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
-	bool IsBodyStatusVisible() const; // ÇöÀç ºÎÀ§ »óÅÂ UI°¡ È°¼ºÈ­µÇ¾ú´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* ë¶€ìœ„ ì‹œìŠ¤í…œ */
+	void UpdateBodyPart(EBodyPart part, float percent, bool bInjured, bool bDisabled); // íŠ¹ì • ë¶€ìœ„ì˜ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” í•¨ìˆ˜
+	void ToggleBodyStatus(); // ë¶€ìœ„ ìƒíƒœ UIë¥¼ í† ê¸€í•˜ëŠ” í•¨ìˆ˜ 
+	void SetBodyStatusVisible(bool bVisible); // ë¶€ìœ„ ìƒíƒœ UIë¥¼ í™œì„±í™”/ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
+	bool IsBodyStatusVisible() const; // í˜„ì¬ ë¶€ìœ„ ìƒíƒœ UIê°€ í™œì„±í™”ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
-	/* º¸½º */
-	void ShowBossHealthBar(const FText& bossName, float percent); // º¸½º Ã¼·Â ¹Ù¸¦ Ç¥½ÃÇÏ´Â ÇÔ¼ö
-	void HideBossHealthBar(); // º¸½º Ã¼·Â ¹Ù¸¦ ¼û±â´Â ÇÔ¼ö
-	void SetBossHealthPercent(float percent); // º¸½º Ã¼·Â ºñÀ²À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ë³´ìŠ¤ */
+	void ShowBossHealthBar(const FText& bossName, float percent); // ë³´ìŠ¤ ì²´ë ¥ ë°”ë¥¼ í‘œì‹œí•˜ëŠ” í•¨ìˆ˜
+	void HideBossHealthBar(); // ë³´ìŠ¤ ì²´ë ¥ ë°”ë¥¼ ìˆ¨ê¸°ëŠ” í•¨ìˆ˜
+	void SetBossHealthPercent(float percent); // ë³´ìŠ¤ ì²´ë ¥ ë¹„ìœ¨ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Äü½½·Ô */
-	void UpdateQuickSlot(EQuickSlot quickSlot, UTexture2D* icon, int32 count); // Äü½½·Ô Ç¥½Ã ³»¿ëÀ» °»½ÅÇÏ´Â ÇÔ¼ö
-	void SetQuickSlotCooldown(EQuickSlot quickSlot, float ratio); // Äü½½·ÔÀÇ Àç»ç¿ë ´ë±â Ç¥½Ã¸¦ °»½ÅÇÏ´Â ÇÔ¼ö
-	void SetSelectedQuickSlot(EQuickSlot quickSlot); // ÇöÀç ¼±ÅÃµÈ Äü½½·ÔÀ» Ç¥½ÃÇÏ´Â ÇÔ¼ö
-	void ClearQuickSlots(); // ¸ğµç Äü½½·Ô Ç¥½Ã¸¦ ºñ¿ì´Â ÇÔ¼ö
+	/* í€µìŠ¬ë¡¯ */
+	void UpdateQuickSlot(EQuickSlot quickSlot, UTexture2D* icon, int32 count); // í€µìŠ¬ë¡¯ í‘œì‹œ ë‚´ìš©ì„ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void SetQuickSlotCooldown(EQuickSlot quickSlot, float ratio); // í€µìŠ¬ë¡¯ì˜ ì¬ì‚¬ìš© ëŒ€ê¸° í‘œì‹œë¥¼ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void SetSelectedQuickSlot(EQuickSlot quickSlot); // í˜„ì¬ ì„ íƒëœ í€µìŠ¬ë¡¯ì„ í‘œì‹œí•˜ëŠ” í•¨ìˆ˜
+	void ClearQuickSlots(); // ëª¨ë“  í€µìŠ¬ë¡¯ í‘œì‹œë¥¼ ë¹„ìš°ëŠ” í•¨ìˆ˜
 
 private:
-	/* »ı¸í·Â */
+	/* ìƒëª…ë ¥ */
 	UPROPERTY(meta = (BindWidget))
-	UProgressBar* healthProgressBar; // »ı¸í·Â ¹Ù
+	UProgressBar* healthProgressBar; // ìƒëª…ë ¥ ë°”
 	
 
-	/* ½ºÅÂ¹Ì³ª */
+	/* ìŠ¤íƒœë¯¸ë‚˜ */
 	UPROPERTY(meta = (BindWidget))
-	UProgressBar* staminaProgressBar; // ½ºÅÂ¹Ì³ª ¹Ù
+	UProgressBar* staminaProgressBar; // ìŠ¤íƒœë¯¸ë‚˜ ë°”
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	UProgressBar* staminaLockBar; // ½ºÅÂ¹Ì³ª Àá±İ ¿µ¿ª
+	UProgressBar* staminaLockBar; // ìŠ¤íƒœë¯¸ë‚˜ ì ê¸ˆ ì˜ì—­
 
 
-	/* ÀçÈ­ */
+	/* ì¬í™” */
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* moltStoneCountText; // Å»ÇÇ¼® °³¼ö ÅØ½ºÆ®
+	UTextBlock* moltStoneCountText; // íƒˆí”¼ì„ ê°œìˆ˜ í…ìŠ¤íŠ¸
 
 
-	/* È¥µ· ½Ã½ºÅÛ */
+	/* í˜¼ëˆ ì‹œìŠ¤í…œ */
 	UPROPERTY(meta = (BindWidget))
-	UProgressBar* chaosProgressBar; // È¥µ· °ÔÀÌÁö ¹Ù
+	UProgressBar* chaosProgressBar; // í˜¼ëˆ ê²Œì´ì§€ ë°”
 
 
-	/* ºÎÀ§ ½Ã½ºÅÛ */
-	void SetHealthBarColor(bool bDisabled, bool bInjured, UProgressBar* bar); // ºÎÀ§ »óÅÂ¿¡ µû¸¥ »ı¸í·Â ¹Ù »ö»óÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
-
-	UPROPERTY(meta = (BindWidgetOptional)) 
-	UWidget* bodyStatusPanel; // ºÎÀ§ »óÅÂ UI ÆĞ³Î
+	/* ë¶€ìœ„ ì‹œìŠ¤í…œ */
+	void SetHealthBarColor(bool bDisabled, bool bInjured, UProgressBar* bar); // ë¶€ìœ„ ìƒíƒœì— ë”°ë¥¸ ìƒëª…ë ¥ ë°” ìƒ‰ìƒì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* headBar; // ¸Ó¸® ºÎÀ§ »ı¸í·Â ¹Ù
+	UWidget* bodyStatusPanel; // ë¶€ìœ„ ìƒíƒœ UI íŒ¨ë„
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* chestBar; // °¡½¿ ºÎÀ§ »ı¸í·Â ¹Ù 
+	UProgressBar* headBar; // ë¨¸ë¦¬ ë¶€ìœ„ ìƒëª…ë ¥ ë°”
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* leftArmBar; // ¿ŞÂÊ ÆÈ ºÎÀ§ »ı¸í·Â ¹Ù 
+	UProgressBar* chestBar; // ê°€ìŠ´ ë¶€ìœ„ ìƒëª…ë ¥ ë°” 
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* rightArmBar; // ¿À¸¥ÂÊ ÆÈ ºÎÀ§ »ı¸í·Â ¹Ù 
+	UProgressBar* leftArmBar; // ì™¼ìª½ íŒ” ë¶€ìœ„ ìƒëª…ë ¥ ë°” 
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* leftLegBar; // ¿ŞÂÊ ´Ù¸® ºÎÀ§ »ı¸í·Â ¹Ù
+	UProgressBar* rightArmBar; // ì˜¤ë¥¸ìª½ íŒ” ë¶€ìœ„ ìƒëª…ë ¥ ë°” 
 
 	UPROPERTY(meta = (BindWidgetOptional)) 
-	UProgressBar* rightLegBar; // ¿À¸¥ÂÊ ´Ù¸® ºÎÀ§ »ı¸í·Â ¹Ù 
+	UProgressBar* leftLegBar; // ì™¼ìª½ ë‹¤ë¦¬ ë¶€ìœ„ ìƒëª…ë ¥ ë°”
+
+	UPROPERTY(meta = (BindWidgetOptional)) 
+	UProgressBar* rightLegBar; // ì˜¤ë¥¸ìª½ ë‹¤ë¦¬ ë¶€ìœ„ ìƒëª…ë ¥ ë°” 
 
 
-	/* º¸½º */
+	/* ë³´ìŠ¤ */
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UBossHealthBarWidget> bossHealthBarWidget; // º¸½º Ã¼·Â ¹Ù À§Á¬
+	TObjectPtr<UBossHealthBarWidget> bossHealthBarWidget; // ë³´ìŠ¤ ì²´ë ¥ ë°” ìœ„ì ¯
 
 
-	/* Äü½½·Ô */
+	/* í€µìŠ¬ë¡¯ */
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UQuickSlotBarWidget> quickSlotBar; // Äü½½·Ô ¹Ù À§Á¬
+	TObjectPtr<UQuickSlotBarWidget> quickSlotBar; // í€µìŠ¬ë¡¯ ë°” ìœ„ì ¯
 };

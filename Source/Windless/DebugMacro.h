@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DrawDebugHelpers.h"
 
 #define DRAW_SPHERE(location) if (GetWorld()) DrawDebugSphere(GetWorld(),location, 25.f, 12, FColor::Red, true);

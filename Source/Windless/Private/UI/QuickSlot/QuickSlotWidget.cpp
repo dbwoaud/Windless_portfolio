@@ -1,4 +1,4 @@
-#include "UI/QuickSlot/QuickSlotWidget.h"
+﻿#include "UI/QuickSlot/QuickSlotWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/Border.h"

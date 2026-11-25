@@ -1,4 +1,4 @@
-#include "Enemy/AI/MonsterArchetypeRow.h"
+﻿#include "Enemy/AI/MonsterArchetypeRow.h"
 #include "Enemy/AI/EnemyAIDataValidation.h"
 
 void FMonsterArchetypeRow::OnPostDataImport(const UDataTable* inDataTable, const FName inRowName, TArray<FString>& outCollectedImportProblems)

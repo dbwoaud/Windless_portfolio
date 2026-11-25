@@ -1,4 +1,4 @@
-#include "Dialogue/DialogueWidget.h"
+﻿#include "Dialogue/DialogueWidget.h"
 #include "Components/TextBlock.h"
 
 void UDialogueWidget::SetLine(const FText& speaker, const FText& line)

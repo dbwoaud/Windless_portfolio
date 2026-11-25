@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Items/Soul.h"
@@ -18,10 +18,10 @@ void ASoul::BeginPlay()
 	const FVector end = start - FVector(0.f, 0.f, 2000.0f);
 	
 	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypes;
-	objectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1); // WorldStatic Å¸ÀÔ(¹Ù´Ú, º® µî)ÀÇ ¿ÀºêÁ§Æ®¸¦ ÀúÀå
+	objectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1); // WorldStatic íƒ€ì…(ë°”ë‹¥, ë²½ ë“±)ì˜ ì˜¤ë¸Œì íŠ¸ë¥¼ ì €ì¥
 
 	TArray<AActor*> actorsToIgnore;
-	actorsToIgnore.Add(GetOwner()); // ¼Ò¿ïÀ» »ı¼º½ÃÅ² ¾×ÅÍ ¹«½Ã
+	actorsToIgnore.Add(GetOwner()); // ì†Œìš¸ì„ ìƒì„±ì‹œí‚¨ ì•¡í„° ë¬´ì‹œ
 
 	FHitResult hitResult;
 	UKismetSystemLibrary::LineTraceSingleForObjects(
@@ -42,7 +42,7 @@ void ASoul::BeginPlay()
 void ASoul::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	IPickupInterface* pickupInterface = Cast<IPickupInterface>(OtherActor);
-	if (pickupInterface) // PickupInterface¸¦ »ó¼Ó¹ŞÀº ¾×ÅÍ¿Í °ãÄ¥°æ¿ì ¼Ò¿ïÀ» È¹µæ
+	if (pickupInterface) // PickupInterfaceë¥¼ ìƒì†ë°›ì€ ì•¡í„°ì™€ ê²¹ì¹ ê²½ìš° ì†Œìš¸ì„ íšë“
 	{
 		pickupInterface->AddSouls(this);
 		SpawnPickupEffect();

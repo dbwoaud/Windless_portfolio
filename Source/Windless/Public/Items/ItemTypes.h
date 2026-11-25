@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Characters/BodyPartTypes.h"
@@ -10,55 +10,55 @@ class UTexture2D;
 class UStaticMesh;
 class AWeapon;
 
-/* ¾ÆÀÌÅÛ ´ëºĞ·ù */
+/* ì•„ì´í…œ ëŒ€ë¶„ë¥˜ */
 UENUM(BlueprintType)
 enum class EItemCategory : uint8
 {
     EIC_None       UMETA(DisplayName = "None"),
-    EIC_Equipment  UMETA(DisplayName = "Equipment"), // Àåºñ ¾ÆÀÌÅÛ
-    EIC_Consumable UMETA(DisplayName = "Consumable"), // ¼Ò¸ğ¼º ¾ÆÀÌÅÛ
-    EIC_Material   UMETA(DisplayName = "Material"), // Á¦ÀÛ Àç·á ¾ÆÀÌÅÛ
-    EIC_Etc        UMETA(DisplayName = "Etc"), // ±âÅ¸ ¾ÆÀÌÅÛ
-    EIC_Currency   UMETA(DisplayName = "Currency") // ÀçÈ­ ¾ÆÀÌÅÛ
+    EIC_Equipment  UMETA(DisplayName = "Equipment"), // ì¥ë¹„ ì•„ì´í…œ
+    EIC_Consumable UMETA(DisplayName = "Consumable"), // ì†Œëª¨ì„± ì•„ì´í…œ
+    EIC_Material   UMETA(DisplayName = "Material"), // ì œì‘ ì¬ë£Œ ì•„ì´í…œ
+    EIC_Etc        UMETA(DisplayName = "Etc"), // ê¸°íƒ€ ì•„ì´í…œ
+    EIC_Currency   UMETA(DisplayName = "Currency") // ì¬í™” ì•„ì´í…œ
 };
 
-/* ¾ÆÀÌÅÛ µî±Ş */
+/* ì•„ì´í…œ ë“±ê¸‰ */
 UENUM(BlueprintType)
 enum class EItemGrade : uint8
 {
-    EIG_Common    UMETA(DisplayName = "Common"), // ÀÏ¹İ(¿¬µÎ)
-    EIG_Uncommon  UMETA(DisplayName = "Uncommon"), // °í±Ş(¿¬ÇÏ´Ã)
-    EIG_Rare      UMETA(DisplayName = "Rare"), // Èñ±Í(¿¬ÆÄ¶û)
-    EIG_Unique      UMETA(DisplayName = "Unique"), // À¯ÀÏ(¿¬º¸¶ó)
-    EIG_Legendary UMETA(DisplayName = "Legendary") // Àü¼³(¿¬ÁÖÈ²)
+    EIG_Common    UMETA(DisplayName = "Common"), // ì¼ë°˜(ì—°ë‘)
+    EIG_Uncommon  UMETA(DisplayName = "Uncommon"), // ê³ ê¸‰(ì—°í•˜ëŠ˜)
+    EIG_Rare      UMETA(DisplayName = "Rare"), // í¬ê·€(ì—°íŒŒë‘)
+    EIG_Unique      UMETA(DisplayName = "Unique"), // ìœ ì¼(ì—°ë³´ë¼)
+    EIG_Legendary UMETA(DisplayName = "Legendary") // ì „ì„¤(ì—°ì£¼í™©)
 };
 
 inline FColor GetItemGradeColor(EItemGrade grade)
 {
     switch (grade)
     {
-        case EItemGrade::EIG_Uncommon:  return FColor(219, 238, 239); // °í±Ş(¿¬ÇÏ´Ã)
-        case EItemGrade::EIG_Rare:      return FColor(221, 235, 255); // Èñ±Í(¿¬ÆÄ¶û)
-        case EItemGrade::EIG_Unique:    return FColor(230, 207, 242); // À¯ÀÏ(¿¬º¸¶ó)
-        case EItemGrade::EIG_Legendary: return FColor(255, 200, 170); // Àü¼³(¿¬ÁÖÈ²)
-        case EItemGrade::EIG_Common: // ÀÏ¹İ(¿¬µÎ)
+        case EItemGrade::EIG_Uncommon:  return FColor(219, 238, 239); // ê³ ê¸‰(ì—°í•˜ëŠ˜)
+        case EItemGrade::EIG_Rare:      return FColor(221, 235, 255); // í¬ê·€(ì—°íŒŒë‘)
+        case EItemGrade::EIG_Unique:    return FColor(230, 207, 242); // ìœ ì¼(ì—°ë³´ë¼)
+        case EItemGrade::EIG_Legendary: return FColor(255, 200, 170); // ì „ì„¤(ì—°ì£¼í™©)
+        case EItemGrade::EIG_Common: // ì¼ë°˜(ì—°ë‘)
         default:                        return FColor(220, 233, 203);
     }
 }
 
-/* Àåºñ ÀåÂø ºÎÀ§ */
+/* ì¥ë¹„ ì¥ì°© ë¶€ìœ„ */
 UENUM(BlueprintType)
 enum class EEquipSlot : uint8
 {
-    EES_None      UMETA(DisplayName = "None"), // 0 ¹ÌÀåÂø
-    EES_Head      UMETA(DisplayName = "Head"), // 1 ¸Ó¸®
-    EES_Chest     UMETA(DisplayName = "Chest"), // 2 °¡½¿
-    EES_LeftArm   UMETA(DisplayName = "LeftArm"), // 3 ¿ŞÆÈ
-    EES_RightArm  UMETA(DisplayName = "RightArm"), // 4 ¿À¸¥ÆÈ
-    EES_LeftLeg   UMETA(DisplayName = "LeftLeg"), // 5 ¿Ş´Ù¸®
-    EES_RightLeg  UMETA(DisplayName = "RightLeg"), // 6 ¿À¸¥´Ù¸®
-    EES_LeftHand  UMETA(DisplayName = "LeftHand"), // 7 ¿Ş¼Õ(¹«±â)
-    EES_RightHand UMETA(DisplayName = "RightHand"), // 8 ¿À¸¥¼Õ(¹«±â)
+    EES_None      UMETA(DisplayName = "None"), // 0 ë¯¸ì¥ì°©
+    EES_Head      UMETA(DisplayName = "Head"), // 1 ë¨¸ë¦¬
+    EES_Chest     UMETA(DisplayName = "Chest"), // 2 ê°€ìŠ´
+    EES_LeftArm   UMETA(DisplayName = "LeftArm"), // 3 ì™¼íŒ”
+    EES_RightArm  UMETA(DisplayName = "RightArm"), // 4 ì˜¤ë¥¸íŒ”
+    EES_LeftLeg   UMETA(DisplayName = "LeftLeg"), // 5 ì™¼ë‹¤ë¦¬
+    EES_RightLeg  UMETA(DisplayName = "RightLeg"), // 6 ì˜¤ë¥¸ë‹¤ë¦¬
+    EES_LeftHand  UMETA(DisplayName = "LeftHand"), // 7 ì™¼ì†(ë¬´ê¸°)
+    EES_RightHand UMETA(DisplayName = "RightHand"), // 8 ì˜¤ë¥¸ì†(ë¬´ê¸°)
     EES_MAX       UMETA(Hidden)
 };
 
@@ -66,142 +66,142 @@ UENUM(BlueprintType)
 enum class EItemEffect : uint8
 {
     EIE_None          UMETA(DisplayName = "None"),
-    EIE_HealHP        UMETA(DisplayName = "HealHP"), // Ã¼·Â È¸º¹
-    EIE_RevivePart    UMETA(DisplayName = "RevivePart"), // ÆÄ±« ºÎÀ§ ºÎÈ°
-    EIE_RecoverChaos  UMETA(DisplayName = "RecoverChaos"), // È¥µ· °ÔÀÌÁö È¸º¹
-    EIE_BodyHeat      UMETA(DisplayName = "BodyHeat"), // Ã¼¿Â »ó½Â
-    EIE_CureInjury    UMETA(DisplayName = "CureInjury"), // ºÎ»ó Ä¡·á
-    EIE_Throw         UMETA(DisplayName = "Throw"), // ÅõÃ´¹° ¹ß»ç
-    EIE_WeaponEnchant UMETA(DisplayName = "WeaponEnchant"), // ¹«±â ÀÎÃ¦Æ®
-    EIE_SpawnObject   UMETA(DisplayName = "SpawnObject"), // ¿ÀºêÁ§Æ® ¼ÒÈ¯
-    EIE_Detect        UMETA(DisplayName = "Detect"), // Àû Å½Áö
-    EIE_GiveMoney     UMETA(DisplayName = "GiveMoney"), // ÀçÈ­ Áö±Ş
-    EIE_RepairTool    UMETA(DisplayName = "RepairTool"), // ¼ö¸® µµ±¸
-    EIE_Ammo          UMETA(DisplayName = "Ammo") // Åº¾à
+    EIE_HealHP        UMETA(DisplayName = "HealHP"), // ì²´ë ¥ íšŒë³µ
+    EIE_RevivePart    UMETA(DisplayName = "RevivePart"), // íŒŒê´´ ë¶€ìœ„ ë¶€í™œ
+    EIE_RecoverChaos  UMETA(DisplayName = "RecoverChaos"), // í˜¼ëˆ ê²Œì´ì§€ íšŒë³µ
+    EIE_BodyHeat      UMETA(DisplayName = "BodyHeat"), // ì²´ì˜¨ ìƒìŠ¹
+    EIE_CureInjury    UMETA(DisplayName = "CureInjury"), // ë¶€ìƒ ì¹˜ë£Œ
+    EIE_Throw         UMETA(DisplayName = "Throw"), // íˆ¬ì²™ë¬¼ ë°œì‚¬
+    EIE_WeaponEnchant UMETA(DisplayName = "WeaponEnchant"), // ë¬´ê¸° ì¸ì±ˆíŠ¸
+    EIE_SpawnObject   UMETA(DisplayName = "SpawnObject"), // ì˜¤ë¸Œì íŠ¸ ì†Œí™˜
+    EIE_Detect        UMETA(DisplayName = "Detect"), // ì  íƒì§€
+    EIE_GiveMoney     UMETA(DisplayName = "GiveMoney"), // ì¬í™” ì§€ê¸‰
+    EIE_RepairTool    UMETA(DisplayName = "RepairTool"), // ìˆ˜ë¦¬ ë„êµ¬
+    EIE_Ammo          UMETA(DisplayName = "Ammo") // íƒ„ì•½
 };
 
 
-/* ¾ÆÀÌÅÛ µ¥ÀÌÅÍ */
+/* ì•„ì´í…œ ë°ì´í„° */
 USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase
 {
     GENERATED_BODY()
 
-    /* °øÅë ¼³Á¤ °ª */
+    /* ê³µí†µ ì„¤ì • ê°’ */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    FName itemId = NAME_None; // ¾ÆÀÌÅÛÀÇ ID
+    FName itemId = NAME_None; // ì•„ì´í…œì˜ ID
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    FText itemName; // ¾ÆÀÌÅÛ ÀÌ¸§
+    FText itemName; // ì•„ì´í…œ ì´ë¦„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common", meta = (MultiLine = "true"))
-    FText itemDescription; // ¾ÆÀÌÅÛ ¼³¸í
+    FText itemDescription; // ì•„ì´í…œ ì„¤ëª…
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    TObjectPtr<UTexture2D> icon = nullptr; // ¾ÆÀÌÅÛ UI ¾ÆÀÌÄÜ
+    TObjectPtr<UTexture2D> icon = nullptr; // ì•„ì´í…œ UI ì•„ì´ì½˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    EItemCategory category = EItemCategory::EIC_None; // ´ëºĞ·ù
+    EItemCategory category = EItemCategory::EIC_None; // ëŒ€ë¶„ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    int32 subType = 0; // ¼ÒºĞ·ù
+    int32 subType = 0; // ì†Œë¶„ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    EItemGrade grade = EItemGrade::EIG_Common; // µî±Ş
+    EItemGrade grade = EItemGrade::EIG_Common; // ë“±ê¸‰
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    EEquipSlot equipSlot = EEquipSlot::EES_None; // ±âº» ÀåÂø ½½·Ô
+    EEquipSlot equipSlot = EEquipSlot::EES_None; // ê¸°ë³¸ ì¥ì°© ìŠ¬ë¡¯
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    bool bDroppable = true; // ÆÇ¸Å/¹ö¸®±â °¡´É ¿©ºÎ
+    bool bDroppable = true; // íŒë§¤/ë²„ë¦¬ê¸° ê°€ëŠ¥ ì—¬ë¶€
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common")
-    TSoftObjectPtr<UStaticMesh> fieldMesh; // ÇÊµå Ç¥½Ã¿ë Á¤Àû ¸Ş½Ã
+    TSoftObjectPtr<UStaticMesh> fieldMesh; // í•„ë“œ í‘œì‹œìš© ì •ì  ë©”ì‹œ
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Common", meta = (ClampMin = "0"))
-    int32 carryLimit = 0; // ÃÖ´ë ¼ÒÁö °³¼ö
+    int32 carryLimit = 0; // ìµœëŒ€ ì†Œì§€ ê°œìˆ˜
 
 
-    /* ±×¸®µå Å©±â */
+    /* ê·¸ë¦¬ë“œ í¬ê¸° */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Grid", meta = (ClampMin = "1"))
-    int32 width = 1; // ÀÎº¥Åä¸® °¡·Î Á¡À¯ Ä­
+    int32 width = 1; // ì¸ë²¤í† ë¦¬ ê°€ë¡œ ì ìœ  ì¹¸
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Grid", meta = (ClampMin = "1"))
-    int32 height = 1; // ÀÎº¥Åä¸® ¼¼·Î Á¡À¯ Ä­
+    int32 height = 1; // ì¸ë²¤í† ë¦¬ ì„¸ë¡œ ì ìœ  ì¹¸
 
 
-    /* ÁßÃ¸ ¼³Á¤ */
+    /* ì¤‘ì²© ì„¤ì • */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Stack")
-    bool bStackable = false; // ÁßÃ¸ °¡´É ¿©ºÎ
+    bool bStackable = false; // ì¤‘ì²© ê°€ëŠ¥ ì—¬ë¶€
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Stack")
-    int32 maxStack = 1; // ÃÖ´ë °ãÄ§ ÇÑµµ
+    int32 maxStack = 1; // ìµœëŒ€ ê²¹ì¹¨ í•œë„
 
 
-    /* Àåºñ Àü¿ë */
+    /* ì¥ë¹„ ì „ìš© */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment")
-    float attackPowerBonus = 0.f; // °ø°İ·Â º¸Á¤Ä¡
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment")
-    float maxLimbHPBonus = 0.f; // »ı¸í·Â º¸Á¤Ä¡
+    float attackPowerBonus = 0.f; // ê³µê²©ë ¥ ë³´ì •ì¹˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment")
-    float maxDurability = 0.f; // ÃÖ´ë ³»±¸µµ(0ÀÌ¸é ³»±¸µµ ¾øÀ½)
+    float maxLimbHPBonus = 0.f; // ìƒëª…ë ¥ ë³´ì •ì¹˜
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment")
+    float maxDurability = 0.f; // ìµœëŒ€ ë‚´êµ¬ë„(0ì´ë©´ ë‚´êµ¬ë„ ì—†ìŒ)
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment|Weapon")
-    TSoftClassPtr<AWeapon> weaponActorClass; // ÀåÂø ÁßÀÎ ¹«±â ¾×ÅÍ Å¬·¡½º
+    TSoftClassPtr<AWeapon> weaponActorClass; // ì¥ì°© ì¤‘ì¸ ë¬´ê¸° ì•¡í„° í´ë˜ìŠ¤
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment|Weapon")
-    EWeaponType weaponType = EWeaponType::EWT_OneHanded; // ¹«±â Á¾·ù
+    EWeaponType weaponType = EWeaponType::EWT_OneHanded; // ë¬´ê¸° ì¢…ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Equipment|Weapon", meta = (ClampMin = "0.0"))
-    float guardValueBonus = 0.f; // °¡µå¼öÄ¡ º¸Á¤Ä¡
+    float guardValueBonus = 0.f; // ê°€ë“œìˆ˜ì¹˜ ë³´ì •ì¹˜
 
 
-    /* ¼Ò¸ğ¼º Àü¿ë */
+    /* ì†Œëª¨ì„± ì „ìš© */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    EItemEffect effectType = EItemEffect::EIE_None; // È¿°ú Á¾·ù
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    float effectAmount = 0.f; // È¿°ú·®
+    EItemEffect effectType = EItemEffect::EIE_None; // íš¨ê³¼ ì¢…ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    float effectDuration = 0.f; // È¿°ú Áö¼Ó½Ã°£
+    float effectAmount = 0.f; // íš¨ê³¼ëŸ‰
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    float useTime = 0.f; // ½ÃÀü ½Ã°£
+    float effectDuration = 0.f; // íš¨ê³¼ ì§€ì†ì‹œê°„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    float cooldown = 0.f; // Àç»ç¿ë ´ë±â½Ã°£
+    float useTime = 0.f; // ì‹œì „ ì‹œê°„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    FName effectPayload = NAME_None; // ÅõÃ´¹°/ÀÎÃ¦Æ®/¼ÒÈ¯ ¿ÀºêÁ§Æ® ID 
+    float cooldown = 0.f; // ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    bool bChanneled = false; // »ç¿ë ÁßÁö±îÁö Áö¼ÓµÇ´Â ¿©ºÎ
+    FName effectPayload = NAME_None; // íˆ¬ì²™ë¬¼/ì¸ì±ˆíŠ¸/ì†Œí™˜ ì˜¤ë¸Œì íŠ¸ ID 
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    FName useAnim = NAME_None; // »ç¿ë ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¸§
+    bool bChanneled = false; // ì‚¬ìš© ì¤‘ì§€ê¹Œì§€ ì§€ì†ë˜ëŠ” ì—¬ë¶€
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    float moveSpeedRateOnUse = 1.f; // »ç¿ë Áß ÀÌµ¿¼Óµµ ¹èÀ²
+    FName useAnim = NAME_None; // ì‚¬ìš© ì• ë‹ˆë©”ì´ì…˜ ì´ë¦„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    int32 conditionCode = 0; // »ç¿ë Á¶°Ç °ËÁõ°ª
+    float moveSpeedRateOnUse = 1.f; // ì‚¬ìš© ì¤‘ ì´ë™ì†ë„ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    bool bConsumedOnUse = true; // »ç¿ë ÈÄ ¼Ò¸ğ ¿©ºÎ
+    int32 conditionCode = 0; // ì‚¬ìš© ì¡°ê±´ ê²€ì¦ê°’
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    bool bRequiresBodyPart = false; // ºÎÀ§ ÁöÁ¤ ÇÊ¿ä ¿©ºÎ
+    bool bConsumedOnUse = true; // ì‚¬ìš© í›„ ì†Œëª¨ ì—¬ë¶€
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
-    EInjuryType targetInjury = EInjuryType::EIT_None; // ºÎ»ó Ä¡À¯ ¾ÆÀÌÅÛÀÌ Ä¡·áÇÏ´Â ºÎ»ó Á¾·ù
+    bool bRequiresBodyPart = false; // ë¶€ìœ„ ì§€ì • í•„ìš” ì—¬ë¶€
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable")
+    EInjuryType targetInjury = EInjuryType::EIT_None; // ë¶€ìƒ ì¹˜ìœ  ì•„ì´í…œì´ ì¹˜ë£Œí•˜ëŠ” ë¶€ìƒ ì¢…ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item|Consumable", meta = (ClampMin = "0"))
-    int32 maxEquipCount = 0; // ¼Ò¸ğÇ° ½½·Ô¿¡ ÀåÂø °¡´ÉÇÑ ÃÖ´ë ÁßÃ¸ ¼ö·®
+    int32 maxEquipCount = 0; // ì†Œëª¨í’ˆ ìŠ¬ë¡¯ì— ì¥ì°© ê°€ëŠ¥í•œ ìµœëŒ€ ì¤‘ì²© ìˆ˜ëŸ‰
 
-    /* ¾ÆÀÌÅÛ ID À¯È¿¼º È®ÀÎ ÇÔ¼ö */
+    /* ì•„ì´í…œ ID ìœ íš¨ì„± í™•ì¸ í•¨ìˆ˜ */
     bool IsValid() const { return itemId != NAME_None; }
 };
 
@@ -211,35 +211,35 @@ struct FItemInstance
     GENERATED_BODY()
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    int64 instanceUID = 0; // °³Ã¼ °íÀ¯ ¹øÈ£
+    int64 instanceUID = 0; // ê°œì²´ ê³ ìœ  ë²ˆí˜¸
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    FName itemId = NAME_None; // ¿øº» ¾ÆÀÌÅÛ ID
+    FName itemId = NAME_None; // ì›ë³¸ ì•„ì´í…œ ID
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    int32 gridPosX = 0; // ±×¸®µå XÁÂÇ¥(ÁÂÃø »ó´Ü ±âÁØ)
+    int32 gridPosX = 0; // ê·¸ë¦¬ë“œ Xì¢Œí‘œ(ì¢Œì¸¡ ìƒë‹¨ ê¸°ì¤€)
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    int32 gridPosY = 0; // ±×¸®µå YÁÂÇ¥(ÁÂÃø »ó´Ü ±âÁØ)
+    int32 gridPosY = 0; // ê·¸ë¦¬ë“œ Yì¢Œí‘œ(ì¢Œì¸¡ ìƒë‹¨ ê¸°ì¤€)
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    bool bIsRotated = false; // È¸Àü ¿©ºÎ
+    bool bIsRotated = false; // íšŒì „ ì—¬ë¶€
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    int32 currentStackCount = 1; // ÇöÀç ¼ö·®
+    int32 currentStackCount = 1; // í˜„ì¬ ìˆ˜ëŸ‰
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    float currentDurability = 0.f; // ÇöÀç ³»±¸µµ
+    float currentDurability = 0.f; // í˜„ì¬ ë‚´êµ¬ë„
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    bool bIsEquipped = false; // ÀåÂø ¿©ºÎ
+    bool bIsEquipped = false; // ì¥ì°© ì—¬ë¶€
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    EEquipSlot equipSlot = EEquipSlot::EES_None; // ÀåÂø ½½·Ô
+    EEquipSlot equipSlot = EEquipSlot::EES_None; // ì¥ì°© ìŠ¬ë¡¯
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, Category = "Instance")
-    EQuickSlot quickSlot = EQuickSlot::EQS_None; // ÀåÂø Äü½½·Ô
+    EQuickSlot quickSlot = EQuickSlot::EQS_None; // ì¥ì°© í€µìŠ¬ë¡¯
 
-    /* ÀÎ½ºÅÏ½º À¯È¿¼º È®ÀÎ ÇÔ¼ö */
+    /* ì¸ìŠ¤í„´ìŠ¤ ìœ íš¨ì„± í™•ì¸ í•¨ìˆ˜ */
     bool IsValid() const { return instanceUID != 0 && itemId != NAME_None; }
 };

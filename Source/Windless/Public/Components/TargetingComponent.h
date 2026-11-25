@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -19,137 +19,137 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 
-	/* ¶ô¿Â */
+	/* ë½ì˜¨ */
 	UFUNCTION(BlueprintCallable, Category = "Targeting")
-	void ToggleLockOn(); // ¶ô¿ÂÀ» Åä±ÛÇÏ´Â ÇÔ¼ö
+	void ToggleLockOn(); // ë½ì˜¨ì„ í† ê¸€í•˜ëŠ” í•¨ìˆ˜
 
-	void ReleaseLockOn(const TCHAR* reason); // ¶ô¿ÂÀ» °­Á¦ ÇØÁ¦ÇÏ´Â ÇÔ¼ö
+	void ReleaseLockOn(const TCHAR* reason); // ë½ì˜¨ì„ ê°•ì œ í•´ì œí•˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintCallable, Category = "Targeting")
-	void SwitchTarget(float Direction); // ¶ô¿Â Å¸°ÙÀ» ÁÂ¿ì ¹æÇâÀ¸·Î ÀüÈ¯ÇÏ´Â ÇÔ¼ö
+	void SwitchTarget(float Direction); // ë½ì˜¨ íƒ€ê²Ÿì„ ì¢Œìš° ë°©í–¥ìœ¼ë¡œ ì „í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
 	UPROPERTY(BlueprintAssignable, Category = "Targeting")
-	FOnTargetChanged OnTargetChanged; // ¶ô¿Â Å¸°Ù º¯°æ ½Ã È£ÃâµÇ´Â µ¨¸®°ÔÀÌÆ®
+	FOnTargetChanged OnTargetChanged; // ë½ì˜¨ íƒ€ê²Ÿ ë³€ê²½ ì‹œ í˜¸ì¶œë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 protected:
 	virtual void BeginPlay() override;
 
-	/* ¶ô¿Â (Àû Å½»ö)*/
+	/* ë½ì˜¨ (ì  íƒìƒ‰)*/
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	float MaxLockOnDistance = 1500.f; // ¶ô¿Â °¡´É ÃÖ´ë °Å¸®
+	float MaxLockOnDistance = 1500.f; // ë½ì˜¨ ê°€ëŠ¥ ìµœëŒ€ ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	float BreakLockDistance = 2000.f; // ¶ô¿Â ÀÚµ¿ ÇØÁ¦ °Å¸®
+	float BreakLockDistance = 2000.f; // ë½ì˜¨ ìë™ í•´ì œ ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	float SearchSphereRadius = 1500.f; // Å¸°Ù Å½»ö ½Ã overlapÀÇ ¹İ°æ
+	float SearchSphereRadius = 1500.f; // íƒ€ê²Ÿ íƒìƒ‰ ì‹œ overlapì˜ ë°˜ê²½
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	FName RequiredTag = FName("Enemy"); // ¶ô¿Â Å¸°ÙÀÌ °¡Á®¾ß ÇÏ´Â ÅÂ±×
+	FName RequiredTag = FName("Enemy"); // ë½ì˜¨ íƒ€ê²Ÿì´ ê°€ì ¸ì•¼ í•˜ëŠ” íƒœê·¸
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	FName DeadTag = FName("Dead"); // »ç¸ÁÇÑ ¾×ÅÍ¸¦ ½Äº°ÇÏ´Â ÅÂ±×
+	FName DeadTag = FName("Dead"); // ì‚¬ë§í•œ ì•¡í„°ë¥¼ ì‹ë³„í•˜ëŠ” íƒœê·¸
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search") 
-	TArray<TEnumAsByte<EObjectTypeQuery>> TargetObjectTypes; // Å¸°Ù ÈÄº¸ Å½»ö ½Ã °Ë»çÇÒ ¿ÀºêÁ§Æ® Å¸ÀÔ 
+	TArray<TEnumAsByte<EObjectTypeQuery>> TargetObjectTypes; // íƒ€ê²Ÿ í›„ë³´ íƒìƒ‰ ì‹œ ê²€ì‚¬í•  ì˜¤ë¸Œì íŠ¸ íƒ€ì… 
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search")
-	TEnumAsByte<ETraceTypeQuery> VisibilityTraceChannel; // ½Ã¾ß È®º¸ ¶óÀÎ ÃßÀû¿¡ »ç¿ëµÇ´Â Ã¤³Î
+	TEnumAsByte<ETraceTypeQuery> VisibilityTraceChannel; // ì‹œì•¼ í™•ë³´ ë¼ì¸ ì¶”ì ì— ì‚¬ìš©ë˜ëŠ” ì±„ë„
 	
 	UPROPERTY(EditAnywhere, Category = "Targeting|Search", meta = (ClampMin = "0.0"))
-	float lineOfSightGraceTime = 0.5f; // ½Ã¾ß°¡ °¡·ÁÁ®µµ ¶ô¿ÂÀ» À¯ÁöÇÏ´Â À¯¿¹ ½Ã°£
+	float lineOfSightGraceTime = 0.5f; // ì‹œì•¼ê°€ ê°€ë ¤ì ¸ë„ ë½ì˜¨ì„ ìœ ì§€í•˜ëŠ” ìœ ì˜ˆ ì‹œê°„
 
 
-	/* ¶ô¿Â(Àû ¼±ÅÃ) */
+	/* ë½ì˜¨(ì  ì„ íƒ) */
 	UPROPERTY(EditAnywhere, Category = "Targeting|Selection", meta = (ClampMin = "0.0", ClampMax = "1.5"))
-	float MaxScreenDistance = 0.6f;  // È­¸é Áß½É¿¡¼­ ÈÄº¸±îÁöÀÇ ÃÖ´ë Çã¿ë °Å¸®
+	float MaxScreenDistance = 0.6f;  // í™”ë©´ ì¤‘ì‹¬ì—ì„œ í›„ë³´ê¹Œì§€ì˜ ìµœëŒ€ í—ˆìš© ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Selection")
-	float ScreenCenterWeight = 2.f; // º£½ºÆ® Å¸°Ù ¼±Á¤ ½Ã È­¸é Áß¾Ó ±ÙÁ¢µµ °¡ÁßÄ¡
+	float ScreenCenterWeight = 2.f; // ë² ìŠ¤íŠ¸ íƒ€ê²Ÿ ì„ ì • ì‹œ í™”ë©´ ì¤‘ì•™ ê·¼ì ‘ë„ ê°€ì¤‘ì¹˜
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Selection")
-	float DistanceWeight = 1.f; // º£½ºÆ® Å¸°Ù ¼±Á¤ ½Ã ¿ùµå °Å¸® ±ÙÁ¢µµ °¡ÁßÄ¡
+	float DistanceWeight = 1.f; // ë² ìŠ¤íŠ¸ íƒ€ê²Ÿ ì„ ì • ì‹œ ì›”ë“œ ê±°ë¦¬ ê·¼ì ‘ë„ ê°€ì¤‘ì¹˜
 
 
-	/* ¶ô¿Â (Àû ÀüÈ¯) */
+	/* ë½ì˜¨ (ì  ì „í™˜) */
 	UPROPERTY(EditAnywhere, Category = "Targeting|Switching")
-	float SwitchCoolTime = 0.25f; // Å¸°Ù ÀüÈ¯ ÀÔ·Â Äğ´Ù¿î
+	float SwitchCoolTime = 0.25f; // íƒ€ê²Ÿ ì „í™˜ ì…ë ¥ ì¿¨ë‹¤ìš´
 
 
-	/* ¶ô¿Â (Ä«¸Ş¶ó ¼³Á¤) */
+	/* ë½ì˜¨ (ì¹´ë©”ë¼ ì„¤ì •) */
 	UPROPERTY(EditAnywhere, Category = "Targeting|Camera")
-	float CameraInterpSpeed = 6.f; // ¶ô¿Â Áß Ä«¸Ş¶ó°¡ Å¸°ÙÀ» ÇâÇØ È¸ÀüÇÏ´Â º¸°£ ¼Óµµ
+	float CameraInterpSpeed = 6.f; // ë½ì˜¨ ì¤‘ ì¹´ë©”ë¼ê°€ íƒ€ê²Ÿì„ í–¥í•´ íšŒì „í•˜ëŠ” ë³´ê°„ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Camera")
-	float TargetPitchOffset = -15.f; // ¶ô¿Â ½Ã Ä«¸Ş¶ó ÇÇÄ¡ ¿ÀÇÁ¼Â
+	float TargetPitchOffset = -15.f; // ë½ì˜¨ ì‹œ ì¹´ë©”ë¼ í”¼ì¹˜ ì˜¤í”„ì…‹
 
 
-	/* ¶ô¿Â ¸¶Ä¿ */
+	/* ë½ì˜¨ ë§ˆì»¤ */
 	UPROPERTY(EditAnywhere, Category = "Targeting|Marker")
-	TSubclassOf<UUserWidget> lockOnMarkerClass; // ¶ô¿Â ´ë»ó¿¡ Ç¥½ÃÇÒ ¸¶Ä¿ À§Á¬ Å¬·¡½º
-
-	UPROPERTY(EditAnywhere, Category = "Targeting|Marker")
-	FVector2D lockOnMarkerSize = FVector2D(16.f, 16.f); // ¸¶Ä¿ À§Á¬ÀÇ È­¸é Å©±â
+	TSubclassOf<UUserWidget> lockOnMarkerClass; // ë½ì˜¨ ëŒ€ìƒì— í‘œì‹œí•  ë§ˆì»¤ ìœ„ì ¯ í´ë˜ìŠ¤
 
 	UPROPERTY(EditAnywhere, Category = "Targeting|Marker")
-	FVector lockOnMarkerOffset = FVector(0.f, 0.f, 20.f); // ´ë»ó ·çÆ® ±âÁØ ¸¶Ä¿ À§Ä¡ ¿ÀÇÁ¼Â
+	FVector2D lockOnMarkerSize = FVector2D(16.f, 16.f); // ë§ˆì»¤ ìœ„ì ¯ì˜ í™”ë©´ í¬ê¸°
+
+	UPROPERTY(EditAnywhere, Category = "Targeting|Marker")
+	FVector lockOnMarkerOffset = FVector(0.f, 0.f, 20.f); // ëŒ€ìƒ ë£¨íŠ¸ ê¸°ì¤€ ë§ˆì»¤ ìœ„ì¹˜ ì˜¤í”„ì…‹
 
 
 private:
-	/* Ä³½Ì º¯¼ö */
+	/* ìºì‹± ë³€ìˆ˜ */
 	UPROPERTY()
-	TObjectPtr<class ACharacter> WindlessCharacter; // ¼ÒÀ¯ Ä³¸¯ÅÍ 
-
-	UPROPERTY()
-	TObjectPtr<class APlayerController> PlayerController; // ¼ÒÀ¯ Ä³¸¯ÅÍÀÇ ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯
+	TObjectPtr<class ACharacter> WindlessCharacter; // ì†Œìœ  ìºë¦­í„° 
 
 	UPROPERTY()
-	TObjectPtr<AActor> CurrentTarget; // ÇöÀç ¶ô¿ÂµÈ ´ë»ó
+	TObjectPtr<class APlayerController> PlayerController; // ì†Œìœ  ìºë¦­í„°ì˜ í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬
 
-	bool bLockActive = false; // ¶ô¿Â ÁøÇà ¿©ºÎ
-	float lostSightTime = 0.f; // ´ë»óÀÌ ½Ã¾ß¿¡¼­ °¡·ÁÁø ´©Àû ½Ã°£
+	UPROPERTY()
+	TObjectPtr<AActor> CurrentTarget; // í˜„ì¬ ë½ì˜¨ëœ ëŒ€ìƒ
 
-
-	/* ¶ô¿Â */
-	void FindAndLockTarget(); // ÃÖÀû Å¸°ÙÀ» Å½»öÇÏ¿© ¶ô¿ÂÇÏ´Â ÇÔ¼ö
-	void SetLockTarget(AActor* newTarget); // ¶ô¿Â ´ë»óÀ» ÁöÁ¤ÇÏ´Â ÇÔ¼ö
-	void BreakLock(const TCHAR* reason); // ¶ô¿ÂÀ» ÇØÁ¦ÇÏ´Â ÇÔ¼ö
+	bool bLockActive = false; // ë½ì˜¨ ì§„í–‰ ì—¬ë¶€
+	float lostSightTime = 0.f; // ëŒ€ìƒì´ ì‹œì•¼ì—ì„œ ê°€ë ¤ì§„ ëˆ„ì  ì‹œê°„
 
 
-	/* ¶ô¿Â(Àû Å½»ö) */
-	void CollectCandidates(TArray<AActor*>& OutCandidates) const; // ¶ô¿Â ÈÄº¸ ¾×ÅÍ¸¦ ¼öÁıÇÏ´Â ÇÔ¼ö
-	bool IsCandidateEligible(AActor* Candidate) const; // ÈÄº¸°¡ ¶ô¿Â °¡´É Á¶°ÇÀ» ¸¸Á·ÇÏ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsValidTargetActor(const AActor* candidate) const; // ´ë»óÀÌ »ì¾ÆÀÖ´Â ÀûÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsWithinRange(const AActor* candidate, float baseRange) const; // ºÎ»ó ¹èÀ²À» Àû¿ëÇÑ °Å¸® ¾È¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasLineOfSight(const AActor* Target) const; // ´ë»ó±îÁö ½Ã¾ß°¡ Â÷´ÜµÇÁö ¾Ê¾Ò´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool GetScreenPosition(const AActor* Target, FVector2D& OutScreenPos) const; // ´ë»óÀÇ ¿ùµå À§Ä¡¸¦ ½ºÅ©¸° ÁÂÇ¥·Î Åõ¿µÇÏ´Â ÇÔ¼ö
+	/* ë½ì˜¨ */
+	void FindAndLockTarget(); // ìµœì  íƒ€ê²Ÿì„ íƒìƒ‰í•˜ì—¬ ë½ì˜¨í•˜ëŠ” í•¨ìˆ˜
+	void SetLockTarget(AActor* newTarget); // ë½ì˜¨ ëŒ€ìƒì„ ì§€ì •í•˜ëŠ” í•¨ìˆ˜
+	void BreakLock(const TCHAR* reason); // ë½ì˜¨ì„ í•´ì œí•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¶ô¿Â(Àü ¼±ÅÃ) */
-	AActor* FindBestTarget(const TArray<AActor*>& Candidates) const; // ¶ô¿Â ÈÄº¸ Áß ÃÖÀû Å¸°ÙÀ» ¼±Á¤ÇÏ´Â ÇÔ¼ö
-	FVector GetTargetingLocation(const AActor* Target) const; // ´ë»óÀÇ ¶ô¿Â ±âÁØ À§Ä¡¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ë½ì˜¨(ì  íƒìƒ‰) */
+	void CollectCandidates(TArray<AActor*>& OutCandidates) const; // ë½ì˜¨ í›„ë³´ ì•¡í„°ë¥¼ ìˆ˜ì§‘í•˜ëŠ” í•¨ìˆ˜
+	bool IsCandidateEligible(AActor* Candidate) const; // í›„ë³´ê°€ ë½ì˜¨ ê°€ëŠ¥ ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsValidTargetActor(const AActor* candidate) const; // ëŒ€ìƒì´ ì‚´ì•„ìˆëŠ” ì ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsWithinRange(const AActor* candidate, float baseRange) const; // ë¶€ìƒ ë°°ìœ¨ì„ ì ìš©í•œ ê±°ë¦¬ ì•ˆì— ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasLineOfSight(const AActor* Target) const; // ëŒ€ìƒê¹Œì§€ ì‹œì•¼ê°€ ì°¨ë‹¨ë˜ì§€ ì•Šì•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool GetScreenPosition(const AActor* Target, FVector2D& OutScreenPos) const; // ëŒ€ìƒì˜ ì›”ë“œ ìœ„ì¹˜ë¥¼ ìŠ¤í¬ë¦° ì¢Œí‘œë¡œ íˆ¬ì˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¶ô¿Â(Àû ÀüÈ¯) */
-	AActor* FindSwitchTarget(float Direction) const; // ÀÔ·Â ¹æÇâ¿¡ À§Ä¡ÇÑ °¡Àå °¡±î¿î ´ÙÀ½ Å¸°ÙÀ» Ã£´Â ÇÔ¼ö
-	float LastSwitchTime = 0.f; // ¸¶Áö¸· Å¸°Ù ÀüÈ¯ ½Ã°¢
+	/* ë½ì˜¨(ì „ ì„ íƒ) */
+	AActor* FindBestTarget(const TArray<AActor*>& Candidates) const; // ë½ì˜¨ í›„ë³´ ì¤‘ ìµœì  íƒ€ê²Ÿì„ ì„ ì •í•˜ëŠ” í•¨ìˆ˜
+	FVector GetTargetingLocation(const AActor* Target) const; // ëŒ€ìƒì˜ ë½ì˜¨ ê¸°ì¤€ ìœ„ì¹˜ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+
+
+	/* ë½ì˜¨(ì  ì „í™˜) */
+	AActor* FindSwitchTarget(float Direction) const; // ì…ë ¥ ë°©í–¥ì— ìœ„ì¹˜í•œ ê°€ì¥ ê°€ê¹Œìš´ ë‹¤ìŒ íƒ€ê²Ÿì„ ì°¾ëŠ” í•¨ìˆ˜
+	float LastSwitchTime = 0.f; // ë§ˆì§€ë§‰ íƒ€ê²Ÿ ì „í™˜ ì‹œê°
 	
-	/* ¶ô¿Â(Ä«¸Ş¶ó ¼³Á¤) */
-	void UpdateCameraOnTarget(float DeltaTime); // ¶ô¿Â Áß Ä«¸Ş¶ó¸¦ ´ë»ó ¹æÇâÀ¸·Î È¸Àü½ÃÅ°´Â ÇÔ¼ö
+	/* ë½ì˜¨(ì¹´ë©”ë¼ ì„¤ì •) */
+	void UpdateCameraOnTarget(float DeltaTime); // ë½ì˜¨ ì¤‘ ì¹´ë©”ë¼ë¥¼ ëŒ€ìƒ ë°©í–¥ìœ¼ë¡œ íšŒì „ì‹œí‚¤ëŠ” í•¨ìˆ˜
 
 
-	/* ¶ô¿Â ¸¶Ä¿ */
+	/* ë½ì˜¨ ë§ˆì»¤ */
 	UPROPERTY()
-	TObjectPtr<UWidgetComponent> lockOnMarker; // ¶ô¿Â ¸¶Ä¿ À§Á¬ ÄÄÆ÷³ÍÆ®
+	TObjectPtr<UWidgetComponent> lockOnMarker; // ë½ì˜¨ ë§ˆì»¤ ìœ„ì ¯ ì»´í¬ë„ŒíŠ¸
 
-	void CreateLockOnMarker(); // ¸¶Ä¿¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
-	void ShowLockOnMarker(AActor* target); // ¸¶Ä¿¸¦ ´ë»ó¿¡ ºÎÂøÇÏ°í Ç¥½ÃÇÏ´Â ÇÔ¼ö
-	void HideLockOnMarker(); // ¸¶Ä¿¸¦ ¼û±â´Â ÇÔ¼ö
+	void CreateLockOnMarker(); // ë§ˆì»¤ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
+	void ShowLockOnMarker(AActor* target); // ë§ˆì»¤ë¥¼ ëŒ€ìƒì— ë¶€ì°©í•˜ê³  í‘œì‹œí•˜ëŠ” í•¨ìˆ˜
+	void HideLockOnMarker(); // ë§ˆì»¤ë¥¼ ìˆ¨ê¸°ëŠ” í•¨ìˆ˜
 
 public:
-	/* º¯¼ö getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ getter í•¨ìˆ˜ */
 	UFUNCTION(BlueprintPure, Category = "Targeting")
 	FORCEINLINE bool IsLockedOn() const { return CurrentTarget != nullptr; }
 	UFUNCTION(BlueprintPure, Category = "Targeting")

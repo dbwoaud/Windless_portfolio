@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -20,56 +20,56 @@ class WINDLESS_API ASnakeMount : public AActor
 public:	
 	ASnakeMount();
 
-	/* ¼ÒÈ¯ */
-	void Emerge();   // Å» °Í ¼ÒÈ¯ ¿¬ÃâÀ» ¼öÇàÇÏ´Â ÇÔ¼ö
+	/* ì†Œí™˜ */
+	void Emerge();   // íƒˆ ê²ƒ ì†Œí™˜ ì—°ì¶œì„ ìˆ˜í–‰í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÅğÀå */
-	void Submerge(); // Å» °Í ÅğÀå ¿¬ÃâÀ» ¼öÇàÇÏ´Â ÇÔ¼ö
+	/* í‡´ì¥ */
+	void Submerge(); // íƒˆ ê²ƒ í‡´ì¥ ì—°ì¶œì„ ìˆ˜í–‰í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
-	FOnEmergeFinished OnEmergeFinished; // Å» °Í µîÀå ¿¬Ãâ ¿Ï·á ½Ã ½ÇÇàµÇ´Â µ¨¸®°ÔÀÌÆ®
-	FOnSubmergeFinished OnSubmergeFinished; // Å» °Í ÅğÀå ¿¬Ãâ ¿Ï·á ½Ã ½ÇÇàµÇ´Â µ¨¸®°ÔÀÌÆ®
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
+	FOnEmergeFinished OnEmergeFinished; // íƒˆ ê²ƒ ë“±ì¥ ì—°ì¶œ ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
+	FOnSubmergeFinished OnSubmergeFinished; // íƒˆ ê²ƒ í‡´ì¥ ì—°ì¶œ ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 protected:
 	virtual void BeginPlay() override;
 
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	UBoxComponent* collisionBox; // ¹Ú½º Äİ¶óÀÌ´õ ÄÄÆ÷³ÍÆ®
+	UBoxComponent* collisionBox; // ë°•ìŠ¤ ì½œë¼ì´ë” ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere, Category = Components)
-	USkeletalMeshComponent* mountMesh; // ½ºÄÌ·¹Å» ¸Ş½Ã ÄÄÆ÷³ÍÆ®
+	USkeletalMeshComponent* mountMesh; // ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ì»´í¬ë„ŒíŠ¸
 
 
-	/* ¼ÒÈ¯ */
+	/* ì†Œí™˜ */
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	UAnimMontage* emergeMontage; // µîÀå ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* emergeMontage; // ë“±ì¥ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 	UPROPERTY(EditAnywhere, Category = VFX)
-	UNiagaraSystem* groundBurstEffect; // Èë¸ÕÁö ½Ã°¢ È¿°ú
+	UNiagaraSystem* groundBurstEffect; // í™ë¨¼ì§€ ì‹œê° íš¨ê³¼
 	
 
-	/* Å¾½Â */
+	/* íƒ‘ìŠ¹ */
 	UPROPERTY(EditAnywhere, Category = Mount)
-	FName riderSocketName = FName("RiderSocket"); // Å¾½Â ¼ÒÄÏ ÀÌ¸§
+	FName riderSocketName = FName("RiderSocket"); // íƒ‘ìŠ¹ ì†Œì¼“ ì´ë¦„
 
 
-	/* ÅğÀå */
+	/* í‡´ì¥ */
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	UAnimMontage* submergeMontage; // ÅğÀå ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* submergeMontage; // í‡´ì¥ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 private:
-	/* ¼ÒÈ¯ */
-	void HandleEmergeEnded(UAnimMontage* montage, bool bInterrupted); // Å» °Í ¼ÒÈ¯ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ Á¾·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	void SpawnGroundBurst(); // Èë¸ÕÁö ½Ã°¢ È¿°ú¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
+	/* ì†Œí™˜ */
+	void HandleEmergeEnded(UAnimMontage* montage, bool bInterrupted); // íƒˆ ê²ƒ ì†Œí™˜ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì¢…ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	void SpawnGroundBurst(); // í™ë¨¼ì§€ ì‹œê° íš¨ê³¼ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 
-	/* ÅğÀå */
-	void HandleSubmergeEnded(UAnimMontage* montage, bool bInterrupted); // Å» °Í ÅğÀå ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ Á¾·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* í‡´ì¥ */
+	void HandleSubmergeEnded(UAnimMontage* montage, bool bInterrupted); // íƒˆ ê²ƒ í‡´ì¥ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì¢…ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 public:
-	/* º¯¼ö getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ getter í•¨ìˆ˜ */
 	FORCEINLINE USkeletalMeshComponent* GetMountMesh() const { return mountMesh; }
 	FORCEINLINE FName GetRiderSocketName() const { return riderSocketName; }
 	FORCEINLINE UBoxComponent* GetCollisionBox() const { return collisionBox; }

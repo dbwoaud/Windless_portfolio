@@ -1,4 +1,4 @@
-#include "Components/DialogueComponent.h"
+﻿#include "Components/DialogueComponent.h"
 #include "Windless/DebugMacro.h"
 #include "Characters/WindlessCharacter.h"
 #include "Dialogue/DialogueWidget.h"

@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "CharacterTypes.generated.h"
 
-/* ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ Àåºñ ÀåÂø »óÅÂ ¿­°ÅÇü */
+/* í”Œë ˆì´ì–´ ìºë¦­í„° ì¥ë¹„ ì¥ì°© ìƒíƒœ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class ECharacterState : uint8 
 {
@@ -12,7 +12,7 @@ enum class ECharacterState : uint8
 	ECS_EquippedTwoHandedWeapon UMETA(DisplayName = "Equipped Two-Handed Weapon")
 };
 
-/* ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ »óÅÂ ¿­°ÅÇü */
+/* í”Œë ˆì´ì–´ ìºë¦­í„° ìƒíƒœ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class EActionState : uint8
 {
@@ -30,7 +30,7 @@ enum class EActionState : uint8
 	EAS_Knockdown UMETA(DisplayName = "Knockdown")
 };
 
-/* ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÌµ¿ »óÅÂ ¿­°ÅÇü */
+/* í”Œë ˆì´ì–´ ìºë¦­í„° ì´ë™ ìƒíƒœ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class EMovementAction : uint8
 {
@@ -40,7 +40,7 @@ enum class EMovementAction : uint8
 	EMA_Crouch UMETA(DisplayName = "Crouch")
 };
 
-/* Ä³¸¯ÅÍ Á×À½ Æ÷Áî ¿­°ÅÇü */
+/* ìºë¦­í„° ì£½ìŒ í¬ì¦ˆ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum EDeathPose
 {
@@ -54,7 +54,7 @@ enum EDeathPose
 	EDP_MAX UMETA(DisplayName = "DefaultMAX")
 };
 
-/* Àû »óÅÂ ¿­°ÅÇü */
+/* ì  ìƒíƒœ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class EEnemyState : uint8 
 {
@@ -70,11 +70,11 @@ enum class EEnemyState : uint8
 	EES_Staggered UMETA(DisplayName = "Staggered")
 };
 
-/* Àû ÀÌµ¿ ¹æ½Ä */
+/* ì  ì´ë™ ë°©ì‹ */
 UENUM(BlueprintType)
 enum class EEnemyMoveType : uint8
 {
-	EMT_Wander UMETA(DisplayName = "Wander"), // ¹èÈ¸Çü(¹èÄ¡ À§Ä¡ ¹İ°æ ³» ¹«ÀÛÀ§ ÀÌµ¿)
-	EMT_Patrol UMETA(DisplayName = "Patrol"), // ¼øÂûÇü(Á¤ÇØÁø °æ·Î ¼ø¼­´ë·Î ÀÌµ¿)
-	EMT_Fixed  UMETA(DisplayName = "Fixed")   // °íÁ¤Çü(Á¦ÀÚ¸® °ø°İ)
+	EMT_Wander UMETA(DisplayName = "Wander"), // ë°°íšŒí˜•(ë°°ì¹˜ ìœ„ì¹˜ ë°˜ê²½ ë‚´ ë¬´ì‘ìœ„ ì´ë™)
+	EMT_Patrol UMETA(DisplayName = "Patrol"), // ìˆœì°°í˜•(ì •í•´ì§„ ê²½ë¡œ ìˆœì„œëŒ€ë¡œ ì´ë™)
+	EMT_Fixed  UMETA(DisplayName = "Fixed")   // ê³ ì •í˜•(ì œìë¦¬ ê³µê²©)
 };

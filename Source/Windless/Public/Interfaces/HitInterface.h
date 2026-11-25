@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
@@ -10,12 +10,12 @@ class UHitInterface : public UInterface
 	GENERATED_BODY()
 };
 
-//ÇÇ°İ °¡´ÉÇÑ ¾×ÅÍ¸¦ Á¤ÀÇÇÏ´Â ÀÎÅÍÆäÀÌ½º
+//í”¼ê²© ê°€ëŠ¥í•œ ì•¡í„°ë¥¼ ì •ì˜í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤
 class WINDLESS_API IHitInterface
 {
 	GENERATED_BODY()
 
 public:
 	UFUNCTION(BlueprintNativeEvent)
-	void GetHit(const FVector& impactPoint, AActor* hitter); // ÇÇ°İ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	void GetHit(const FVector& impactPoint, AActor* hitter); // í”¼ê²© ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 };

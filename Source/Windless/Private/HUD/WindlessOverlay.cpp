@@ -1,4 +1,4 @@
-#include "HUD/WindlessOverlay.h"
+ï»¿#include "HUD/WindlessOverlay.h"
 #include "HUD/BossHealthBarWidget.h"
 #include "UI/QuickSlot/QuickSlotBarWidget.h"
 #include "Components/ProgressBar.h"
@@ -49,25 +49,25 @@ void UWindlessOverlay::SetChaosBarColor(EChaosState state)
 	switch (state)
 	{
 		case EChaosState::ECS_Collapse1: 
-			color = FLinearColor(0.9f, 0.5f, 0.1f, 1.f); // ÁÖÈ²
+			color = FLinearColor(0.9f, 0.5f, 0.1f, 1.f); // ì£¼í™©
 			break;
 		case EChaosState::ECS_Collapse2: 
-			color = FLinearColor(0.9f, 0.2f, 0.1f, 1.f); // ÀûÁÖÈ²
+			color = FLinearColor(0.9f, 0.2f, 0.1f, 1.f); // ì ì£¼í™©
 			break; 
 		case EChaosState::ECS_Collapse3: 
-			color = FLinearColor(0.7f, 0.0f, 0.0f, 1.f); // ÁøÈ«
+			color = FLinearColor(0.7f, 0.0f, 0.0f, 1.f); // ì§„í™
 			break;
 		case EChaosState::ECS_Awakening1: 
-			color = FLinearColor(0.2f, 0.6f, 0.9f, 1.f); // ÇÏ´Ã
+			color = FLinearColor(0.2f, 0.6f, 0.9f, 1.f); // í•˜ëŠ˜
 			break;
 		case EChaosState::ECS_Awakening2: 
-			color = FLinearColor(0.1f, 0.4f, 0.9f, 1.f); // Ã»
+			color = FLinearColor(0.1f, 0.4f, 0.9f, 1.f); // ì²­
 			break;
 		case EChaosState::ECS_Awakening3: 
-			color = FLinearColor(0.2f, 0.1f, 0.8f, 1.f); // ³²º¸¶ó
+			color = FLinearColor(0.2f, 0.1f, 0.8f, 1.f); // ë‚¨ë³´ë¼
 			break;
 		default:
-			color = FLinearColor(0.6f, 0.6f, 0.6f, 1.f); // È¸»ö
+			color = FLinearColor(0.6f, 0.6f, 0.6f, 1.f); // íšŒìƒ‰
 			break;
 	}
 	chaosProgressBar->SetFillColorAndOpacity(color);
@@ -100,7 +100,7 @@ void UWindlessOverlay::UpdateBodyPart(EBodyPart part, float percent, bool bInjur
 			return;
 	}
 
-	if (!bar) // ÇØ´çµÇ´Â ºÎÀ§ Ã¼·Â ¹Ù°¡ ¾øÀ¸¸é ¹«½Ã
+	if (!bar) // í•´ë‹¹ë˜ëŠ” ë¶€ìœ„ ì²´ë ¥ ë°”ê°€ ì—†ìœ¼ë©´ ë¬´ì‹œ
 		return;
 
 	bar->SetPercent(percent);
@@ -169,11 +169,11 @@ void UWindlessOverlay::SetHealthBarColor(bool bDisabled, bool bInjured, UProgres
 {
 	FLinearColor color;
 	if (bDisabled)
-		color = FLinearColor(0.25f, 0.f, 0.f, 1.f); // ÆÄ±«: »¡°­
+		color = FLinearColor(0.25f, 0.f, 0.f, 1.f); // íŒŒê´´: ë¹¨ê°•
 	else if (bInjured)
-		color = FLinearColor(1.f, 0.85f, 0.1f, 1.f); // ºÎ»ó: ³ë¶û
+		color = FLinearColor(1.f, 0.85f, 0.1f, 1.f); // ë¶€ìƒ: ë…¸ëž‘
 	else
-		color = FLinearColor(0.f, 1.f, 0.f, 1.f); // Á¤»ó :ÃÊ·Ï
+		color = FLinearColor(0.f, 1.f, 0.f, 1.f); // ì •ìƒ :ì´ˆë¡
 
 	bar->SetFillColorAndOpacity(color);
 }

@@ -1,4 +1,4 @@
-#include "Enemy/AI/EnemyAttackTiming.h"
+﻿#include "Enemy/AI/EnemyAttackTiming.h"
 #include "Enemy/AI/EnemyAttackRow.h"
 
 TArray<FEnemyAttackPhaseSpan> EnemyAttackTiming::BuildTimeline(const FEnemyAttackRow& attack, int32 hitIndex, float windupScale)

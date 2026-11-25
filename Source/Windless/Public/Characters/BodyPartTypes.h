@@ -1,156 +1,156 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h" 
 #include "BodyPartTypes.generated.h"
 
-/* ½ÅÃ¼ ºÎÀ§ ¿­°ÅÇü */
+/* ì‹ ì²´ ë¶€ìœ„ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class EBodyPart : uint8
 {
     EBP_None     UMETA(DisplayName = "None"),
-    EBP_Head     UMETA(DisplayName = "Head"),     // ¸Ó¸®
-    EBP_Chest    UMETA(DisplayName = "Chest"),    // ¸öÅë
-    EBP_LeftArm  UMETA(DisplayName = "LeftArm"),  // ¿ŞÆÈ
-    EBP_RightArm UMETA(DisplayName = "RightArm"), // ¿À¸¥ÆÈ
-    EBP_LeftLeg  UMETA(DisplayName = "LeftLeg"),  // ¿Ş´Ù¸®
-    EBP_RightLeg UMETA(DisplayName = "RightLeg"), // ¿À¸¥´Ù¸®
+    EBP_Head     UMETA(DisplayName = "Head"),     // ë¨¸ë¦¬
+    EBP_Chest    UMETA(DisplayName = "Chest"),    // ëª¸í†µ
+    EBP_LeftArm  UMETA(DisplayName = "LeftArm"),  // ì™¼íŒ”
+    EBP_RightArm UMETA(DisplayName = "RightArm"), // ì˜¤ë¥¸íŒ”
+    EBP_LeftLeg  UMETA(DisplayName = "LeftLeg"),  // ì™¼ë‹¤ë¦¬
+    EBP_RightLeg UMETA(DisplayName = "RightLeg"), // ì˜¤ë¥¸ë‹¤ë¦¬
     EBP_MAX      UMETA(Hidden)
 };
 
-/* ºÎ»ó Á¾·ù ¿­°ÅÇü */
+/* ë¶€ìƒ ì¢…ë¥˜ ì—´ê±°í˜• */
 UENUM(BlueprintType)
 enum class EInjuryType : uint8
 {
     EIT_None        UMETA(DisplayName = "None"),
-    EIT_Concussion  UMETA(DisplayName = "Concussion"),  // ³úÁøÅÁ(¸Ó¸®)
-    EIT_EyeDamage   UMETA(DisplayName = "EyeDamage"),   // ¾È±¸ ¼Õ»ó(¸Ó¸®)
-    EIT_Breathless  UMETA(DisplayName = "Breathless"),  // È£Èí°ï¶õ(¸öÅë)
-    EIT_ArmFracture UMETA(DisplayName = "ArmFracture"), // °ñÀı(ÆÈ)
-    EIT_LegFracture UMETA(DisplayName = "LegFracture"), // °ñÀı(´Ù¸®)
-    EIT_Bleeding    UMETA(DisplayName = "Bleeding")     // °ú´ÙÃâÇ÷(ºÎÀ§)
+    EIT_Concussion  UMETA(DisplayName = "Concussion"),  // ë‡Œì§„íƒ•(ë¨¸ë¦¬)
+    EIT_EyeDamage   UMETA(DisplayName = "EyeDamage"),   // ì•ˆêµ¬ ì†ìƒ(ë¨¸ë¦¬)
+    EIT_Breathless  UMETA(DisplayName = "Breathless"),  // í˜¸í¡ê³¤ë€(ëª¸í†µ)
+    EIT_ArmFracture UMETA(DisplayName = "ArmFracture"), // ê³¨ì ˆ(íŒ”)
+    EIT_LegFracture UMETA(DisplayName = "LegFracture"), // ê³¨ì ˆ(ë‹¤ë¦¬)
+    EIT_Bleeding    UMETA(DisplayName = "Bleeding")     // ê³¼ë‹¤ì¶œí˜ˆ(ë¶€ìœ„)
 };
 
-/* ºÎ»ó Á¾·ùÀÇ Á¤º¸¸¦ ÀúÀåÇÑ ±¸Á¶Ã¼ */
+/* ë¶€ìƒ ì¢…ë¥˜ì˜ ì •ë³´ë¥¼ ì €ì¥í•œ êµ¬ì¡°ì²´ */
 USTRUCT(BlueprintType)
 struct FInjuryEntry
 {
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    EInjuryType type = EInjuryType::EIT_None; // ºÎ»ó Á¾·ù
+    EInjuryType type = EInjuryType::EIT_None; // ë¶€ìƒ ì¢…ë¥˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float chance = 0.f; // ºÎ»ó ¹ßµ¿ È®·ü
+    float chance = 0.f; // ë¶€ìƒ ë°œë™ í™•ë¥ 
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart")
-    bool bActive = false; // ÇöÀç È°¼º ¿©ºÎ
+    bool bActive = false; // í˜„ì¬ í™œì„± ì—¬ë¶€
 };
 
-/* ºÎÀ§ÀÇ ÇöÀç »óÅÂ Á¤º¸¸¦ ÀúÀåÇÑ ±¸Á¶Ã¼ */
+/* ë¶€ìœ„ì˜ í˜„ì¬ ìƒíƒœ ì •ë³´ë¥¼ ì €ì¥í•œ êµ¬ì¡°ì²´ */
 USTRUCT(BlueprintType)
 struct FBodyPartState
 {
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float maxHealth = 100.f; // ºÎÀ§ ÃÖ´ë Ã¼·Â
+    float maxHealth = 100.f; // ë¶€ìœ„ ìµœëŒ€ ì²´ë ¥
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart")
-    float baseMaxHealth = 0.f; // Àåºñ º¸Á¤À» Á¦¿ÜÇÑ ¿øº» ÃÖ´ë Ã¼·Â
+    float baseMaxHealth = 0.f; // ì¥ë¹„ ë³´ì •ì„ ì œì™¸í•œ ì›ë³¸ ìµœëŒ€ ì²´ë ¥
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart")
-    float dataMaxHealth = 0.f; // µ¥ÀÌÅÍ Å×ÀÌºí ¿øº» ÃÖ´ë Ã¼·Â
+    float dataMaxHealth = 0.f; // ë°ì´í„° í…Œì´ë¸” ì›ë³¸ ìµœëŒ€ ì²´ë ¥
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart")
-    float health = 100.f; // ºÎÀ§ ÇöÀç Ã¼·Â
+    float health = 100.f; // ë¶€ìœ„ í˜„ì¬ ì²´ë ¥
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float baseHealthRegenRate = 0.f; // ºÎÀ§ ±âº» »ı¸í·Â º¯µ¿ ¼Óµµ
+    float baseHealthRegenRate = 0.f; // ë¶€ìœ„ ê¸°ë³¸ ìƒëª…ë ¥ ë³€ë™ ì†ë„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float flatHealthRegenAdd = 0.f; // ºÎÀ§ ÇÕ¿¬»ê Àç»ı·Â
+    float flatHealthRegenAdd = 0.f; // ë¶€ìœ„ í•©ì—°ì‚° ì¬ìƒë ¥
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float multHealthRegenAdd = 0.f; // ºÎÀ§ °ö¿¬»ê Àç»ı·Â
+    float multHealthRegenAdd = 0.f; // ë¶€ìœ„ ê³±ì—°ì‚° ì¬ìƒë ¥
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart|Regen")
-    float finalHealthRegenRate = 0.f; // ºÎÀ§ ÃÖÁ¾ »ı¸í·Â º¯µ¿ ¼Óµµ
+    float finalHealthRegenRate = 0.f; // ë¶€ìœ„ ìµœì¢… ìƒëª…ë ¥ ë³€ë™ ì†ë„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Injury")
-    TArray<FInjuryEntry> injuries; // ºÎÀ§°¡ °¡Áú ¼ö ÀÖ´Â ºÎ»ó ¸ñ·Ï
+    TArray<FInjuryEntry> injuries; // ë¶€ìœ„ê°€ ê°€ì§ˆ ìˆ˜ ìˆëŠ” ë¶€ìƒ ëª©ë¡
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart|Injury")
-    bool bInjured = false; // ÇöÀç ºÎ»ó »óÅÂÀÎÁö
+    bool bInjured = false; // í˜„ì¬ ë¶€ìƒ ìƒíƒœì¸ì§€
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BodyPart")
-    bool bDisabled = false; // ºÎÀ§ HP°¡ 0ÀÌ µÇ¾î »ç¿ë ºÒ°¡ »óÅÂÀÎÁö
+    bool bDisabled = false; // ë¶€ìœ„ HPê°€ 0ì´ ë˜ì–´ ì‚¬ìš© ë¶ˆê°€ ìƒíƒœì¸ì§€
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float partDamageMultiplier = 1.f; // ÃÖ´ë Ã¼·Â ºñ·Ê ´ë¹ÌÁö ¹èÀ²
+    float partDamageMultiplier = 1.f; // ìµœëŒ€ ì²´ë ¥ ë¹„ë¡€ ëŒ€ë¯¸ì§€ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float disturbWeight = 0.f; // °¨°¢ ±³¶õ ÃßÃ· °¡ÁßÄ¡
+    float disturbWeight = 0.f; // ê°ê° êµë€ ì¶”ì²¨ ê°€ì¤‘ì¹˜
 };
 
-/* ºÎÀ§ÀÇ »óÅÂ Á¤º¸¸¦ ÀúÀåÇÑ ±¸Á¶Ã¼ */
+/* ë¶€ìœ„ì˜ ìƒíƒœ ì •ë³´ë¥¼ ì €ì¥í•œ êµ¬ì¡°ì²´ */
 USTRUCT(BlueprintType)
 struct FBodyPartData : public FTableRowBase
 {
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float maxHealth = 100.f; // ºÎÀ§ ÃÖ´ë Ã¼·Â
+    float maxHealth = 100.f; // ë¶€ìœ„ ìµœëŒ€ ì²´ë ¥
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float partDamageMultiplier = 1.f; // ÃÖ´ë Ã¼·Â ºñ·Ê ´ë¹ÌÁö ¹èÀ²
+    float partDamageMultiplier = 1.f; // ìµœëŒ€ ì²´ë ¥ ë¹„ë¡€ ëŒ€ë¯¸ì§€ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart")
-    float disturbWeight = 0.f; // °¨°¢ ±³¶õ ÃßÃ· °¡ÁßÄ¡
+    float disturbWeight = 0.f; // ê°ê° êµë€ ì¶”ì²¨ ê°€ì¤‘ì¹˜
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float baseHealthRegenRate = 0.f; // ºÎÀ§ ±âº» »ı¸í·Â º¯µ¿ ¼Óµµ
+    float baseHealthRegenRate = 0.f; // ë¶€ìœ„ ê¸°ë³¸ ìƒëª…ë ¥ ë³€ë™ ì†ë„
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float flatHealthRegenAdd = 0.f; // ºÎÀ§ ÇÕ¿¬»ê Àç»ı·Â
+    float flatHealthRegenAdd = 0.f; // ë¶€ìœ„ í•©ì—°ì‚° ì¬ìƒë ¥
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Regen")
-    float multHealthRegenAdd = 0.f; // ºÎÀ§ °ö¿¬»ê Àç»ı·Â
+    float multHealthRegenAdd = 0.f; // ë¶€ìœ„ ê³±ì—°ì‚° ì¬ìƒë ¥
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BodyPart|Injury")
-    TArray<FInjuryEntry> injuries; // ºÎÀ§°¡ °¡Áú ¼ö ÀÖ´Â ºÎ»ó ¸ñ·Ï
+    TArray<FInjuryEntry> injuries; // ë¶€ìœ„ê°€ ê°€ì§ˆ ìˆ˜ ìˆëŠ” ë¶€ìƒ ëª©ë¡
 };
 
-/* ºÎ»óÀ¸·Î ¹ß»ıÇÑ 2Â÷ È¿°ú¸¦ ÀúÀåÇÑ ±¸Á¶Ã¼ */
+/* ë¶€ìƒìœ¼ë¡œ ë°œìƒí•œ 2ì°¨ íš¨ê³¼ë¥¼ ì €ì¥í•œ êµ¬ì¡°ì²´ */
 USTRUCT(BlueprintType)
 struct FInjuryData : public FTableRowBase
 {
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float attackRateMultiplier = 1.f; // ÀÏ¹İ °ø°İ ¼Óµµ ¹èÀ²
+    float attackRateMultiplier = 1.f; // ì¼ë°˜ ê³µê²© ì†ë„ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float strongAttackChargingTimeMultiplier = 1.f; // °­°ø°İ Â÷Â¡ ½Ã°£ ¹èÀ²
+    float strongAttackChargingTimeMultiplier = 1.f; // ê°•ê³µê²© ì°¨ì§• ì‹œê°„ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float dodgeDistanceMultiplier = 1.f; // ±¸¸£±â ÀÌµ¿ °Å¸® ¹èÀ²
+    float dodgeDistanceMultiplier = 1.f; // êµ¬ë¥´ê¸° ì´ë™ ê±°ë¦¬ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float lockOnRangeMultiplier = 1.f; // ¶ô¿Â °Å¸® ¹èÀ²
+    float lockOnRangeMultiplier = 1.f; // ë½ì˜¨ ê±°ë¦¬ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float staminaRegenMultiplier = 1.f; // ½ºÅÂ¹Ì³ª È¸º¹ ¹èÀ²
+    float staminaRegenMultiplier = 1.f; // ìŠ¤íƒœë¯¸ë‚˜ íšŒë³µ ë°°ìœ¨
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float moveHpCost = 0.f; // ÀÌµ¿/±¸¸£±â ÃÊ´ç ÀÚÇØ HP
+    float moveHpCost = 0.f; // ì´ë™/êµ¬ë¥´ê¸° ì´ˆë‹¹ ìí•´ HP
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float actionDelay = 0.f; // ¾×¼Ç °£ Ãß°¡ µô·¹ÀÌ
+    float actionDelay = 0.f; // ì•¡ì…˜ ê°„ ì¶”ê°€ ë”œë ˆì´
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float onHitSelfHpCost = 0.f; // ¹«±â È÷Æ®´ç ÀÚÇØ HP
+    float onHitSelfHpCost = 0.f; // ë¬´ê¸° íˆíŠ¸ë‹¹ ìí•´ HP
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Injury")
-    float onActivateChaosLossRatio = 0.f; // ¹ßµ¿ Áï½Ã °¨¼ÒµÇ´Â È¥µ· ºñÀ²
+    float onActivateChaosLossRatio = 0.f; // ë°œë™ ì¦‰ì‹œ ê°ì†Œë˜ëŠ” í˜¼ëˆ ë¹„ìœ¨
 };

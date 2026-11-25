@@ -1,4 +1,4 @@
-#include "Staging/FogEffectActor.h"
+﻿#include "Staging/FogEffectActor.h"
 #include "Windless/DebugMacro.h"
 #include "Engine/ExponentialHeightFog.h"
 #include "Components/ExponentialHeightFogComponent.h"

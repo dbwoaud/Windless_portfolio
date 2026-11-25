@@ -1,4 +1,4 @@
-#include "UI/BodyPartRadialWidget.h"
+﻿#include "UI/BodyPartRadialWidget.h"
 #include "UI/QuickSlot/BodyPartSectorWidget.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"

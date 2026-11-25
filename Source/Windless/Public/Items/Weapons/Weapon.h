@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Items.h"
@@ -19,118 +19,118 @@ class WINDLESS_API AWeapon : public AItems
 public:
 	AWeapon();
 
-	/* ¹«±â(ÀåÂø) */
-	void Equip(USceneComponent* inParent, FName inSocketName, AActor* newOwner, APawn* newInstigator); // ¹«±â¸¦ ÀåÂøÇÏ´Â ÇÔ¼ö
-	void ApplyItemData(const FItemData& data); // ¾ÆÀÌÅÛ ¿øº» µ¥ÀÌÅÍ·Î ¹«±â Å¸ÀÔ/°¡µå¼öÄ¡¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void AttachMeshToSocket(USceneComponent* inParent, const FName& inSocketName); // ¼ÒÄÏ¿¡ ¹«±â¸¦ ºÙÀÌ´Â ÇÔ¼ö
-	void PlayEquipSound(); // ¹«±â ÀåÂø »ç¿îµå¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	void DisableSphereCollision(); // ¹«±â Äİ¶óÀÌ´õ¸¦ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
-	void DeactivateEmbers(); // ¹«±â VFX¸¦ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(ì¥ì°©) */
+	void Equip(USceneComponent* inParent, FName inSocketName, AActor* newOwner, APawn* newInstigator); // ë¬´ê¸°ë¥¼ ì¥ì°©í•˜ëŠ” í•¨ìˆ˜
+	void ApplyItemData(const FItemData& data); // ì•„ì´í…œ ì›ë³¸ ë°ì´í„°ë¡œ ë¬´ê¸° íƒ€ì…/ê°€ë“œìˆ˜ì¹˜ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void AttachMeshToSocket(USceneComponent* inParent, const FName& inSocketName); // ì†Œì¼“ì— ë¬´ê¸°ë¥¼ ë¶™ì´ëŠ” í•¨ìˆ˜
+	void PlayEquipSound(); // ë¬´ê¸° ì¥ì°© ì‚¬ìš´ë“œë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	void DisableSphereCollision(); // ë¬´ê¸° ì½œë¼ì´ë”ë¥¼ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
+	void DeactivateEmbers(); // ë¬´ê¸° VFXë¥¼ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¹«±â(°ø°İ) */
-	void PlayGuardSound(); // °¡µå ¼º°ø »ç¿îµå¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	TArray<AActor*> ignoreActors; // Áßº¹ Å¸°İÀ» ¹æÁö ¸ñ·Ï
-	void SetHitOverride(const FWeaponHitOverride& inHitOverride); // ¸ó½ºÅÍ µ¥ÀÌÅÍ °ø°İÀ¸·Î ÆÇÁ¤ °ªÀ» µ¤¾î¾²´Â ÇÔ¼ö
-	void ClearHitOverride(); // ÆÇÁ¤°ª µ¤¾î¾²±â¸¦ ÇØÁ¦ÇÏ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(ê³µê²©) */
+	void PlayGuardSound(); // ê°€ë“œ ì„±ê³µ ì‚¬ìš´ë“œë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	TArray<AActor*> ignoreActors; // ì¤‘ë³µ íƒ€ê²©ì„ ë°©ì§€ ëª©ë¡
+	void SetHitOverride(const FWeaponHitOverride& inHitOverride); // ëª¬ìŠ¤í„° ë°ì´í„° ê³µê²©ìœ¼ë¡œ íŒì • ê°’ì„ ë®ì–´ì“°ëŠ” í•¨ìˆ˜
+	void ClearHitOverride(); // íŒì •ê°’ ë®ì–´ì“°ê¸°ë¥¼ í•´ì œí•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
-	// ´Ù¸¥ ¾×ÅÍ¿Í overlap ÁßÀÏ ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö 
+	// ë‹¤ë¥¸ ì•¡í„°ì™€ overlap ì¤‘ì¼ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜ 
 	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 
-	/* »óÅÂ È®ÀÎ */
-	bool ActorIsSameType(AActor* OtherActor); // ¹«±â ¼ÒÀ¯ ¾×ÅÍ°¡ ¾Æ±ºÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* ìƒíƒœ í™•ì¸ */
+	bool ActorIsSameType(AActor* OtherActor); // ë¬´ê¸° ì†Œìœ  ì•¡í„°ê°€ ì•„êµ°ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¹«±â(°ø°İ) */
+	/* ë¬´ê¸°(ê³µê²©) */
 	UFUNCTION(BlueprintImplementableEvent) 
-	void CreateFields(const FVector& fieldLocation); // ¹«±â °ø°İ ½Ã ÇÊµå¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
+	void CreateFields(const FVector& fieldLocation); // ë¬´ê¸° ê³µê²© ì‹œ í•„ë“œë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¹«±â(´ë¹ÌÁö) */
-	float GetOwnerAttackPower() const; // ¼ÒÀ¯ Ä³¸¯ÅÍÀÇ ÃÖÁ¾ °ø°İ·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(ëŒ€ë¯¸ì§€) */
+	float GetOwnerAttackPower() const; // ì†Œìœ  ìºë¦­í„°ì˜ ìµœì¢… ê³µê²©ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¹«±â(ÇÇ°İ) */
-	void ExecuteGetHit(FHitResult& boxHit); // ¹«±â ÇÇ°İ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(í”¼ê²©) */
+	void ExecuteGetHit(FHitResult& boxHit); // ë¬´ê¸° í”¼ê²© ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
 
 private:
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties|Trace")
-	UBoxComponent* weaponBox; // ¹Ú½º Äİ¶óÀÌ´õ ÄÄÆ÷³ÍÆ®
+	UBoxComponent* weaponBox; // ë°•ìŠ¤ ì½œë¼ì´ë” ì»´í¬ë„ŒíŠ¸
 
 
-	/* ¹«±â Á¤º¸ */
-	FName sourceItemId = NAME_None; // ¹«±â ¾ÆÀÌÅÛ ID
+	/* ë¬´ê¸° ì •ë³´ */
+	FName sourceItemId = NAME_None; // ë¬´ê¸° ì•„ì´í…œ ID
 
 
-	/* ¹«±â(ÀåÂø) */
+	/* ë¬´ê¸°(ì¥ì°©) */
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Properties|Socket")
-	FName handSocketOverride = NAME_None; // ¼Õ ¼ÒÄÏ
+	FName handSocketOverride = NAME_None; // ì† ì†Œì¼“
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Sound")
-	USoundBase* equipSound; // ÀåÂø È¿°úÀ½
+	USoundBase* equipSound; // ì¥ì°© íš¨ê³¼ìŒ
 
 
-	/* ¹«±â(°ø°İ) */
+	/* ë¬´ê¸°(ê³µê²©) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true"))
-	EWeaponType weaponType = EWeaponType::EWT_OneHanded; // ¹«±â Á¾·ù
+	EWeaponType weaponType = EWeaponType::EWT_OneHanded; // ë¬´ê¸° ì¢…ë¥˜
 
-	EAttackType currentAttackType = EAttackType::EAT_Light; // ÇöÀç °ø°İ Å¸ÀÔ 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true"))
-	FAttackSpec lightAttack; // ¾à°ø°İ ¼³Á¤°ª
+	EAttackType currentAttackType = EAttackType::EAT_Light; // í˜„ì¬ ê³µê²© íƒ€ì… 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true"))
-	FAttackSpec heavyAttack; // °­°ø°İ ¼³Á¤°ª
+	FAttackSpec lightAttack; // ì•½ê³µê²© ì„¤ì •ê°’
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true"))
-	FAttackSpec jumpAttack; // Á¡ÇÁ °ø°İ ¼³Á¤°ª
+	FAttackSpec heavyAttack; // ê°•ê³µê²© ì„¤ì •ê°’
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true"))
+	FAttackSpec jumpAttack; // ì í”„ ê³µê²© ì„¤ì •ê°’
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties|Attack", meta = (AllowPrivateAccess = "true", ClampMin = "-1.0", ClampMax = "1.0"))
-	float injuryChance = -1.f; // °ø°İ ±âº» ºÎ»ó È®·ü
+	float injuryChance = -1.f; // ê³µê²© ê¸°ë³¸ ë¶€ìƒ í™•ë¥ 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties|Guard", meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "180.0"))
-	float guardAngle = 70.f; // °¡µå ¹İ°¢
+	float guardAngle = 70.f; // ê°€ë“œ ë°˜ê°
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties|Guard", meta = (AllowPrivateAccess = "true", ClampMin = "0.0"))
-	float guardValue = 0.f; // °¡µå ¼öÄ¡
+	float guardValue = 0.f; // ê°€ë“œ ìˆ˜ì¹˜
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Sound")
-	USoundBase* guardSound; // °¡µå È¿°úÀ½
+	USoundBase* guardSound; // ê°€ë“œ íš¨ê³¼ìŒ
 
 
-	/* ¹«±â(´ë¹ÌÁö) */
-	float CalculateCurrentDamage() const; // ÇöÀç °ø°İ Á¾·ùÀÇ ÃÖÁ¾ ´ë¹ÌÁö¸¦ °è»êÇÏ´Â ÇÔ¼ö
-	FCombatHitInfo BuildHitInfo(const FHitResult& boxHit); // Å¸°İ ÆÇÁ¤ Á¤º¸¸¦ ±¸¼ºÇÏ´Â ÇÔ¼ö
-	TOptional<FWeaponHitOverride> hitOverride; // ÆÇÁ¤°ª µ¤¾î¾²±â
+	/* ë¬´ê¸°(ëŒ€ë¯¸ì§€) */
+	float CalculateCurrentDamage() const; // í˜„ì¬ ê³µê²© ì¢…ë¥˜ì˜ ìµœì¢… ëŒ€ë¯¸ì§€ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	FCombatHitInfo BuildHitInfo(const FHitResult& boxHit); // íƒ€ê²© íŒì • ì •ë³´ë¥¼ êµ¬ì„±í•˜ëŠ” í•¨ìˆ˜
+	TOptional<FWeaponHitOverride> hitOverride; // íŒì •ê°’ ë®ì–´ì“°ê¸°
 
 
-	/* ¹«±â(ÇÇ°İ) */
-	bool ApplyHitToTarget(const FHitResult& boxHit); // ´ë»ó¿¡°Ô ÇÇ°İÀ» Àû¿ëÇÏ´Â ÇÔ¼ö
-	bool ApplyHitToCharacter(ABaseCharacter* hitCharacter, const FHitResult& boxHit); // Ä³¸¯ÅÍ¿¡°Ô ÇÇ°İÀ» Àû¿ëÇÏ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(í”¼ê²©) */
+	bool ApplyHitToTarget(const FHitResult& boxHit); // ëŒ€ìƒì—ê²Œ í”¼ê²©ì„ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	bool ApplyHitToCharacter(ABaseCharacter* hitCharacter, const FHitResult& boxHit); // ìºë¦­í„°ì—ê²Œ í”¼ê²©ì„ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¹«±â(ÃßÀû) */
-	void BoxTrace(FHitResult& boxhit); // ¹Ú½º ÃßÀûÀ¸·Î Å¸°İ ÁöÁ¡À» °è»êÇÏ´Â ÇÔ¼ö
+	/* ë¬´ê¸°(ì¶”ì ) */
+	void BoxTrace(FHitResult& boxhit); // ë°•ìŠ¤ ì¶”ì ìœ¼ë¡œ íƒ€ê²© ì§€ì ì„ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties|Trace") // ¹Ú½º ÃßÀûÀÇ ½ÃÀÛ ÁöÁ¡
+	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties|Trace") // ë°•ìŠ¤ ì¶”ì ì˜ ì‹œì‘ ì§€ì 
 	USceneComponent* boxTraceStart;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties|Trace") // ¹Ú½º ÃßÀûÀÇ ³¡ ÁöÁ¡
+	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties|Trace") // ë°•ìŠ¤ ì¶”ì ì˜ ë ì§€ì 
 	USceneComponent* boxTraceEnd;
 
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Trace") // ÃßÀû ¹Ú½ºÀÇ Å©±â
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Trace") // ì¶”ì  ë°•ìŠ¤ì˜ í¬ê¸°
 	FVector boxTraceExtent = FVector(5.f);
 
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Trace") // ½Ã°¢È­ º¯¼ö(µğ¹ö±×¿ë)
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties|Trace") // ì‹œê°í™” ë³€ìˆ˜(ë””ë²„ê·¸ìš©)
 	bool bShowBoxDebug = false;
 
 public:
-	/* º¯¼öÀÇ Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE UBoxComponent* GetWeaponBox() const { return weaponBox; }
 	FORCEINLINE void SetCurrentAttackType(EAttackType attackType) { currentAttackType = attackType; }
 	FORCEINLINE EAttackType GetCurrentAttackType() const { return currentAttackType; }

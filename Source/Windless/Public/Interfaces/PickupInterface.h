@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
@@ -14,13 +14,13 @@ class UPickupInterface : public UInterface
 	GENERATED_BODY()
 };
 
-// Áİ±â °¡´ÉÇÑ ¾×ÅÍ¸¦ Á¤ÀÇÇÏ´Â ÀÎÅÍÆäÀÌ½º 
+// ì¤ê¸° ê°€ëŠ¥í•œ ì•¡í„°ë¥¼ ì •ì˜í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤ 
 class WINDLESS_API IPickupInterface
 {
 	GENERATED_BODY()
 
 public:
-	virtual void SetOverlappingItem(AItems* item); // overlapµÈ ¾ÆÀÌÅÛÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	virtual void AddSouls(ASoul* soul); // ¾ÆÀÌÅÛÀ» ÁÖ¿ï ½Ã ¼Ò¿ïÀ» È¹µæÇÏ´Â ÇÔ¼ö
-	virtual void AddGold(ATreasure* treasure); // ¾ÆÀÌÅÛÀ» ÁÖ¿ï ½Ã °ñµå¸¦ È¹µæÇÏ´Â ÇÔ¼ö
+	virtual void SetOverlappingItem(AItems* item); // overlapëœ ì•„ì´í…œì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	virtual void AddSouls(ASoul* soul); // ì•„ì´í…œì„ ì£¼ìš¸ ì‹œ ì†Œìš¸ì„ íšë“í•˜ëŠ” í•¨ìˆ˜
+	virtual void AddGold(ATreasure* treasure); // ì•„ì´í…œì„ ì£¼ìš¸ ì‹œ ê³¨ë“œë¥¼ íšë“í•˜ëŠ” í•¨ìˆ˜
 };

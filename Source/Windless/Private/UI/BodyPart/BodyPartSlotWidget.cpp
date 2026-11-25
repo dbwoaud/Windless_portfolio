@@ -1,4 +1,4 @@
-#include "UI/BodyPart/BodyPartSlotWidget.h"
+﻿#include "UI/BodyPart/BodyPartSlotWidget.h"
 #include "UI/InventoryWidget.h"
 #include "UI/ItemDragDrop.h"
 #include "Characters/WindlessCharacter.h"

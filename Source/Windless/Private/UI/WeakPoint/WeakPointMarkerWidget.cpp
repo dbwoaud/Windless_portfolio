@@ -1,4 +1,4 @@
-#include "UI/WeakPoint/WeakPointMarkerWidget.h"
+﻿#include "UI/WeakPoint/WeakPointMarkerWidget.h"
 #include "Components/TextBlock.h"
 
 void UWeakPointMarkerWidget::SetupWarning(int32 weakPointCount)

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
@@ -18,41 +18,41 @@ public:
 	virtual void NativeUpdateAnimation(float deltaTime) override;
 
 	UPROPERTY(BlueprintReadOnly)
-	AWindlessCharacter* windlessCharacter; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÎ½ºÅÏ½º
+	AWindlessCharacter* windlessCharacter; // í”Œë ˆì´ì–´ ìºë¦­í„° ì¸ìŠ¤í„´ìŠ¤
 
 	UPROPERTY(BlueprintReadOnly, Category = State)
-	ECharacterState characterState; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¹«±â ÀåÂø »óÅÂ
+	ECharacterState characterState; // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ë¬´ê¸° ì¥ì°© ìƒíƒœ
 
 	UPROPERTY(BlueprintReadOnly, Category = State)
-	EActionState actionState; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ »óÅÂ
+	EActionState actionState; // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ìƒíƒœ
 
 	UPROPERTY(BlueprintReadOnly, Category = "State|Death")
-	TEnumAsByte<EDeathPose> deathPose; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç Æ÷Áî ¸ñ·Ï
+	TEnumAsByte<EDeathPose> deathPose; // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ í¬ì¦ˆ ëª©ë¡
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	UCharacterMovementComponent* windlessCharacterMovement; //ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÎ½ºÅÏ½ºÀÇ ÀÌµ¿ ÄÄÆ÷³ÍÆ®
+	UCharacterMovementComponent* windlessCharacterMovement; //í”Œë ˆì´ì–´ ìºë¦­í„° ì¸ìŠ¤í„´ìŠ¤ì˜ ì´ë™ ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	float groundSpeed; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ÇöÀç ¼Óµµ
+	float groundSpeed; // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ í˜„ì¬ ì†ë„
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	bool isFalling; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ Ãß¶ô ÁßÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool isFalling; // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ì¶”ë½ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	bool isCrouched; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ¼÷ÀÎ »óÅÂÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool isCrouched; // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ìˆ™ì¸ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	bool isMounted; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ Å¾½Â »óÅÂÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool isMounted; // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ íƒ‘ìŠ¹ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	bool bIsStrafing; // ¶ô¿Â »óÅÂÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool bIsStrafing; // ë½ì˜¨ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
-	float moveDirection; // Ä³¸¯ÅÍ ÀÌµ¿ ¹æÇâ
+	float moveDirection; // ìºë¦­í„° ì´ë™ ë°©í–¥
 
 	UPROPERTY(BlueprintReadOnly, Category = Combat)
-	bool bIsGuarding; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ °¡µå ÁßÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool bIsGuarding; // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ê°€ë“œ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = Combat)
-	bool bGuardOnLeft; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ °¡µå ¼ÕÀÌ ¿Ş¼ÕÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool bGuardOnLeft; // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ê°€ë“œ ì†ì´ ì™¼ì†ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 };

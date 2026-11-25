@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
@@ -27,166 +27,166 @@ class WINDLESS_API UInventoryWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	/* ¿ìÅ¬¸¯ ÆË¾÷ ½Ã½ºÅÛ */
-	void OpenContextMenu(UInventoryComponent* inventory, int64 uid, EEquipSlot slot, const FVector2D& screenPos); // ¿ìÅ¬¸¯ ÆË¾÷À» ¿©´Â ÇÔ¼ö
-	void CloseContextMenu(); // ¿ìÅ¬¸¯ ÆË¾÷À» ´İ´Â ÇÔ¼ö
-	void OpenSplitPopup(UInventoryComponent* inventory, int64 uid, int32 targetX = -1, int32 targetY = -1, bool bRotated = false);  // ³ª´©±â ÆË¾÷À» ¿©´Â ÇÔ¼ö
-	void CloseSplitPopup(); // ³ª´©±â ÆË¾÷À» ´İ´Â ÇÔ¼ö
-	void OpenInfoPopup(UInventoryComponent* inventory, int64 uid); // Á¤º¸ ÆË¾÷À» ¿©´Â ÇÔ¼ö
-	void CloseInfoPopup(); // Á¤º¸ ÆË¾÷À» ´İ´Â ÇÔ¼ö
-	void CloseAllPopups(); // ¸ğµç ÆË¾÷À» ´İ´Â ÇÔ¼ö
+	/* ìš°í´ë¦­ íŒì—… ì‹œìŠ¤í…œ */
+	void OpenContextMenu(UInventoryComponent* inventory, int64 uid, EEquipSlot slot, const FVector2D& screenPos); // ìš°í´ë¦­ íŒì—…ì„ ì—¬ëŠ” í•¨ìˆ˜
+	void CloseContextMenu(); // ìš°í´ë¦­ íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
+	void OpenSplitPopup(UInventoryComponent* inventory, int64 uid, int32 targetX = -1, int32 targetY = -1, bool bRotated = false);  // ë‚˜ëˆ„ê¸° íŒì—…ì„ ì—¬ëŠ” í•¨ìˆ˜
+	void CloseSplitPopup(); // ë‚˜ëˆ„ê¸° íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
+	void OpenInfoPopup(UInventoryComponent* inventory, int64 uid); // ì •ë³´ íŒì—…ì„ ì—¬ëŠ” í•¨ìˆ˜
+	void CloseInfoPopup(); // ì •ë³´ íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
+	void CloseAllPopups(); // ëª¨ë“  íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintPure, Category = "Inventory|Popup")
-	bool IsAnyPopupOpen() const; // ÆË¾÷ÀÌ ÇÏ³ª¶óµµ ¿­·Á ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	bool IsAnyPopupOpen() const; // íŒì—…ì´ í•˜ë‚˜ë¼ë„ ì—´ë ¤ ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* È£¹ö Á¤º¸ ÆË¾÷ ½Ã½ºÅÛ */
-	void SetHoveredItem(UInventoryComponent* inventory, int64 uid); // ¸¶¿ì½º°¡ ¿Ã¶ó°£ ¾ÆÀÌÅÛÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void BeginHoverInfo(UInventoryComponent* inventory, int64 uid); // È£¹ö Á¤º¸ ÆË¾÷ Ç¥½Ã ´ë±â¸¦ ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void CancelHoverInfo(); // È£¹ö ´ë±â¸¦ Ãë¼ÒÇÏ°í È£¹ö Á¤º¸ ÆË¾÷À» ´İ´Â ÇÔ¼ö
-
-	UPROPERTY()
-	TObjectPtr<UInventoryComponent> hoveredInventory = nullptr; // È£¹öµÈ ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ®
+	/* í˜¸ë²„ ì •ë³´ íŒì—… ì‹œìŠ¤í…œ */
+	void SetHoveredItem(UInventoryComponent* inventory, int64 uid); // ë§ˆìš°ìŠ¤ê°€ ì˜¬ë¼ê°„ ì•„ì´í…œì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void BeginHoverInfo(UInventoryComponent* inventory, int64 uid); // í˜¸ë²„ ì •ë³´ íŒì—… í‘œì‹œ ëŒ€ê¸°ë¥¼ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void CancelHoverInfo(); // í˜¸ë²„ ëŒ€ê¸°ë¥¼ ì·¨ì†Œí•˜ê³  í˜¸ë²„ ì •ë³´ íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
 
 	UPROPERTY()
-	TObjectPtr<UInventoryComponent> pendingHoverInventory = nullptr;   // È£¹ö º¸·ù ÁßÀÎ ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ®
+	TObjectPtr<UInventoryComponent> hoveredInventory = nullptr; // í˜¸ë²„ëœ ì¸ë²¤í† ë¦¬ ì»´í¬ë„ŒíŠ¸
+
+	UPROPERTY()
+	TObjectPtr<UInventoryComponent> pendingHoverInventory = nullptr;   // í˜¸ë²„ ë³´ë¥˜ ì¤‘ì¸ ì¸ë²¤í† ë¦¬ ì»´í¬ë„ŒíŠ¸
 
 
-	/* ±×¸®µå */
-	void SetStorageInventory(UInventoryComponent* storage); // Ã¢°í ÀÎº¥Åä¸®¸¦ ¿¬°áÇÏ´Â ÇÔ¼ö
-	void RefreshAllGrids(); // ¸ğµç ±×¸®µå¸¦ °»½ÅÇÏ´Â ÇÔ¼ö
-	float GetCellSize() const; // ÇÃ·¹ÀÌ¾î ±×¸®µåÀÇ ¼¿ Å©±â¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	void HideAllPlacementHighlights(); // ¸ğµç ±×¸®µåÀÇ ¹èÄ¡ ÇÏÀÌ¶óÀÌÆ®¸¦ ¼û±â´Â ÇÔ¼ö
+	/* ê·¸ë¦¬ë“œ */
+	void SetStorageInventory(UInventoryComponent* storage); // ì°½ê³  ì¸ë²¤í† ë¦¬ë¥¼ ì—°ê²°í•˜ëŠ” í•¨ìˆ˜
+	void RefreshAllGrids(); // ëª¨ë“  ê·¸ë¦¬ë“œë¥¼ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	float GetCellSize() const; // í”Œë ˆì´ì–´ ê·¸ë¦¬ë“œì˜ ì…€ í¬ê¸°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	void HideAllPlacementHighlights(); // ëª¨ë“  ê·¸ë¦¬ë“œì˜ ë°°ì¹˜ í•˜ì´ë¼ì´íŠ¸ë¥¼ ìˆ¨ê¸°ëŠ” í•¨ìˆ˜
 
 
-	/* ºü¸¥ º¸°ü ½Ã½ºÅÛ */
-	bool RequestQuickTransfer(UInventoryComponent* source, int64 instanceUID); // ºü¸¥ º¸°üÀ» ¼öÇàÇÏ´Â ÇÔ¼ö
-	UInventoryComponent* GetQuickTransferTarget(UInventoryComponent* source) const; // ºü¸¥ º¸°ü ´ë»ó ÄÁÅ×ÀÌ³Ê¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ë¹ ë¥¸ ë³´ê´€ ì‹œìŠ¤í…œ */
+	bool RequestQuickTransfer(UInventoryComponent* source, int64 instanceUID); // ë¹ ë¥¸ ë³´ê´€ì„ ìˆ˜í–‰í•˜ëŠ” í•¨ìˆ˜
+	UInventoryComponent* GetQuickTransferTarget(UInventoryComponent* source) const; // ë¹ ë¥¸ ë³´ê´€ ëŒ€ìƒ ì»¨í…Œì´ë„ˆë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
-	/* ºÎÀ§ »ç¿ë ½Ã½ºÅÛ */
-	void BeginConsumableDrag(UItemDragDrop* op); // ¼Ò¸ğÇ° µå·¡±× ½ÃÀÛ ½Ã ºÎÀ§ »ç¿ë ¸ğµå·Î ÀüÈ¯ÇÏ´Â ÇÔ¼ö
-	void SetBodyPartModeActive(bool bActive); // ºÎÀ§ »ç¿ë ¸ğµå¸¦ ÄÑ°í ²ô´Â ÇÔ¼ö
+	/* ë¶€ìœ„ ì‚¬ìš© ì‹œìŠ¤í…œ */
+	void BeginConsumableDrag(UItemDragDrop* op); // ì†Œëª¨í’ˆ ë“œë˜ê·¸ ì‹œì‘ ì‹œ ë¶€ìœ„ ì‚¬ìš© ëª¨ë“œë¡œ ì „í™˜í•˜ëŠ” í•¨ìˆ˜
+	void SetBodyPartModeActive(bool bActive); // ë¶€ìœ„ ì‚¬ìš© ëª¨ë“œë¥¼ ì¼œê³  ë„ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeOnInitialized() override;
 	virtual void NativeDestruct() override;
-	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ¸¶¿ì½º ¹öÆ° Å¬¸¯ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual FReply NativeOnMouseButtonUp(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;   // ¸¶¿ì½º ¹öÆ° Å¬¸¯ ¿Ï·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override; // Å° ¹öÆ° Å¬¸¯ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ë§ˆìš°ìŠ¤ ë²„íŠ¼ í´ë¦­ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual FReply NativeOnMouseButtonUp(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;   // ë§ˆìš°ìŠ¤ ë²„íŠ¼ í´ë¦­ ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override; // í‚¤ ë²„íŠ¼ í´ë¦­ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀÎº¥Åä¸® */
+	/* ì¸ë²¤í† ë¦¬ */
 	UFUNCTION()
-	void HandleInventoryChanged(); // ÀÎº¥Åä¸® »óÅÂ º¯°æ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-
-	UFUNCTION()
-	void HandleEquipmentChanged(); // ÀåÂø »óÅÂ º¯°æ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	void HandleInventoryChanged(); // ì¸ë²¤í† ë¦¬ ìƒíƒœ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION()
-	void HandleQuickSlotChanged(EQuickSlot quickSlot); // Äü½½·Ô º¯°æ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	void HandleEquipmentChanged(); // ì¥ì°© ìƒíƒœ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
-	/* ºÎÀ§ »ç¿ë ½Ã½ºÅÛ */
 	UFUNCTION()
-	void HandleConsumableDragEnded(UDragDropOperation* operation); // ¼Ò¸ğÇ° µå·¡±×°¡ ³¡³µÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	void HandleQuickSlotChanged(EQuickSlot quickSlot); // í€µìŠ¬ë¡¯ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+
+	/* ë¶€ìœ„ ì‚¬ìš© ì‹œìŠ¤í…œ */
+	UFUNCTION()
+	void HandleConsumableDragEnded(UDragDropOperation* operation); // ì†Œëª¨í’ˆ ë“œë˜ê·¸ê°€ ëë‚¬ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 private:
-	/* ÃÊ±âÈ­ ÇïÆÛ ÇÔ¼ö */
-	void CollectEquipmentSlots(); // Àåºñ ½½·Ô À§Á¬À» ¼öÁıÇÏ´Â ÇÔ¼ö
-	void RefreshEquipmentSlots(); // ¼öÁıµÈ Àåºñ ½½·ÔÀ» ÀÏ°ı °»½ÅÇÏ´Â ÇÔ¼ö
-	void CollectConsumableSlots(); // ¼Ò¸ğÇ° ½½·Ô À§Á¬À» ¼öÁıÇÏ´Â ÇÔ¼ö
-	void RefreshConsumableSlots(); // ¼öÁıµÈ ¼Ò¸ğÇ° ½½·ÔÀ» ÀÏ°ı °»½ÅÇÏ´Â ÇÔ¼ö
-	void CollectBodyPartSlots(); // Æ®¸®¿¡¼­ ºÎÀ§ ½½·Ô À§Á¬À» ¼öÁıÇÏ´Â ÇÔ¼ö
-	void RefreshBodyPartSlots(); // ¼öÁıµÈ ºÎÀ§ ½½·ÔÀ» ÀÏ°ı °»½ÅÇÏ´Â ÇÔ¼ö
+	/* ì´ˆê¸°í™” í—¬í¼ í•¨ìˆ˜ */
+	void CollectEquipmentSlots(); // ì¥ë¹„ ìŠ¬ë¡¯ ìœ„ì ¯ì„ ìˆ˜ì§‘í•˜ëŠ” í•¨ìˆ˜
+	void RefreshEquipmentSlots(); // ìˆ˜ì§‘ëœ ì¥ë¹„ ìŠ¬ë¡¯ì„ ì¼ê´„ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void CollectConsumableSlots(); // ì†Œëª¨í’ˆ ìŠ¬ë¡¯ ìœ„ì ¯ì„ ìˆ˜ì§‘í•˜ëŠ” í•¨ìˆ˜
+	void RefreshConsumableSlots(); // ìˆ˜ì§‘ëœ ì†Œëª¨í’ˆ ìŠ¬ë¡¯ì„ ì¼ê´„ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void CollectBodyPartSlots(); // íŠ¸ë¦¬ì—ì„œ ë¶€ìœ„ ìŠ¬ë¡¯ ìœ„ì ¯ì„ ìˆ˜ì§‘í•˜ëŠ” í•¨ìˆ˜
+	void RefreshBodyPartSlots(); // ìˆ˜ì§‘ëœ ë¶€ìœ„ ìŠ¬ë¡¯ì„ ì¼ê´„ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Ä³½Ì º¯¼ö */
+	/* ìºì‹± ë³€ìˆ˜ */
 	UPROPERTY()
-	TObjectPtr<UInventoryComponent> owningInventory = nullptr; // ¼ÒÀ¯ÇÑ ÀÎº¥Åä¸® 
-
-	UPROPERTY()
-	TArray<TObjectPtr<UEquipmentSlotWidget>> equipmentSlots; // ¼öÁıµÈ Àåºñ ½½·Ô À§Á¬ ¹è¿­
+	TObjectPtr<UInventoryComponent> owningInventory = nullptr; // ì†Œìœ í•œ ì¸ë²¤í† ë¦¬ 
 
 	UPROPERTY()
-	TArray<TObjectPtr<UConsumableSlotWidget>> consumableSlots; // ¼öÁıµÈ ¼Ò¸ğÇ° ½½·Ô À§Á¬ ¹è¿­
+	TArray<TObjectPtr<UEquipmentSlotWidget>> equipmentSlots; // ìˆ˜ì§‘ëœ ì¥ë¹„ ìŠ¬ë¡¯ ìœ„ì ¯ ë°°ì—´
+
+	UPROPERTY()
+	TArray<TObjectPtr<UConsumableSlotWidget>> consumableSlots; // ìˆ˜ì§‘ëœ ì†Œëª¨í’ˆ ìŠ¬ë¡¯ ìœ„ì ¯ ë°°ì—´
 
 
-	/* ±×¸®µå */
+	/* ê·¸ë¦¬ë“œ */
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UItemGridWidget> playerGrid; // ÇÃ·¹ÀÌ¾î ÀÎº¥Åä¸® ±×¸®µå
+	TObjectPtr<UItemGridWidget> playerGrid; // í”Œë ˆì´ì–´ ì¸ë²¤í† ë¦¬ ê·¸ë¦¬ë“œ
 
 
-	/* ¾ÆÀÌÅÛ */
-	int64 hoveredUID = 0; // ÇöÀç ¸¶¿ì½º°¡ ¿Ã¶ó°£ ¾ÆÀÌÅÛ
+	/* ì•„ì´í…œ */
+	int64 hoveredUID = 0; // í˜„ì¬ ë§ˆìš°ìŠ¤ê°€ ì˜¬ë¼ê°„ ì•„ì´í…œ
 
 
-	/* ¿ìÅ¬¸¯ ÆË¾÷ ½Ã½ºÅÛ */
-	void ValidatePopupTargets(); // ´ë»ó ¾ÆÀÌÅÛÀÌ »ç¶óÁø ÆË¾÷À» ´İ´Â ÇÔ¼ö
-
-	UPROPERTY()
-	TObjectPtr<UInventoryComponent> popupInventory = nullptr; // ÇöÀç ÆË¾÷ÀÌ ´ë»óÀ¸·Î ÇÏ´Â ÀÎº¥Åä¸®
-
-	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
-	TSubclassOf<UMyItemContextMenuWidget> contextMenuClass; // ¿ìÅ¬¸¯ ÆË¾÷ À§Á¬ Å¬·¡½º
-
-	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
-	TSubclassOf<UItemSplitPopupWidget> splitPopupClass; // ³ª´©±â ÆË¾÷ À§Á¬ Å¬·¡½º
-
-	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
-	TSubclassOf<UItemInfoPopupWidget> infoPopupClass; // Á¤º¸ ÆË¾÷ À§Á¬ Å¬·¡½º
-
-	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
-	int32 popupZOrder = 100; // ÆË¾÷ ºäÆ÷Æ® Z ¼ø¼­
+	/* ìš°í´ë¦­ íŒì—… ì‹œìŠ¤í…œ */
+	void ValidatePopupTargets(); // ëŒ€ìƒ ì•„ì´í…œì´ ì‚¬ë¼ì§„ íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
 
 	UPROPERTY()
-	TObjectPtr<UMyItemContextMenuWidget> contextMenu = nullptr; // ÇöÀç ¿­¸° ¿ìÅ¬¸¯ ÆË¾÷
-
-	UPROPERTY()
-	TObjectPtr<UItemSplitPopupWidget> splitPopup = nullptr; // ÇöÀç ¿­¸° ³ª´©±â ÆË¾÷
-
-	UPROPERTY()
-	TObjectPtr<UItemInfoPopupWidget> infoPopup = nullptr; // ÇöÀç ¿­¸° Á¤º¸ ÆË¾÷
-
-
-	/* È£¹ö Á¤º¸ ÆË¾÷ ½Ã½ºÅÛ */
-	void ShowHoverInfo(); // ´ë±â ½Ã°£ °æ°ú ÈÄ È£¹ö Á¤º¸ ÆË¾÷À» ¿©´Â ÇÔ¼ö
-	void CloseHoverInfo(); // È£¹ö Á¤º¸ ÆË¾÷À» ´İ´Â ÇÔ¼ö
+	TObjectPtr<UInventoryComponent> popupInventory = nullptr; // í˜„ì¬ íŒì—…ì´ ëŒ€ìƒìœ¼ë¡œ í•˜ëŠ” ì¸ë²¤í† ë¦¬
 
 	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
-	TSubclassOf<UItemHoverInfoWidget> hoverInfoClass; // È£¹ö Á¤º¸ ÆË¾÷ À§Á¬ Å¬·¡½º
+	TSubclassOf<UMyItemContextMenuWidget> contextMenuClass; // ìš°í´ë¦­ íŒì—… ìœ„ì ¯ í´ë˜ìŠ¤
+
+	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
+	TSubclassOf<UItemSplitPopupWidget> splitPopupClass; // ë‚˜ëˆ„ê¸° íŒì—… ìœ„ì ¯ í´ë˜ìŠ¤
+
+	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
+	TSubclassOf<UItemInfoPopupWidget> infoPopupClass; // ì •ë³´ íŒì—… ìœ„ì ¯ í´ë˜ìŠ¤
+
+	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
+	int32 popupZOrder = 100; // íŒì—… ë·°í¬íŠ¸ Z ìˆœì„œ
 
 	UPROPERTY()
-	TObjectPtr<UItemHoverInfoWidget> hoverInfo = nullptr; // ÇöÀç ¿­¸° È£¹ö Á¤º¸ ÆË¾÷
+	TObjectPtr<UMyItemContextMenuWidget> contextMenu = nullptr; // í˜„ì¬ ì—´ë¦° ìš°í´ë¦­ íŒì—…
+
+	UPROPERTY()
+	TObjectPtr<UItemSplitPopupWidget> splitPopup = nullptr; // í˜„ì¬ ì—´ë¦° ë‚˜ëˆ„ê¸° íŒì—…
+
+	UPROPERTY()
+	TObjectPtr<UItemInfoPopupWidget> infoPopup = nullptr; // í˜„ì¬ ì—´ë¦° ì •ë³´ íŒì—…
+
+
+	/* í˜¸ë²„ ì •ë³´ íŒì—… ì‹œìŠ¤í…œ */
+	void ShowHoverInfo(); // ëŒ€ê¸° ì‹œê°„ ê²½ê³¼ í›„ í˜¸ë²„ ì •ë³´ íŒì—…ì„ ì—¬ëŠ” í•¨ìˆ˜
+	void CloseHoverInfo(); // í˜¸ë²„ ì •ë³´ íŒì—…ì„ ë‹«ëŠ” í•¨ìˆ˜
+
+	UPROPERTY(EditAnywhere, Category = "Inventory|Popup")
+	TSubclassOf<UItemHoverInfoWidget> hoverInfoClass; // í˜¸ë²„ ì •ë³´ íŒì—… ìœ„ì ¯ í´ë˜ìŠ¤
+
+	UPROPERTY()
+	TObjectPtr<UItemHoverInfoWidget> hoverInfo = nullptr; // í˜„ì¬ ì—´ë¦° í˜¸ë²„ ì •ë³´ íŒì—…
 
 	UPROPERTY(EditAnywhere, Category = "Inventory|Popup", meta = (ClampMin = "0.0"))
-	float hoverInfoDelay = 1.5f; // È£¹ö Á¤º¸ ÆË¾÷ÀÌ ¶ß±â±îÁöÀÇ ´ë±â ½Ã°£
+	float hoverInfoDelay = 1.5f; // í˜¸ë²„ ì •ë³´ íŒì—…ì´ ëœ¨ê¸°ê¹Œì§€ì˜ ëŒ€ê¸° ì‹œê°„
 
-	FTimerHandle hoverInfoTimer; // È£¹ö ´ë±â Å¸ÀÌ¸Ó ÇÚµé
-	int64 pendingHoverUID = 0; // È£¹ö ´ë±â ÁßÀÎ ¾ÆÀÌÅÛ ÀÎ½ºÅÏ½º UID
+	FTimerHandle hoverInfoTimer; // í˜¸ë²„ ëŒ€ê¸° íƒ€ì´ë¨¸ í•¸ë“¤
+	int64 pendingHoverUID = 0; // í˜¸ë²„ ëŒ€ê¸° ì¤‘ì¸ ì•„ì´í…œ ì¸ìŠ¤í„´ìŠ¤ UID
 
 
-	/* Ã¢°í ½Ã½ºÅÛ */
+	/* ì°½ê³  ì‹œìŠ¤í…œ */
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UItemGridWidget> storageGrid; // Ã¢°í ±×¸®µå
+	TObjectPtr<UItemGridWidget> storageGrid; // ì°½ê³  ê·¸ë¦¬ë“œ
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UWidget> storagePanel; // Ã¢°í ÆĞ³Î
+	TObjectPtr<UWidget> storagePanel; // ì°½ê³  íŒ¨ë„
 
 	UPROPERTY()
-	TObjectPtr<UInventoryComponent> storageInventory = nullptr; // Ã¢°í ÀÎº¥Åä¸® ÄÄÆ÷³ÍÆ®
+	TObjectPtr<UInventoryComponent> storageInventory = nullptr; // ì°½ê³  ì¸ë²¤í† ë¦¬ ì»´í¬ë„ŒíŠ¸
 
 
-	/* ºÎÀ§ »ç¿ë ½Ã½ºÅÛ */
+	/* ë¶€ìœ„ ì‚¬ìš© ì‹œìŠ¤í…œ */
 	UPROPERTY()
-	TArray<TObjectPtr<UBodyPartSlotWidget>> bodyPartSlots; // ¼öÁıµÈ ºÎÀ§ ½½·Ô À§Á¬ ¹è¿­
+	TArray<TObjectPtr<UBodyPartSlotWidget>> bodyPartSlots; // ìˆ˜ì§‘ëœ ë¶€ìœ„ ìŠ¬ë¡¯ ìœ„ì ¯ ë°°ì—´
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UWidget> equipSlotPanel; // Àåºñ ½½·Ô ÆĞ³Î
+	TObjectPtr<UWidget> equipSlotPanel; // ì¥ë¹„ ìŠ¬ë¡¯ íŒ¨ë„
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UWidget> bodyPartPanel; // ºÎÀ§ »ç¿ë ÆĞ³Î
+	TObjectPtr<UWidget> bodyPartPanel; // ë¶€ìœ„ ì‚¬ìš© íŒ¨ë„
 
-	bool bBodyPartModeActive = false; // ºÎÀ§ »ç¿ë ¸ğµå È°¼º ¿©ºÎ
+	bool bBodyPartModeActive = false; // ë¶€ìœ„ ì‚¬ìš© ëª¨ë“œ í™œì„± ì—¬ë¶€
 
 public:
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
@@ -17,63 +17,63 @@ class WINDLESS_API UItemSlotWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	/* ÃÊ±âÈ­ ÇÔ¼ö */
-	void InitializeItem(UInventoryComponent* inventory, int64 uid, float inCellSize); // ÀÎº¥Åä¸®¿Í ÀÎ½ºÅÏ½º UID¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void RefreshSlot(); // ÇöÀç ÀÎ½ºÅÏ½º »óÅÂ¸¦ À§Á¬¿¡ ¹İ¿µÇÏ´Â ÇÔ¼ö
-	void SetOwningInventoryWidget(class UInventoryWidget* widget) { owningInventoryWidget = widget; } // ÀÎº¥Åä¸® À§Á¬À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ì´ˆê¸°í™” í•¨ìˆ˜ */
+	void InitializeItem(UInventoryComponent* inventory, int64 uid, float inCellSize); // ì¸ë²¤í† ë¦¬ì™€ ì¸ìŠ¤í„´ìŠ¤ UIDë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void RefreshSlot(); // í˜„ì¬ ì¸ìŠ¤í„´ìŠ¤ ìƒíƒœë¥¼ ìœ„ì ¯ì— ë°˜ì˜í•˜ëŠ” í•¨ìˆ˜
+	void SetOwningInventoryWidget(class UInventoryWidget* widget) { owningInventoryWidget = widget; } // ì¸ë²¤í† ë¦¬ ìœ„ì ¯ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ±×¸®µå ¹èÄ¡¿ë */
-	void GetFootprint(int32& outW, int32& outH) const; // È¸Àü ¹İ¿µ Á¡À¯ Å©±â¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ê·¸ë¦¬ë“œ ë°°ì¹˜ìš© */
+	void GetFootprint(int32& outW, int32& outH) const; // íšŒì „ ë°˜ì˜ ì ìœ  í¬ê¸°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void NativeConstruct() override;
-	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override; // Å° Å¬¸¯ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ¸¶¿ì½º Å¬¸¯ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ¸¶¿ì½º Æ÷ÀÎÅÍ°¡ µé¾î¿ÔÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override; // ¸¶¿ì½º Æ÷ÀÎÅÍ°¡ ³ª°¬À» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override; // µå·¡±× °¨Áö ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override; // í‚¤ í´ë¦­ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override; // ë§ˆìš°ìŠ¤ í¬ì¸í„°ê°€ ë“¤ì–´ì™”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override; // ë§ˆìš°ìŠ¤ í¬ì¸í„°ê°€ ë‚˜ê°”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override; // ë“œë˜ê·¸ ê°ì§€ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
 private:
-	/* Ä³½Ì º¯¼ö */
+	/* ìºì‹± ë³€ìˆ˜ */
 	UPROPERTY()
-	TObjectPtr<UInventoryComponent> owningInventory = nullptr; // ¼ÒÀ¯ÇÑ ÀÎº¥Åä¸®
-
-	UPROPERTY()
-	TObjectPtr<class UInventoryWidget> owningInventoryWidget = nullptr; // ¼ÒÀ¯ÇÑ ÀÎº¥Åä¸® À§Á¬
+	TObjectPtr<UInventoryComponent> owningInventory = nullptr; // ì†Œìœ í•œ ì¸ë²¤í† ë¦¬
 
 	UPROPERTY()
-	int64 instanceUID = 0; // Ç¥ÇöÇÒ ¾ÆÀÌÅÛ ÀÎ½ºÅÏ½º UID
+	TObjectPtr<class UInventoryWidget> owningInventoryWidget = nullptr; // ì†Œìœ í•œ ì¸ë²¤í† ë¦¬ ìœ„ì ¯
 
-	float cellSize = 64.f; // ¼¿ ÇÈ¼¿ Å©±â
+	UPROPERTY()
+	int64 instanceUID = 0; // í‘œí˜„í•  ì•„ì´í…œ ì¸ìŠ¤í„´ìŠ¤ UID
+
+	float cellSize = 64.f; // ì…€ í”½ì…€ í¬ê¸°
 
 
-	/* ¹ÙÀÎµù À§Á¬ */
+	/* ë°”ì¸ë”© ìœ„ì ¯ */
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UImage> icon; // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ
+	TObjectPtr<UImage> icon; // ì•„ì´í…œ ì•„ì´ì½˜
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UTextBlock> quantityText; // ¼ö·® ÅØ½ºÆ®
+	TObjectPtr<UTextBlock> quantityText; // ìˆ˜ëŸ‰ í…ìŠ¤íŠ¸
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UImage> gradeBorder; // µî±Ş »ö Å×µÎ¸®
+	TObjectPtr<UImage> gradeBorder; // ë“±ê¸‰ ìƒ‰ í…Œë‘ë¦¬
 
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<UProgressBar> durabilityBar; // ³»±¸µµ ¹Ù
+	TObjectPtr<UProgressBar> durabilityBar; // ë‚´êµ¬ë„ ë°”
 
 
-	/* ¸¶¿ì½º µå·¡±× */
+	/* ë§ˆìš°ìŠ¤ ë“œë˜ê·¸ */
 	UPROPERTY(meta = (BindWidgetOptional))
-	TObjectPtr<USizeBox> rootSizeBox; // °í½ºÆ® ºñÁÖ¾ó Å©±â ¹Ú½º
+	TObjectPtr<USizeBox> rootSizeBox; // ê³ ìŠ¤íŠ¸ ë¹„ì£¼ì–¼ í¬ê¸° ë°•ìŠ¤
 
-	int32 grabOffsetX = 0; // µå·¡±× ½ÃÀÛ X¼¿ À§Ä¡
-	int32 grabOffsetY = 0; // µå·¡±× ½ÃÀÛ Y¼¿ À§Ä¡
+	int32 grabOffsetX = 0; // ë“œë˜ê·¸ ì‹œì‘ Xì…€ ìœ„ì¹˜
+	int32 grabOffsetY = 0; // ë“œë˜ê·¸ ì‹œì‘ Yì…€ ìœ„ì¹˜
 
-	bool bPendingSplitDrag = false; // ½ÃÇÁÆ® Å°¸¦ ´©¸¥ Ã¤ µå·¡±×¸¦ ½ÃÀÛÇß´ÂÁö ¿©ºÎ
+	bool bPendingSplitDrag = false; // ì‹œí”„íŠ¸ í‚¤ë¥¼ ëˆ„ë¥¸ ì±„ ë“œë˜ê·¸ë¥¼ ì‹œì‘í–ˆëŠ”ì§€ ì—¬ë¶€
 
 public:
-	/* º¯¼ö getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ getter í•¨ìˆ˜ */
 	UFUNCTION(BlueprintPure, Category = "Inventory")
 	FORCEINLINE int64 GetInstanceUID() const { return instanceUID; }
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -9,21 +9,21 @@
 UENUM(BlueprintType)
 enum class EChaosState : uint8
 {
-	ECS_Awakening3 UMETA(DisplayName = "Awakening3"), // -100 ~ -81 ½É¾ÈÀÇ °æÁö
-	ECS_Awakening2 UMETA(DisplayName = "Awakening2"), // -80  ~ -51 ÅëÂûÀÇ ´«
-	ECS_Awakening1 UMETA(DisplayName = "Awakening1"), // -50  ~ -21 Á÷°üÀÇ °³È­
-	ECS_Neutral    UMETA(DisplayName = "Neutral"),    // -20  ~ +20 ÀÌ¼º À¯Áö
-	ECS_Collapse1  UMETA(DisplayName = "Collapse1"),  // +21  ~ +50 ÀÎÁöÀÇ ±Õ¿­
-	ECS_Collapse2  UMETA(DisplayName = "Collapse2"),  // +51  ~ +80 Áö°¢ÀÇ ÆÄÆíÈ­
-	ECS_Collapse3  UMETA(DisplayName = "Collapse3")   // +81  ~ +100 ³»¸éÀÇ ¾ÏÈæ
+	ECS_Awakening3 UMETA(DisplayName = "Awakening3"), // -100 ~ -81 ì‹¬ì•ˆì˜ ê²½ì§€
+	ECS_Awakening2 UMETA(DisplayName = "Awakening2"), // -80  ~ -51 í†µì°°ì˜ ëˆˆ
+	ECS_Awakening1 UMETA(DisplayName = "Awakening1"), // -50  ~ -21 ì§ê´€ì˜ ê°œí™”
+	ECS_Neutral    UMETA(DisplayName = "Neutral"),    // -20  ~ +20 ì´ì„± ìœ ì§€
+	ECS_Collapse1  UMETA(DisplayName = "Collapse1"),  // +21  ~ +50 ì¸ì§€ì˜ ê· ì—´
+	ECS_Collapse2  UMETA(DisplayName = "Collapse2"),  // +51  ~ +80 ì§€ê°ì˜ íŒŒí¸í™”
+	ECS_Collapse3  UMETA(DisplayName = "Collapse3")   // +81  ~ +100 ë‚´ë©´ì˜ ì•”í‘
 };
 
 UENUM(BlueprintType)
 enum class EChaosZone : uint8
 {
-	Shade UMETA(Hidden), // Ä¥ÇÏÁö ¾ÊÀº °÷: È¥µ· º¯È­ ¾øÀ½
-	Light, // ºû ±¸¿ª: ÇÏÇÑ±îÁö¸¸ ³»¸°´Ù
-	Dark   // ¾îµÒ ±¸¿ª: »óÇÑ±îÁö¸¸ ¿Ã¸°´Ù
+	Shade UMETA(Hidden), // ì¹ í•˜ì§€ ì•Šì€ ê³³: í˜¼ëˆ ë³€í™” ì—†ìŒ
+	Light, // ë¹› êµ¬ì—­: í•˜í•œê¹Œì§€ë§Œ ë‚´ë¦°ë‹¤
+	Dark   // ì–´ë‘  êµ¬ì—­: ìƒí•œê¹Œì§€ë§Œ ì˜¬ë¦°ë‹¤
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChaosStateChanged, EChaosState, newState);
@@ -38,281 +38,281 @@ public:
 	UAttributeComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
-	/* »ı¸í·Â */
-	void InitializeHealth(float newMaxHealth); // »ı¸í·ÂÀ» ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	void ReceiveDamage(float damage); // ´ë¹ÌÁö¸¦ ÀÔ¾î »ı¸í·ÂÀ» ¼Ò¸ğÇÏ´Â ÇÔ¼ö
-	void Heal(float amount); // »ı¸í·ÂÀ» È¸º¹ÇÏ´Â ÇÔ¼ö
-	float GetHealthPercent(); // ÆÛ¼¾Æ® ´ÜÀ§·Î ÇöÀç »ı¸í·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	bool IsAlive(); // Ä³¸¯ÅÍÀÇ »ç¸Á ÆÇÁ¤À» È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* ìƒëª…ë ¥ */
+	void InitializeHealth(float newMaxHealth); // ìƒëª…ë ¥ì„ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	void ReceiveDamage(float damage); // ëŒ€ë¯¸ì§€ë¥¼ ì…ì–´ ìƒëª…ë ¥ì„ ì†Œëª¨í•˜ëŠ” í•¨ìˆ˜
+	void Heal(float amount); // ìƒëª…ë ¥ì„ íšŒë³µí•˜ëŠ” í•¨ìˆ˜
+	float GetHealthPercent(); // í¼ì„¼íŠ¸ ë‹¨ìœ„ë¡œ í˜„ì¬ ìƒëª…ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool IsAlive(); // ìºë¦­í„°ì˜ ì‚¬ë§ íŒì •ì„ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ½ºÅÂ¹Ì³ª */
-	void UseStamina(float staminaCost); // ½ºÅÂ¹Ì³ª¸¦ ¼Ò¸ğÇÏ´Â ÇÔ¼ö
-	void RegenStamina(float deltaTime, float regenMultiplier); // ½ºÅÂ¹Ì³ª¸¦ È¸º¹ÇÏ´Â ÇÔ¼ö
-	float GetStaminaPercent(); // ÆÛ¼¾Æ® ´ÜÀ§·Î ÇöÀç ½ºÅÂ¹Ì³ª¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	void CalculateFinalStaminaRegenRate(); // ÃÖÁ¾ ½ºÅÂ¹Ì³ª Àç»ı ¼Óµµ¸¦ °è»êÇÏ´Â ÇÔ¼ö
+	/* ìŠ¤íƒœë¯¸ë‚˜ */
+	void UseStamina(float staminaCost); // ìŠ¤íƒœë¯¸ë‚˜ë¥¼ ì†Œëª¨í•˜ëŠ” í•¨ìˆ˜
+	void RegenStamina(float deltaTime, float regenMultiplier); // ìŠ¤íƒœë¯¸ë‚˜ë¥¼ íšŒë³µí•˜ëŠ” í•¨ìˆ˜
+	float GetStaminaPercent(); // í¼ì„¼íŠ¸ ë‹¨ìœ„ë¡œ í˜„ì¬ ìŠ¤íƒœë¯¸ë‚˜ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	void CalculateFinalStaminaRegenRate(); // ìµœì¢… ìŠ¤íƒœë¯¸ë‚˜ ì¬ìƒ ì†ë„ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* È¥µ· °ÔÀÌÁö */
-	void TickChaos(float deltaTime, EChaosZone zone, float zoneLimit); // ÇÁ·¹ÀÓ¸¶´Ù È¥µ·À» °è»êÇÏ´Â ÇÔ¼ö
-	void AddChaos(float delta); // È¥µ·À» »©°Å³ª ´õÇÏ´Â ÇÔ¼ö
-	void ApplyDamageChaos(float dealtDamage, float partMaxHealth); // ÇÇ°İ ´ë¹ÌÁö ºñ·Ê È¥µ·À» Àû¿ëÇÏ´Â ÇÔ¼ö
-	void OnPerfectDodge(); // ¿Ïº®ÇÑ ±¸¸£±â ¼º°ø ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	void OnMentalAttackHit(); // Á¤½Å ¿À¿°°ø°İ ÇÇ°İ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	void ResetChaos(); // È¥µ·À» 0À¸·Î ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	void LoseChaos(float amount); // Áï½Ã È¥µ·À» °¨¼Ò½ÃÅ°´Â ÇÔ¼ö
-	void RecoverChaos(float amount); // Áï½Ã È¥µ·À» È¸º¹½ÃÅ°´Â ÇÔ¼ö
-	float GetChaosPercent(); // ÆÛ¼¾Æ® ´ÜÀ§·Î ÇöÀç È¥µ·À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	bool IsChaosEmpty(); // È¥µ·ÀÌ 0ÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	void CalculateFinalChaosRegenRate(EChaosZone zone = EChaosZone::Shade); // ÃÖÁ¾ È¥µ· º¯µ¿ °ÔÀÌÁö ¼Óµµ¸¦ °è»êÇÏ´Â ÇÔ¼ö
-	float GetWillPowerResistRatio() const; // Á¤½Å·Â¿¡ µû¸¥ È¥µ· Áõ°¡ ÀúÇ×·üÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float ResistChaosGain(float gain) const; // Á¤½Å·Â ÀúÇ×À» Àû¿ëÇÑ È¥µ· Áõ°¡·®À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* í˜¼ëˆ ê²Œì´ì§€ */
+	void TickChaos(float deltaTime, EChaosZone zone, float zoneLimit); // í”„ë ˆì„ë§ˆë‹¤ í˜¼ëˆì„ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	void AddChaos(float delta); // í˜¼ëˆì„ ë¹¼ê±°ë‚˜ ë”í•˜ëŠ” í•¨ìˆ˜
+	void ApplyDamageChaos(float dealtDamage, float partMaxHealth); // í”¼ê²© ëŒ€ë¯¸ì§€ ë¹„ë¡€ í˜¼ëˆì„ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void OnPerfectDodge(); // ì™„ë²½í•œ êµ¬ë¥´ê¸° ì„±ê³µ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	void OnMentalAttackHit(); // ì •ì‹  ì˜¤ì—¼ê³µê²© í”¼ê²© ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	void ResetChaos(); // í˜¼ëˆì„ 0ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	void LoseChaos(float amount); // ì¦‰ì‹œ í˜¼ëˆì„ ê°ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜
+	void RecoverChaos(float amount); // ì¦‰ì‹œ í˜¼ëˆì„ íšŒë³µì‹œí‚¤ëŠ” í•¨ìˆ˜
+	float GetChaosPercent(); // í¼ì„¼íŠ¸ ë‹¨ìœ„ë¡œ í˜„ì¬ í˜¼ëˆì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool IsChaosEmpty(); // í˜¼ëˆì´ 0ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	void CalculateFinalChaosRegenRate(EChaosZone zone = EChaosZone::Shade); // ìµœì¢… í˜¼ëˆ ë³€ë™ ê²Œì´ì§€ ì†ë„ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	float GetWillPowerResistRatio() const; // ì •ì‹ ë ¥ì— ë”°ë¥¸ í˜¼ëˆ ì¦ê°€ ì €í•­ë¥ ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float ResistChaosGain(float gain) const; // ì •ì‹ ë ¥ ì €í•­ì„ ì ìš©í•œ í˜¼ëˆ ì¦ê°€ëŸ‰ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* °ø°İ·Â */
-	void CalculateFinalAttackPower(); // ÃÖÁ¾ °ø°İ·ÂÀ» °è»êÇÏ´Â ÇÔ¼ö
-	void SetEquipmentAttackBonus(float value); // Àåºñ °ø°İ·Â º¸Á¤ ÇÕ°è¸¦ ´ëÀÔÇÏ´Â ÇÔ¼ö
-	float GetAttackPowerWithWeaponBonus(float weaponBonus) const; // Æ¯Á¤ ¹«±â º¸Á¤Ä¡¸¦ ´õÇÑ °ø°İ·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ê³µê²©ë ¥ */
+	void CalculateFinalAttackPower(); // ìµœì¢… ê³µê²©ë ¥ì„ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+	void SetEquipmentAttackBonus(float value); // ì¥ë¹„ ê³µê²©ë ¥ ë³´ì • í•©ê³„ë¥¼ ëŒ€ì…í•˜ëŠ” í•¨ìˆ˜
+	float GetAttackPowerWithWeaponBonus(float weaponBonus) const; // íŠ¹ì • ë¬´ê¸° ë³´ì •ì¹˜ë¥¼ ë”í•œ ê³µê²©ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Ã¼¿Â */
-	void SetBodyHeat(float value); // Ã¼¿ÂÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void ApplyTimedBodyHeat(float amount, float duration); // ÀÏÁ¤ ½Ã°£ Ã¼¿ÂÀ» »ó½Â½ÃÅ°´Â ÇÔ¼ö
+	/* ì²´ì˜¨ */
+	void SetBodyHeat(float value); // ì²´ì˜¨ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void ApplyTimedBodyHeat(float amount, float duration); // ì¼ì • ì‹œê°„ ì²´ì˜¨ì„ ìƒìŠ¹ì‹œí‚¤ëŠ” í•¨ìˆ˜
 
 
-	/* ÀçÈ­ */
+	/* ì¬í™” */
 	UFUNCTION(BlueprintCallable, Category = "Attribute|MoltStone")
-	void AddMoltStones(int32 amount); // Å»ÇÇ¼®À» È¹µæÇÏ´Â ÇÔ¼ö
+	void AddMoltStones(int32 amount); // íƒˆí”¼ì„ì„ íšë“í•˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintCallable, Category = "Attribute|MoltStone")
-	bool SpendMoltStones(int32 amount); // Å»ÇÇ¼®À» ¼Ò¸ğÇÏ´Â ÇÔ¼ö
+	bool SpendMoltStones(int32 amount); // íƒˆí”¼ì„ì„ ì†Œëª¨í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Å»ÇÇ(·¹º§¾÷) */
+	/* íƒˆí”¼(ë ˆë²¨ì—…) */
 	UFUNCTION(BlueprintPure, Category = "Attribute|Molting")
-	bool CanMolt() const; // Å»ÇÇ °¡´É ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
+	bool CanMolt() const; // íƒˆí”¼ ê°€ëŠ¥ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintCallable, Category = "Attribute|Molting")
-	bool Molt(); // Å»ÇÇ¼®À» ¼Ò¸ğÇØ Çã¹°À» 1 ¿Ã¸®´Â ÇÔ¼ö
+	bool Molt(); // íƒˆí”¼ì„ì„ ì†Œëª¨í•´ í—ˆë¬¼ì„ 1 ì˜¬ë¦¬ëŠ” í•¨ìˆ˜
 
 	UFUNCTION(BlueprintPure, Category = "Attribute|Molting")
-	float GetMoltingExpPercent() const; // ´ÙÀ½ Å»ÇÇ±îÁöÀÇ ÁøÇàµµ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	float GetMoltingExpPercent() const; // ë‹¤ìŒ íƒˆí”¼ê¹Œì§€ì˜ ì§„í–‰ë„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
-	void ApplyLevelUpStats(); // Çã¹°¿¡ µû¸¥ ½ºÅÂ¹Ì³ª, °ø°İ·Â, Á¤½Å·Â Áõ°¡¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	void CaptureLv1Stats(); // Lv1 ±âÁØ°ªÀ» Ä¸Ã³ÇÏ´Â ÇÔ¼ö
-	void ApplyStatsForLevel(int32 level); // ·¹º§¿¡ ¸Â´Â ½ºÅÈÀ» °è»êÇØ ´ëÀÔÇÏ´Â ÇÔ¼ö
-
-
-	/* ÀúÀå/ºÒ·¯¿À±â */
-	void SaveToRecord(FPlayerStatSaveRecord& outRecord) const; // ÇöÀç ½ºÅ×ÀÌÅÍ½º¸¦ ÀúÀå ·¹ÄÚµå·Î º¯È¯ÇÏ´Â ÇÔ¼ö
-	void LoadFromRecord(const FPlayerStatSaveRecord& record); // ÀúÀå ·¹ÄÚµå·Î ½ºÅ×ÀÌÅÍ½º¸¦ º¹¿øÇÏ´Â ÇÔ¼ö
+	void ApplyLevelUpStats(); // í—ˆë¬¼ì— ë”°ë¥¸ ìŠ¤íƒœë¯¸ë‚˜, ê³µê²©ë ¥, ì •ì‹ ë ¥ ì¦ê°€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void CaptureLv1Stats(); // Lv1 ê¸°ì¤€ê°’ì„ ìº¡ì²˜í•˜ëŠ” í•¨ìˆ˜
+	void ApplyStatsForLevel(int32 level); // ë ˆë²¨ì— ë§ëŠ” ìŠ¤íƒ¯ì„ ê³„ì‚°í•´ ëŒ€ì…í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ±âÅ¸ */
-	float GetStaminaLockRatio() const; // ÇöÀç È¥µ· ´Ü°è¿¡ µû¸¥ ½ºÅÂ¹Ì³ª Àá±İ ºñÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetStaminaLockRatio_Internal(EChaosState state) const; // È¥µ· ´Ü°èÀÇ ½ºÅÂ¹Ì³ª Àá±İ ºñÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetUsableMaxStamina() const; // ÇöÀç È¥µ· ´Ü°è¿¡ µû¸¥ ÇöÀç ÃÖ´ë ½ºÅÂ¹Ì³ª¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetStaminaRegenDelay() const; // ÇöÀç È¥µ· ´Ü°è¿¡ µû¸¥ ½ºÅÂ¹Ì³ª È¸º¹ µô·¹ÀÌ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetCastSpeedMultiplier() const; // ÇöÀç È¥µ· ´Ü°è¿¡ µû¸¥ ¾ÆÀÌÅÛ ½ÃÀü ¼Óµµ ºñÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetInjuryChanceReduction() const;// ÇöÀç È¥µ· ´Ü°è¿¡ µû¸¥ ºÎ»ó °¨¼Ò È®·üÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetWeaknessDamageMultiplier() const; // °¢¼º 3´Ü°è ½Ã ¾àÁ¡ °ø°İ µ¥¹ÌÁö ºñÀ²À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetLockOnBreakInterval() const; // ¶ô¿Â °­Á¦ ÇØÁ¦ ÆÇÁ¤ ÁÖ±â¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetLockOnBreakChance() const;   // ¶ô¿Â °­Á¦ ÇØÁ¦ È®·üÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	bool IsLockOnInputBlocked() const; // ¶ô¿Â ±â´ÉÀ» ºñÈ°¼ºÈ­ ÇØ¾ßÇÏ´Â È¥µ· ´Ü°èÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	float GetLockOnShakeInterval() const; // ¶ô¿Â Áß Ä«¸Ş¶ó Èçµé¸² ÁÖ±â¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ì €ì¥/ë¶ˆëŸ¬ì˜¤ê¸° */
+	void SaveToRecord(FPlayerStatSaveRecord& outRecord) const; // í˜„ì¬ ìŠ¤í…Œì´í„°ìŠ¤ë¥¼ ì €ì¥ ë ˆì½”ë“œë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜
+	void LoadFromRecord(const FPlayerStatSaveRecord& record); // ì €ì¥ ë ˆì½”ë“œë¡œ ìŠ¤í…Œì´í„°ìŠ¤ë¥¼ ë³µì›í•˜ëŠ” í•¨ìˆ˜
+
+
+	/* ê¸°íƒ€ */
+	float GetStaminaLockRatio() const; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ ìŠ¤íƒœë¯¸ë‚˜ ì ê¸ˆ ë¹„ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetStaminaLockRatio_Internal(EChaosState state) const; // í˜¼ëˆ ë‹¨ê³„ì˜ ìŠ¤íƒœë¯¸ë‚˜ ì ê¸ˆ ë¹„ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetUsableMaxStamina() const; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ í˜„ì¬ ìµœëŒ€ ìŠ¤íƒœë¯¸ë‚˜ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetStaminaRegenDelay() const; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ ìŠ¤íƒœë¯¸ë‚˜ íšŒë³µ ë”œë ˆì´ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetCastSpeedMultiplier() const; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ ì•„ì´í…œ ì‹œì „ ì†ë„ ë¹„ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetInjuryChanceReduction() const;// í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì— ë”°ë¥¸ ë¶€ìƒ ê°ì†Œ í™•ë¥ ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetWeaknessDamageMultiplier() const; // ê°ì„± 3ë‹¨ê³„ ì‹œ ì•½ì  ê³µê²© ë°ë¯¸ì§€ ë¹„ìœ¨ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetLockOnBreakInterval() const; // ë½ì˜¨ ê°•ì œ í•´ì œ íŒì • ì£¼ê¸°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetLockOnBreakChance() const;   // ë½ì˜¨ ê°•ì œ í•´ì œ í™•ë¥ ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool IsLockOnInputBlocked() const; // ë½ì˜¨ ê¸°ëŠ¥ì„ ë¹„í™œì„±í™” í•´ì•¼í•˜ëŠ” í˜¼ëˆ ë‹¨ê³„ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	float GetLockOnShakeInterval() const; // ë½ì˜¨ ì¤‘ ì¹´ë©”ë¼ í”ë“¤ë¦¼ ì£¼ê¸°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 	
 	
-	/* µğ¹ö±×¿ë */
+	/* ë””ë²„ê·¸ìš© */
 	UFUNCTION(BlueprintCallable, Category = "Actor Attributes|Chaos")
-	void SetLanternOn(bool bOn) { bLanternOn = bOn; } // µîºÒÀ» ÄÑ°í ²ø ¶§ ºÎ¸£´Â ÇÔ¼ö (¾îµÒÀÇ Áõ°¡¸¸ ÁÙÀÎ´Ù)
+	void SetLanternOn(bool bOn) { bLanternOn = bOn; } // ë“±ë¶ˆì„ ì¼œê³  ëŒ ë•Œ ë¶€ë¥´ëŠ” í•¨ìˆ˜ (ì–´ë‘ ì˜ ì¦ê°€ë§Œ ì¤„ì¸ë‹¤)
 
-	void DebugSetChaos(float value); // È¥µ· ¼öÄ¡¸¦ Áï½Ã ÁöÁ¤ÇÏ´Â ÇÔ¼ö(µğ¹ö±×¿ë)
+	void DebugSetChaos(float value); // í˜¼ëˆ ìˆ˜ì¹˜ë¥¼ ì¦‰ì‹œ ì§€ì •í•˜ëŠ” í•¨ìˆ˜(ë””ë²„ê·¸ìš©)
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
 	UPROPERTY(BlueprintAssignable, Category = "Actor Attributes|Chaos")
-	FOnChaosStateChanged onChaosStateChanged; // È¥µ· »óÅÂ º¯°æ ½Ã ½ÇÇàµÇ´Â µ¨¸®°ÔÀÌÆ®
+	FOnChaosStateChanged onChaosStateChanged; // í˜¼ëˆ ìƒíƒœ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 	UPROPERTY(BlueprintAssignable, Category = "Actor Attributes|Molting")
-	FOnMoltingChanged onMoltingChanged; // Çã¹°/Å»ÇÇ °ÔÀÌÁö º¯°æ ½Ã ½ÇÇàµÇ´Â µ¨¸®°ÔÀÌÆ®
+	FOnMoltingChanged onMoltingChanged; // í—ˆë¬¼/íƒˆí”¼ ê²Œì´ì§€ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	/* »ı¸í·Â */
+	/* ìƒëª…ë ¥ */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Health")
-	float health; // ÇöÀç Ã¼·Â
+	float health; // í˜„ì¬ ì²´ë ¥
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Health")
-	float maxHealth; // ÃÖ´ë Ã¼·Â
+	float maxHealth; // ìµœëŒ€ ì²´ë ¥
 
 
-	/* ½ºÅÂ¹Ì³ª */
+	/* ìŠ¤íƒœë¯¸ë‚˜ */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float stamina; // ÇöÀç ½ºÅÂ¹Ì³ª
-
-	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float maxStamina; // ÃÖ´ë ½ºÅÂ¹Ì³ª
+	float stamina; // í˜„ì¬ ìŠ¤íƒœë¯¸ë‚˜
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float dodgeCost = 14.f; // ±¸¸£±â »ç¿ë ½Ã ¼Ò¸ğµÇ´Â ½ºÅÂ¹Ì³ª(È½¼ö ´ç)
+	float maxStamina; // ìµœëŒ€ ìŠ¤íƒœë¯¸ë‚˜
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float sprintStaminaCost = 10.f; // ´Ş¸®±â »ç¿ë ½Ã ¼Ò¸ğµÇ´Â ½ºÅÂ¹Ì³ª(ÃÊ ´ç)
+	float dodgeCost = 14.f; // êµ¬ë¥´ê¸° ì‚¬ìš© ì‹œ ì†Œëª¨ë˜ëŠ” ìŠ¤íƒœë¯¸ë‚˜(íšŸìˆ˜ ë‹¹)
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float baseStaminaRegenRate = 10.f; // ±âº» ½ºÅÂ¹Ì³ª Àç»ı ¼Óµµ
+	float sprintStaminaCost = 10.f; // ë‹¬ë¦¬ê¸° ì‚¬ìš© ì‹œ ì†Œëª¨ë˜ëŠ” ìŠ¤íƒœë¯¸ë‚˜(ì´ˆ ë‹¹)
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float flatStaminaRegenAdd = 0.f;  // ÇÕ¿¬»ê
+	float baseStaminaRegenRate = 10.f; // ê¸°ë³¸ ìŠ¤íƒœë¯¸ë‚˜ ì¬ìƒ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float multStaminaRegenAdd = 0.f;  // °ö¿¬»ê
+	float flatStaminaRegenAdd = 0.f;  // í•©ì—°ì‚°
+
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
+	float multStaminaRegenAdd = 0.f;  // ê³±ì—°ì‚°
 
 	UPROPERTY(VisibleAnywhere, Category = "Actor Attributes|Stamina")
-	float finalStaminaRegenRate = 0.f; //ÃÖÁ¾ ½ºÅÂ¹Ì³ª Àç»ı ¼Óµµ
+	float finalStaminaRegenRate = 0.f; //ìµœì¢… ìŠ¤íƒœë¯¸ë‚˜ ì¬ìƒ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float staminaRegenDelay = 0.4f; // È¸º¹À» ½ÃÀÛÇÏ´Â ´ë±â½Ã°£
+	float staminaRegenDelay = 0.4f; // íšŒë³µì„ ì‹œì‘í•˜ëŠ” ëŒ€ê¸°ì‹œê°„
 
-	float timeSinceStaminaUse = 999.f; // ¸¶Áö¸· ½ºÅÂ¹Ì³ª ¼Ò¸ğ ÈÄ °æ°ú½Ã°£
-	bool bIsRegen = false; // ÇöÀç ½ºÅÂ¹Ì³ª°¡ È¸º¹ ÁßÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	float timeSinceStaminaUse = 999.f; // ë§ˆì§€ë§‰ ìŠ¤íƒœë¯¸ë‚˜ ì†Œëª¨ í›„ ê²½ê³¼ì‹œê°„
+	bool bIsRegen = false; // í˜„ì¬ ìŠ¤íƒœë¯¸ë‚˜ê°€ íšŒë³µ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Stamina")
-	float exhaustedAttackRate = 0.6f; // ½ºÅÂ¹Ì³ª ¼ÒÁø ½Ã °ø°İ ¼Óµµ ¹èÀ²
+	float exhaustedAttackRate = 0.6f; // ìŠ¤íƒœë¯¸ë‚˜ ì†Œì§„ ì‹œ ê³µê²© ì†ë„ ë°°ìœ¨
 
 
-	/* È¥µ· °ÔÀÌÁö */
-	EChaosState ComputeState(float value) const; // È¥µ· ¼öÄ¡¸¦ ´Ü°è·Î º¯È¯ÇÏ´Â ÇÔ¼ö 
-	void UpdateChaosState(); // È¥µ· »óÅÂ¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö
-	void InitializeChaosStateCache(); // È¥µ· »óÅÂ Å×ÀÌºíÀ» enum Å° ¸ÊÀ¸·Î ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	const FChaosStateData& GetCurrentChaosData() const; // ÇöÀç È¥µ· ´Ü°èÀÇ µ¥ÀÌÅÍ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-
-	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float chaos = 0.f; // ÇöÀç È¥µ· °ÔÀÌÁö
+	/* í˜¼ëˆ ê²Œì´ì§€ */
+	EChaosState ComputeState(float value) const; // í˜¼ëˆ ìˆ˜ì¹˜ë¥¼ ë‹¨ê³„ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜ 
+	void UpdateChaosState(); // í˜¼ëˆ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” í•¨ìˆ˜
+	void InitializeChaosStateCache(); // í˜¼ëˆ ìƒíƒœ í…Œì´ë¸”ì„ enum í‚¤ ë§µìœ¼ë¡œ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	const FChaosStateData& GetCurrentChaosData() const; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„ì˜ ë°ì´í„°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float maxChaos = 100.f; // ÃÖ´ë È¥µ· °ÔÀÌÁö
+	float chaos = 0.f; // í˜„ì¬ í˜¼ëˆ ê²Œì´ì§€
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float minChaos = -100.f; // ÃÖ¼Ò È¥µ· °ÔÀÌÁö
+	float maxChaos = 100.f; // ìµœëŒ€ í˜¼ëˆ ê²Œì´ì§€
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float baseChaosRegenRate = 0.f; // ±âº» È¥µ· °ÔÀÌÁö º¯µ¿ ¼Óµµ
+	float minChaos = -100.f; // ìµœì†Œ í˜¼ëˆ ê²Œì´ì§€
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float flatChaosRegenAdd = 0.f; // ÇÕ¿¬»ê
+	float baseChaosRegenRate = 0.f; // ê¸°ë³¸ í˜¼ëˆ ê²Œì´ì§€ ë³€ë™ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float multChaosRegenAdd = 0.f; // °ö¿¬»ê
+	float flatChaosRegenAdd = 0.f; // í•©ì—°ì‚°
+
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
+	float multChaosRegenAdd = 0.f; // ê³±ì—°ì‚°
 
 	UPROPERTY(VisibleAnywhere, Category = "Actor Attributes|Chaos")
-	float finalChaosRegenRate = 0.f;  // ÃÖÁ¾ È¥µ· °ÔÀÌÁö º¯µ¿ ¼Óµµ
+	float finalChaosRegenRate = 0.f;  // ìµœì¢… í˜¼ëˆ ê²Œì´ì§€ ë³€ë™ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float chaosGainRate = 1.0f; // È¥µ· °¡ÁßÄ¡ ¹èÀ²
+	float chaosGainRate = 1.0f; // í˜¼ëˆ ê°€ì¤‘ì¹˜ ë°°ìœ¨
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	EChaosState chaosState = EChaosState::ECS_Neutral; // ÇöÀç È¥µ· ´Ü°è
+	EChaosState chaosState = EChaosState::ECS_Neutral; // í˜„ì¬ í˜¼ëˆ ë‹¨ê³„
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	UDataTable* chaosStateTable = nullptr; // È¥µ· ´Ü°èº° ¼öÄ¡ Å×ÀÌºí
+	UDataTable* chaosStateTable = nullptr; // í˜¼ëˆ ë‹¨ê³„ë³„ ìˆ˜ì¹˜ í…Œì´ë¸”
 
 	UPROPERTY(Transient)
-	TMap<EChaosState, FChaosStateData> chaosStateCache; // È¥µ· »óÅÂ Ä³½Ã
+	TMap<EChaosState, FChaosStateData> chaosStateCache; // í˜¼ëˆ ìƒíƒœ ìºì‹œ
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float staminaLockRatio = 0.f; // ÇöÀç ´Ü°è ½ºÅÂ¹Ì³ª Àá±İ ºñÀ²
+	float staminaLockRatio = 0.f; // í˜„ì¬ ë‹¨ê³„ ìŠ¤íƒœë¯¸ë‚˜ ì ê¸ˆ ë¹„ìœ¨
 
-	/* È¥µ· °ÔÀÌÁö (¾îµÒ, ºû ±¸¿ª) */
+	/* í˜¼ëˆ ê²Œì´ì§€ (ì–´ë‘ , ë¹› êµ¬ì—­) */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float lanternDarkGainScale = 0.5f; // µîºÒÀ» Ä×À» ¶§ ¾îµÒ ±¸¿ª Áõ°¡¿¡ °öÇÏ´Â °ª
+	float lanternDarkGainScale = 0.5f; // ë“±ë¶ˆì„ ì¼°ì„ ë•Œ ì–´ë‘  êµ¬ì—­ ì¦ê°€ì— ê³±í•˜ëŠ” ê°’
 
-	bool bLanternOn = false; // µîºÒÀÌ ÄÑÁ® ÀÖ´ÂÁö
-
-	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float darkZoneChaosGainRate = 2.0f; // ¾îµÒ ±¸¿ªÀÇ ÃÊ´ç È¹µæ È¥µ·
+	bool bLanternOn = false; // ë“±ë¶ˆì´ ì¼œì ¸ ìˆëŠ”ì§€
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float lightZoneChaosFloor = 0.f; // ÇÏÇÑÀ» µû·Î ÁÖÁö ¾Ê´Â ºû(¼¼ÀÌºêÆ÷ÀÎÆ®, EnterLightZone)ÀÇ ÇÏÇÑ. ºû¸¶´Ù ´Ù¸¥ ÇÏÇÑÀº ChaosZoneVolume¿¡ Àû´Â´Ù
+	float darkZoneChaosGainRate = 2.0f; // ì–´ë‘  êµ¬ì—­ì˜ ì´ˆë‹¹ íšë“ í˜¼ëˆ
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
-	float lightZoneChaosLossRate = 1.5f; // ºû ±¸¿ªÀÇ ÃÊ´ç °¨¼Ò È¥µ·
+	float lightZoneChaosFloor = 0.f; // í•˜í•œì„ ë”°ë¡œ ì£¼ì§€ ì•ŠëŠ” ë¹›(ì„¸ì´ë¸Œí¬ì¸íŠ¸, EnterLightZone)ì˜ í•˜í•œ. ë¹›ë§ˆë‹¤ ë‹¤ë¥¸ í•˜í•œì€ ChaosZoneVolumeì— ì ëŠ”ë‹¤
 
-	/* È¥µ· °ÔÀÌÁö (ÀÎÅÍ·´Æ® »ó¼ö) */
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos")
+	float lightZoneChaosLossRate = 1.5f; // ë¹› êµ¬ì—­ì˜ ì´ˆë‹¹ ê°ì†Œ í˜¼ëˆ
+
+	/* í˜¼ëˆ ê²Œì´ì§€ (ì¸í„°ëŸ½íŠ¸ ìƒìˆ˜) */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos|Constant")
-	float perfectDodgeChaos = 10.f; // ¿Ïº® ±¸¸£±â ½Ã °¨¼ÒµÇ´Â È¥µ··®
-
-	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos|Constant")
-	float mentalAttackChaos = 15.f;   // Á¤½Å¿À¿° °ø°İÀ¸·Î ÀÎÇØ Áõ°¡µÇ´Â È¥µ··®
+	float perfectDodgeChaos = 10.f; // ì™„ë²½ êµ¬ë¥´ê¸° ì‹œ ê°ì†Œë˜ëŠ” í˜¼ëˆëŸ‰
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos|Constant")
-	float damageChaosWeight = 0.5f;   // ÇÇ°İ ´ë¹ÌÁö ºñ·Ê Áõ°¡µÇ´Â È¥µ· °¡ÁßÄ¡
+	float mentalAttackChaos = 15.f;   // ì •ì‹ ì˜¤ì—¼ ê³µê²©ìœ¼ë¡œ ì¸í•´ ì¦ê°€ë˜ëŠ” í˜¼ëˆëŸ‰
+
+	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Chaos|Constant")
+	float damageChaosWeight = 0.5f;   // í”¼ê²© ëŒ€ë¯¸ì§€ ë¹„ë¡€ ì¦ê°€ë˜ëŠ” í˜¼ëˆ ê°€ì¤‘ì¹˜
 
 
-	/* °ø°İ·Â */
+	/* ê³µê²©ë ¥ */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Attack")
-	float baseAttackPower = 10.f; // ±âº» °ø°İ·Â
+	float baseAttackPower = 10.f; // ê¸°ë³¸ ê³µê²©ë ¥
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Attack")
-	float flatAttackAdd = 0.f; // ÇÕ¿¬»ê
+	float flatAttackAdd = 0.f; // í•©ì—°ì‚°
 
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Attack")
-	float multAttackAdd = 0.f; // °ö¿¬»ê
+	float multAttackAdd = 0.f; // ê³±ì—°ì‚°
 
 	UPROPERTY(VisibleAnywhere, Category = "Actor Attributes|Attack")
-	float equipmentAttackAdd = 0.f; // ¹æ¾î±¸ º¸Á¤ Àü¿ë ÇÕ¿¬»ê
+	float equipmentAttackAdd = 0.f; // ë°©ì–´êµ¬ ë³´ì • ì „ìš© í•©ì—°ì‚°
 
 	UPROPERTY(VisibleAnywhere, Category = "Actor Attributes|Attack")
-	float finalAttackPower = 0.f; // ÃÖÁ¾ °ø°İ·Â
+	float finalAttackPower = 0.f; // ìµœì¢… ê³µê²©ë ¥
 
 
-	/* Á¤½Å·Â */
+	/* ì •ì‹ ë ¥ */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Will")
-	float baseWillPower = 0.f; // ±âº» Á¤½Å·Â
+	float baseWillPower = 0.f; // ê¸°ë³¸ ì •ì‹ ë ¥
 
-	// Á¤½Å·Â ÀúÇ×: È¥µ· Áõ°¡ x 100 / (100 + Á¤½Å·Â). »óÇÑ ¾øÀ½ (»ç¿ëÀÚ °áÁ¤ 2026-11-17)
+	// ì •ì‹ ë ¥ ì €í•­: í˜¼ëˆ ì¦ê°€ x 100 / (100 + ì •ì‹ ë ¥). ìƒí•œ ì—†ìŒ (ì‚¬ìš©ì ê²°ì • 2026-11-17)
 
 
-	/* °­ÀÎµµ */
+	/* ê°•ì¸ë„ */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Tenacity", meta = (ClampMin = "0.0"))
-	float tenacity = 15.f; // ±âº» °­ÀÎÇÔ
+	float tenacity = 15.f; // ê¸°ë³¸ ê°•ì¸í•¨
 
 
-	/* Ã¼¿Â */
-	void RevertBodyHeat();// Ã¼¿Â º¸Á¤À» µÇµ¹¸®´Â ÇÔ¼ö
+	/* ì²´ì˜¨ */
+	void RevertBodyHeat();// ì²´ì˜¨ ë³´ì •ì„ ë˜ëŒë¦¬ëŠ” í•¨ìˆ˜
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|Heat")
-	float bodyHeat = 36.f; // ÇöÀç Ã¼¿Â
-	float activeBodyHeatBonus = 0.f; // ÇöÀç Àû¿ëÁßÀÎ Ã¼¿Â º¸Á¤Ä¡
-	FTimerHandle bodyHeatTimer; // Ã¼¿Â Áö¼ÓÈ¿°ú Å¸ÀÌ¸Ó
+	float bodyHeat = 36.f; // í˜„ì¬ ì²´ì˜¨
+	float activeBodyHeatBonus = 0.f; // í˜„ì¬ ì ìš©ì¤‘ì¸ ì²´ì˜¨ ë³´ì •ì¹˜
+	FTimerHandle bodyHeatTimer; // ì²´ì˜¨ ì§€ì†íš¨ê³¼ íƒ€ì´ë¨¸
 
 
-	/* ÀçÈ­ */
+	/* ì¬í™” */
 	UPROPERTY(EditAnywhere, Category = "Actor Attributes|MoltStone")
-	int32 moltStones; // ÇöÀç Å»ÇÇ¼®
+	int32 moltStones; // í˜„ì¬ íƒˆí”¼ì„
 
 	UPROPERTY(EditAnywhere, Category = "Attribute|MoltStone", meta = (ClampMin = "0"))
-	int32 moltStoneReward = 0; // Ã³Ä¡ ½Ã ÁÖ´Â Å»ÇÇ¼®
+	int32 moltStoneReward = 0; // ì²˜ì¹˜ ì‹œ ì£¼ëŠ” íƒˆí”¼ì„
 
 
-	/* Å»ÇÇ(·¹º§¾÷) */
+	/* íƒˆí”¼(ë ˆë²¨ì—…) */
 	UPROPERTY(VisibleAnywhere, Category = "Attribute|Molting")
-	int32 currentLevel = 1; // ÇöÀç ·¹º§
+	int32 currentLevel = 1; // í˜„ì¬ ë ˆë²¨
 
 	UPROPERTY(VisibleAnywhere, Category = "Attribute|Molting")
-	int32 moltCost = 200; // ´ÙÀ½ Å»ÇÇ¿¡ ÇÊ¿äÇÑ Å»ÇÇ¼®
+	int32 moltCost = 200; // ë‹¤ìŒ íƒˆí”¼ì— í•„ìš”í•œ íƒˆí”¼ì„
 
 	UPROPERTY(EditAnywhere, Category = "Attribute|Molting", meta = (ClampMin = "0"))
-	int32 moltCostIncrement = 100; // Å»ÇÇ ´ç ºñ¿ë Áõ°¡·®
+	int32 moltCostIncrement = 100; // íƒˆí”¼ ë‹¹ ë¹„ìš© ì¦ê°€ëŸ‰
 
-	float lv1MaxStamina = 100.f;      // Lv1 ÃÖ´ë ½ºÅÂ¹Ì³ª
-	float lv1BaseAttackPower = 10.f;  // Lv1 ±âº» °ø°İ·Â
-	float lv1BaseWillPower = 0.f;     // Lv1 ±âº» Á¤½Å·Â
-	bool bLv1StatsCaptured = false;   // ½º³À¼¦ Ä¸Ã³ ¿©ºÎ
+	float lv1MaxStamina = 100.f;      // Lv1 ìµœëŒ€ ìŠ¤íƒœë¯¸ë‚˜
+	float lv1BaseAttackPower = 10.f;  // Lv1 ê¸°ë³¸ ê³µê²©ë ¥
+	float lv1BaseWillPower = 0.f;     // Lv1 ê¸°ë³¸ ì •ì‹ ë ¥
+	bool bLv1StatsCaptured = false;   // ìŠ¤ëƒ…ìƒ· ìº¡ì²˜ ì—¬ë¶€
 
 public:
-	/* º¯¼öÀÇ Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE float GetStamina() const { return stamina; }
 	FORCEINLINE float GetMaxStamina() const { return maxStamina; }
 	FORCEINLINE float GetDodgeCost() const { return dodgeCost; }

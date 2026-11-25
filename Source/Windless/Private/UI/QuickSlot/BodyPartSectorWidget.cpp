@@ -1,4 +1,4 @@
-#include "UI/QuickSlot/BodyPartSectorWidget.h"
+﻿#include "UI/QuickSlot/BodyPartSectorWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/ProgressBar.h"

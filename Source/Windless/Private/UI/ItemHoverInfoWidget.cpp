@@ -1,4 +1,4 @@
-#include "UI/ItemHoverInfoWidget.h"
+﻿#include "UI/ItemHoverInfoWidget.h"
 #include "UI/WindlessUIStyle.h"
 #include "UI/InventoryWidget.h"
 #include "Components/CanvasPanel.h"

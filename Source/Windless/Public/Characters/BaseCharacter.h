@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
@@ -23,180 +23,180 @@ public:
 	ABaseCharacter();
 	virtual void Tick(float DeltaTime) override;
 
-	/* ÀÌµ¿ ½Ã½ºÅÛ */
-	virtual void Landed(const FHitResult& Hit) override; // Ä³¸¯ÅÍ ÂøÁö ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ì´ë™ ì‹œìŠ¤í…œ */
+	virtual void Landed(const FHitResult& Hit) override; // ìºë¦­í„° ì°©ì§€ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
-	/* ³«»ç */
-	virtual void DieByFall(); // ³«»ç ¿µ¿ª¿¡ µé¾î¿Í Áï»çÇÏ´Â ÇÔ¼ö
+	/* ë‚™ì‚¬ */
+	virtual void DieByFall(); // ë‚™ì‚¬ ì˜ì—­ì— ë“¤ì–´ì™€ ì¦‰ì‚¬í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(°ø°İ) */
-	virtual void OnDealtWeaponHit(); // ±ÙÁ¢ °ø°İ¿¡ Àû È÷Æ® ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void OnDealtRangedHit(); // ¿ø°Å¸® °ø°İ¿¡ Àû È÷Æ® ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void OnWeaponHitLanded() {} // ¹«±â °ø°İÀÌ ½ÇÁ¦·Î ´ë¹ÌÁö¸¦ ÀÔÇûÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual float GetAttackPower() const; // ÃÖÁ¾ °ø°İ·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	virtual float GetAttackPowerWith(const AWeapon* weapon) const; // ¹«±â °ø°İ ½Ã °ø°İ·ÂÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	void SetPendingHit(const FCombatHitInfo& hitInfo); // ÀÌ¹ø °ø°İÀÇ °æÁ÷ Á¤º¸¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ê³µê²©) */
+	virtual void OnDealtWeaponHit(); // ê·¼ì ‘ ê³µê²©ì— ì  íˆíŠ¸ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void OnDealtRangedHit(); // ì›ê±°ë¦¬ ê³µê²©ì— ì  íˆíŠ¸ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void OnWeaponHitLanded() {} // ë¬´ê¸° ê³µê²©ì´ ì‹¤ì œë¡œ ëŒ€ë¯¸ì§€ë¥¼ ì…í˜”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual float GetAttackPower() const; // ìµœì¢… ê³µê²©ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	virtual float GetAttackPowerWith(const AWeapon* weapon) const; // ë¬´ê¸° ê³µê²© ì‹œ ê³µê²©ë ¥ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	void SetPendingHit(const FCombatHitInfo& hitInfo); // ì´ë²ˆ ê³µê²©ì˜ ê²½ì§ ì •ë³´ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÇÇ°İ) */
-	void ApplyBodyPartHit(FName boneName, float damage); // »À ÀÌ¸§À¸·Î ºÎÀ§¿¡ ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	void ApplyBodyPartHitAt(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage); // Ãæµ¹ À§Ä¡·Î ºÎÀ§ ÆÇÁ¤ ÈÄ ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	virtual bool ReceiveWeaponHit(const FCombatHitInfo& hitInfo); // ¹«±â ÇÇ°İ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual float GetTenacity() const; // °­ÀÎµµ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	virtual FStaggerStatus GetStaggerStatus() const; // °æÁ÷ »óÅÂ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(í”¼ê²©) */
+	void ApplyBodyPartHit(FName boneName, float damage); // ë¼ˆ ì´ë¦„ìœ¼ë¡œ ë¶€ìœ„ì— ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	void ApplyBodyPartHitAt(const USkeletalMeshComponent* mesh, const FVector& impactPoint, float damage); // ì¶©ëŒ ìœ„ì¹˜ë¡œ ë¶€ìœ„ íŒì • í›„ ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	virtual bool ReceiveWeaponHit(const FCombatHitInfo& hitInfo); // ë¬´ê¸° í”¼ê²© ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual float GetTenacity() const; // ê°•ì¸ë„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	virtual FStaggerStatus GetStaggerStatus() const; // ê²½ì§ ìƒíƒœë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(¹«Àû) */
-	virtual void SetInvincible(bool bEnable); // ¹«Àû »óÅÂ¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë¬´ì ) */
+	virtual void SetInvincible(bool bEnable); // ë¬´ì  ìƒíƒœë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 	
-	/* ÀüÅõ ½Ã½ºÅÛ(°ø°İ) */
-	virtual void Attack(); // Ä³¸¯ÅÍ °ø°İ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ê³µê²©) */
+	virtual void Attack(); // ìºë¦­í„° ê³µê²© ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable)
-	virtual void AttackEnd(); // Ä³¸¯ÅÍ °ø°İ ¿Ï·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual bool CanAttack(); // Ä³¸¯ÅÍ°¡ °ø°İ °¡´É »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	virtual void HandleDamage(float damageAmount); // °ø°İ ´ë¹ÌÁö¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+	virtual void AttackEnd(); // ìºë¦­í„° ê³µê²© ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual bool CanAttack(); // ìºë¦­í„°ê°€ ê³µê²© ê°€ëŠ¥ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	virtual void HandleDamage(float damageAmount); // ê³µê²© ëŒ€ë¯¸ì§€ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat|Attack")
-	AActor* combatTarget; // Ä³¸¯ÅÍÀÇ ÀüÅõ ´ë»ó
+	AActor* combatTarget; // ìºë¦­í„°ì˜ ì „íˆ¬ ëŒ€ìƒ
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÇÇ°İ) */
-	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // HitInterface¸¦ ±¸ÇöÇÏ´Â ÇÔ¼ö
-	virtual void OnStaggered(const FVector& impactPoint, AActor* hitter); // °æÁ÷ÀÌ ¹ßµ¿ÇßÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void OnEndured(); // °æÁ÷À» ¹öÅß³ÂÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual bool IsKnockbackImmune() const { return false; } // ³¯¾Æ°¨ ¸é¿ª ¿©ºÎ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	virtual void CancelCurrentAttack(); // ÁøÇà ÁßÀÎ °ø°İÀ» °­Á¦ Ãë¼ÒÇÏ´Â ÇÔ¼ö
-	void DirectionalHitReact(const FVector& impactPoint); // ¹æÇâ¿¡ µû¸¥ Ä³¸¯ÅÍ ÇÇ°İ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	void PlayHitSound(const FVector& impactPoint); // ÇÇ°İ »ç¿îµå¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	void SpawnHitParticle(const FVector& impactPoint); // ÇÇ°İ VFX¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö
-	void UpdateFallTracking(); // Ä³¸¯ÅÍÀÇ ³«ÇÏ¸¦ ÃßÀûÇÏ´Â ÇÔ¼ö
-	virtual void ApplyFallDamage(float fallDistance); // Ä³¸¯ÅÍ¿¡°Ô ³«ÇÏ ´ë¹ÌÁö¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	float CalculateFallDamage(float fallDistance) const; // ³«ÇÏ °Å¸®¿¡ µû¸¥ ³«ÇÏ ´ë¹ÌÁö¸¦ °è»êÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(í”¼ê²©) */
+	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // HitInterfaceë¥¼ êµ¬í˜„í•˜ëŠ” í•¨ìˆ˜
+	virtual void OnStaggered(const FVector& impactPoint, AActor* hitter); // ê²½ì§ì´ ë°œë™í–ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void OnEndured(); // ê²½ì§ì„ ë²„í…¨ëƒˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual bool IsKnockbackImmune() const { return false; } // ë‚ ì•„ê° ë©´ì—­ ì—¬ë¶€ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	virtual void CancelCurrentAttack(); // ì§„í–‰ ì¤‘ì¸ ê³µê²©ì„ ê°•ì œ ì·¨ì†Œí•˜ëŠ” í•¨ìˆ˜
+	void DirectionalHitReact(const FVector& impactPoint); // ë°©í–¥ì— ë”°ë¥¸ ìºë¦­í„° í”¼ê²© ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	void PlayHitSound(const FVector& impactPoint); // í”¼ê²© ì‚¬ìš´ë“œë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	void SpawnHitParticle(const FVector& impactPoint); // í”¼ê²© VFXë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
+	void UpdateFallTracking(); // ìºë¦­í„°ì˜ ë‚™í•˜ë¥¼ ì¶”ì í•˜ëŠ” í•¨ìˆ˜
+	virtual void ApplyFallDamage(float fallDistance); // ìºë¦­í„°ì—ê²Œ ë‚™í•˜ ëŒ€ë¯¸ì§€ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	float CalculateFallDamage(float fallDistance) const; // ë‚™í•˜ ê±°ë¦¬ì— ë”°ë¥¸ ë‚™í•˜ ëŒ€ë¯¸ì§€ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fall Damage")
-	float safeFallDistance = 500.f; // ÃÖ¼Ò ³«ÇÏ ´ë¹ÌÁö°¡ Àû¿ëµÇ´Â ÃÖ¼Ò ³«ÇÏ ´ë¹ÌÁö °Å¸®
+	float safeFallDistance = 500.f; // ìµœì†Œ ë‚™í•˜ ëŒ€ë¯¸ì§€ê°€ ì ìš©ë˜ëŠ” ìµœì†Œ ë‚™í•˜ ëŒ€ë¯¸ì§€ ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fall Damage")
-	float lethalFallDistance = 1500.f; // ÃÖ´ë ³«ÇÏ ´ë¹ÌÁö°¡ Àû¿ëµÇ´Â ÃÖ¼Ò ³«ÇÏ ´ë¹ÌÁö °Å¸®
+	float lethalFallDistance = 1500.f; // ìµœëŒ€ ë‚™í•˜ ëŒ€ë¯¸ì§€ê°€ ì ìš©ë˜ëŠ” ìµœì†Œ ë‚™í•˜ ëŒ€ë¯¸ì§€ ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fall Damage")
-	float landSoundMinDistance = 200.f; // ÂøÁö ¼Ò¸®°¡ ³ª´Â ÃÖ¼Ò ³«ÇÏ °Å¸®
+	float landSoundMinDistance = 200.f; // ì°©ì§€ ì†Œë¦¬ê°€ ë‚˜ëŠ” ìµœì†Œ ë‚™í•˜ ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fall Damage")
-	TObjectPtr<USoundBase> landSound; // ÂøÁö ¼Ò¸® (ºñ¾î ÀÖÀ¸¸é ¼Ò¸® ¾øÀ½)
+	TObjectPtr<USoundBase> landSound; // ì°©ì§€ ì†Œë¦¬ (ë¹„ì–´ ìˆìœ¼ë©´ ì†Œë¦¬ ì—†ìŒ)
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fall Damage")
-	float maxFallDamage = 100.f; // ÃÖ´ë ³«ÇÏ ´ë¹ÌÁö
+	float maxFallDamage = 100.f; // ìµœëŒ€ ë‚™í•˜ ëŒ€ë¯¸ì§€
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(»ç¸Á) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì‚¬ë§) */
 	UFUNCTION(BluePrintNativeEvent)
-	void Die(); // Ä³¸¯ÅÍ »ç¸Á ½Ã È£ÃâµÇ´Â ÇÔ¼ö 
-	virtual bool IsAlive(); // Ä³¸¯ÅÍ°¡ »ì¾ÆÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	void DisableCapsule(); // Ä³¸¯ÅÍÀÇ Äİ¶óÀÌ´õ¸¦ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
-	void DisableMeshCollision(); // Ä³¸¯ÅÍÀÇ ¸Ş½¬ Äİ¶óÀÌ´õ¸¦ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	void Die(); // ìºë¦­í„° ì‚¬ë§ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ 
+	virtual bool IsAlive(); // ìºë¦­í„°ê°€ ì‚´ì•„ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	void DisableCapsule(); // ìºë¦­í„°ì˜ ì½œë¼ì´ë”ë¥¼ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
+	void DisableMeshCollision(); // ìºë¦­í„°ì˜ ë©”ì‰¬ ì½œë¼ì´ë”ë¥¼ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(±¸¸£±â) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(êµ¬ë¥´ê¸°) */
 	UFUNCTION(BlueprintCallable)
-	virtual void DodgeEnd(); // Ä³¸¯ÅÍ ±¸¸£±â ¿Ï·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	virtual void DodgeEnd(); // ìºë¦­í„° êµ¬ë¥´ê¸° ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(¹«±â) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë¬´ê¸°) */
 	UFUNCTION(BlueprintCallable)
-	virtual void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled); // ÀåÂø ¹«±âÀÇ Äİ¶óÀÌ´õ¸¦ È°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	virtual void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled); // ì¥ì°© ë¬´ê¸°ì˜ ì½œë¼ì´ë”ë¥¼ í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(VisibleAnywhere, Category = Weapon);
-	AWeapon* rightHandWeapon; // Ä³¸¯ÅÍÀÇ ¿À¸¥¼Õ ¹«±â
+	AWeapon* rightHandWeapon; // ìºë¦­í„°ì˜ ì˜¤ë¥¸ì† ë¬´ê¸°
 
 
-	/* ¾Ö´Ï¸ŞÀÌ¼Ç */
-	virtual int32 PlayAttackMontage(); //°ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	void StopAttackMontage(); // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Á¤ÁöÇÏ´Â ÇÔ¼ö
-	void PlayHitReactMontage(const FName& sectionName); // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	virtual int32 PlayDeathMontage(); // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
-	virtual void PlayDodgeMontage(); // ±¸¸£±â ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
+	/* ì• ë‹ˆë©”ì´ì…˜ */
+	virtual int32 PlayAttackMontage(); //ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	void StopAttackMontage(); // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì •ì§€í•˜ëŠ” í•¨ìˆ˜
+	void PlayHitReactMontage(const FName& sectionName); // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	virtual int32 PlayDeathMontage(); // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	virtual void PlayDodgeMontage(); // êµ¬ë¥´ê¸° ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(BlueprintReadOnly)
-	TEnumAsByte<EDeathPose> deathPose; // Ä³¸¯ÅÍÀÇ Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç Æ÷Áî ¸ñ·Ï
+	TEnumAsByte<EDeathPose> deathPose; // ìºë¦­í„°ì˜ ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ í¬ì¦ˆ ëª©ë¡
 
 
-	/* ¸ğ¼Ç ¿öÇÎ */
+	/* ëª¨ì…˜ ì›Œí•‘ */
 	UFUNCTION(BlueprintCallable)
-	FVector GetTranslationWarpTarget(); // ÀûÀ¸·ÎºÎÅÍ MotionWarping ¸ñÇ¥ÀÇ À§Ä¡¸¦ ¾ò´Â ÇÔ¼ö
+	FVector GetTranslationWarpTarget(); // ì ìœ¼ë¡œë¶€í„° MotionWarping ëª©í‘œì˜ ìœ„ì¹˜ë¥¼ ì–»ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable)
-	FVector GetRotationWarpTarget(); // ÀûÀ¸·ÎºÎÅÍ MotionWarping ¸ñÇ¥ÀÇ È¸ÀüÀ» ¾ò´Â ÇÔ¼ö
+	FVector GetRotationWarpTarget(); // ì ìœ¼ë¡œë¶€í„° MotionWarping ëª©í‘œì˜ íšŒì „ì„ ì–»ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = Combat)
-	double warpTargetDistance = 75.f; // MotionWarping °Å¸®
+	double warpTargetDistance = 75.f; // MotionWarping ê±°ë¦¬
 
 
-	/* Ä³¸¯ÅÍ ÄÄÆ÷³ÍÆ® */
+	/* ìºë¦­í„° ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere)
-	UAttributeComponent* attributes; // Ä³¸¯ÅÍ ¼Ó¼º ÄÄÆ÷³ÍÆ®  
+	UAttributeComponent* attributes; // ìºë¦­í„° ì†ì„± ì»´í¬ë„ŒíŠ¸  
 
 	UPROPERTY(VisibleAnywhere)
-	UBodyPartComponent* bodyParts;  // Ä³¸¯ÅÍ ºÎÀ§ ÄÄÆ÷³ÍÆ®
+	UBodyPartComponent* bodyParts;  // ìºë¦­í„° ë¶€ìœ„ ì»´í¬ë„ŒíŠ¸
 
 private:
-	/* ÀüÅõ ½Ã½ºÅÛ(°ø°İ) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ê³µê²©) */
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	UAnimMontage* attackMontage; // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* attackMontage; // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Attack")
-	TArray<FName> attackMontageSections; // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ ¼½¼Ç ¸ñ·Ï
+	TArray<FName> attackMontageSections; // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì„¹ì…˜ ëª©ë¡
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÇÇ°İ) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(í”¼ê²©) */
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Hit")
-	UAnimMontage* hitReactMontage; // ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* hitReactMontage; // í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Hit")
-	UAnimMontage* knockdownMontage; // °­ÇÑ °æÁ÷ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* knockdownMontage; // ê°•í•œ ê²½ì§ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Hit")
-	USoundBase* hitSound; // ÇÇ°İ »ç¿îµå
+	USoundBase* hitSound; // í”¼ê²© ì‚¬ìš´ë“œ
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Hit")
-	UParticleSystem* hitParticles; // ÇÇ°İ VFX
+	UParticleSystem* hitParticles; // í”¼ê²© VFX
 
-	float fallStartZ = 0.f; // Ãß¶ô ½ÃÀÛ ³ôÀÌ
-	bool bIsTrackingFall = false; // Ãß¶ô ÃßÀûÀ» È®ÀÎÇÏ´Â º¯¼ö
-	float pendingHitImpact = 0.f; // ÀÌ¹ø °ø°İÀÇ Ãæ°İ·®
-	bool bForceStaggerOnHit = false; // °ø°İÀÇ °æÁ÷ Ã³¸® ¿©ºÎ
-	float pendingHitWindup = -1.f; // ÀÌ¹ø °ø°İÀÇ ¿¹°í ±æÀÌ
-	bool bPendingHitCanStaggerStrong = true; // ÀÌ¹ø °ø°İÀÇ °­ÇÑ °æÁ÷ Çã¿ë ¿©ºÎ
-	EStaggerResult lastStaggerResult{}; // ¸¶Áö¸· ÇÇ°İÀÇ °æÁ÷ °áÁ¤ °á°ú
-
-
-	/* ÀüÅõ ½Ã½ºÅÛ(¹«Àû) */
-	bool bInvincible = false; // ÇöÀç ¹«Àû »óÅÂ ¿©ºÎ
+	float fallStartZ = 0.f; // ì¶”ë½ ì‹œì‘ ë†’ì´
+	bool bIsTrackingFall = false; // ì¶”ë½ ì¶”ì ì„ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
+	float pendingHitImpact = 0.f; // ì´ë²ˆ ê³µê²©ì˜ ì¶©ê²©ëŸ‰
+	bool bForceStaggerOnHit = false; // ê³µê²©ì˜ ê²½ì§ ì²˜ë¦¬ ì—¬ë¶€
+	float pendingHitWindup = -1.f; // ì´ë²ˆ ê³µê²©ì˜ ì˜ˆê³  ê¸¸ì´
+	bool bPendingHitCanStaggerStrong = true; // ì´ë²ˆ ê³µê²©ì˜ ê°•í•œ ê²½ì§ í—ˆìš© ì—¬ë¶€
+	EStaggerResult lastStaggerResult{}; // ë§ˆì§€ë§‰ í”¼ê²©ì˜ ê²½ì§ ê²°ì • ê²°ê³¼
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(»ç¸Á) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë¬´ì ) */
+	bool bInvincible = false; // í˜„ì¬ ë¬´ì  ìƒíƒœ ì—¬ë¶€
+
+
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì‚¬ë§) */
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Death")
-	UAnimMontage* deathMontage; // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* deathMontage; // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Death")
-	TArray<FName> deathMontageSections; // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ ¼½¼Ç ¸ñ·Ï
+	TArray<FName> deathMontageSections; // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì„¹ì…˜ ëª©ë¡
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(±¸¸£±â) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(êµ¬ë¥´ê¸°) */
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Dodge")
-	UAnimMontage* dodgeMontage; // ±¸¸£±â ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ
+	UAnimMontage* dodgeMontage; // êµ¬ë¥´ê¸° ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼
 
 
-	/* ¾Ö´Ï¸ŞÀÌ¼Ç °ü·Ã ÇïÆÛ ÇÔ¼ö */
-	void PlayMontageSection(UAnimMontage* montage, const FName& sectionName); // ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ ¼½¼ÇÀ» Àç»ıÇÏ´Â ÇÔ¼ö
-	int32 PlayRandomMontageSection(UAnimMontage* montage, const TArray<FName>& sectionNames); // ¹«ÀÛÀ§ ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ ¼½¼ÇÀ» Àç»ıÇÏ´Â ÇÔ¼ö
+	/* ì• ë‹ˆë©”ì´ì…˜ ê´€ë ¨ í—¬í¼ í•¨ìˆ˜ */
+	void PlayMontageSection(UAnimMontage* montage, const FName& sectionName); // ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì„¹ì…˜ì„ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
+	int32 PlayRandomMontageSection(UAnimMontage* montage, const TArray<FName>& sectionNames); // ë¬´ì‘ìœ„ ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ ì„¹ì…˜ì„ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
 
 public:
-	/* º¯¼öÀÇ Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE bool IsInvincible() const { return bInvincible; }
 	FORCEINLINE TEnumAsByte<EDeathPose> GetDeathPose() const { return deathPose; }
 	FORCEINLINE UAttributeComponent* GetAttributes() const { return attributes; }
@@ -207,7 +207,7 @@ public:
 	FORCEINLINE EStaggerResult GetLastStaggerResult() const { return lastStaggerResult; }
 
 
-	/* º¯¼öÀÇ Setter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Setter í•¨ìˆ˜ */
 	FORCEINLINE void SetPendingHitImpact(float impact) { pendingHitImpact = impact; } 
 	FORCEINLINE void SetForceStaggerOnHit(bool bForce) { bForceStaggerOnHit = bForce; }
 };

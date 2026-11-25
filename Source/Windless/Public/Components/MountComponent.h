@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -10,10 +10,10 @@ class ASnakeMount;
 UENUM(BlueprintType)
 enum class EMountPhase : uint8
 {
-	EMP_Grounded UMETA(DisplayName = "Grounded"), // ¹ÌÅ¾½Â »óÅÂ
-	EMP_Mounting UMETA(DisplayName = "Mounting"), // Å¾½Â ¿¬Ãâ Áß
-	EMP_Mounted UMETA(DisplayName = "Mounted"), // Å¾½Â ¿Ï·á
-	EMP_Dismounting UMETA(DisplayName = "Dismounting") // Å¾½Â ÇØÁ¦ ¿¬Ãâ Áß
+	EMP_Grounded UMETA(DisplayName = "Grounded"), // ë¯¸íƒ‘ìŠ¹ ìƒíƒœ
+	EMP_Mounting UMETA(DisplayName = "Mounting"), // íƒ‘ìŠ¹ ì—°ì¶œ ì¤‘
+	EMP_Mounted UMETA(DisplayName = "Mounted"), // íƒ‘ìŠ¹ ì™„ë£Œ
+	EMP_Dismounting UMETA(DisplayName = "Dismounting") // íƒ‘ìŠ¹ í•´ì œ ì—°ì¶œ ì¤‘
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMountPhaseChanged, EMountPhase, phase);
@@ -26,59 +26,59 @@ class WINDLESS_API UMountComponent : public UActorComponent
 public:	
 	UMountComponent();
 	
-	/* Å¾½Â */
-	void Mount(); // Å» °Í ¼ÒÈ¯ ¹× µîÀå ¿¬ÃâÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
+	/* íƒ‘ìŠ¹ */
+	void Mount(); // íƒˆ ê²ƒ ì†Œí™˜ ë° ë“±ì¥ ì—°ì¶œì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Å¾½Â ÇØÁ¦ */
-	void Dismount(); // Å» °Í Å¾½Â ÇØÁ¦ ¹× ÅğÀå ¿¬ÃâÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
+	/* íƒ‘ìŠ¹ í•´ì œ */
+	void Dismount(); // íƒˆ ê²ƒ íƒ‘ìŠ¹ í•´ì œ ë° í‡´ì¥ ì—°ì¶œì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* µ¨¸®°ÔÀÌÆ® */
+	/* ë¸ë¦¬ê²Œì´íŠ¸ */
 	UPROPERTY(BlueprintAssignable, Category = "Mount")
-	FOnMountPhaseChanged OnMountPhaseChanged; // Å¾½Â »óÅÂ º¯°æ ½Ã ½ÇÇàµÇ´Â µ¨¸®°ÔÀÌÆ®
+	FOnMountPhaseChanged OnMountPhaseChanged; // íƒ‘ìŠ¹ ìƒíƒœ ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸
 
 protected:
 	virtual void BeginPlay() override;
 
 private:	
-	/* Ä³½Ì º¯¼ö */
+	/* ìºì‹± ë³€ìˆ˜ */
 	UPROPERTY()
-	ACharacter* ownerCharacter = nullptr; // ¼ÒÀ¯ Ä³¸¯ÅÍ
+	ACharacter* ownerCharacter = nullptr; // ì†Œìœ  ìºë¦­í„°
 
 	UPROPERTY()
-	ASnakeMount* currentMount = nullptr;  // ÇöÀç ¼ÒÈ¯µÈ Å»°Í
+	ASnakeMount* currentMount = nullptr;  // í˜„ì¬ ì†Œí™˜ëœ íƒˆê²ƒ
 
 
-	/* Å¾½Â */
-	void OnMountEmerged(); // ½ÇÁ¦ Å¾½ÂÀ» ¼öÇàÇÏ´Â ÇÔ¼ö
-	bool CanMount() const; // Ä³¸¯ÅÍ°¡ Å¾½ÂÇÒ ¼ö ÀÖ´Â »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool TrySpawnMount(); // Å» °Í ¼ÒÈ¯À» ½ÃµµÇÏ´Â ÇÔ¼ö
-	void SetMountCollision(); // Å¾½Â ½Ã Ä³¸¯ÅÍ¿Í Å» °ÍÀÇ Äİ¶óÀÌ´õ¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void MoveToMountSocket(); // Å¾½Â ½Ã Ä³¸¯ÅÍ¸¦ Å» °Í ¼ÒÄÏÀ¸·Î ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
-	void ApplyMountEffect(); // Å¾½Â ½Ã È¿°ú¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
+	/* íƒ‘ìŠ¹ */
+	void OnMountEmerged(); // ì‹¤ì œ íƒ‘ìŠ¹ì„ ìˆ˜í–‰í•˜ëŠ” í•¨ìˆ˜
+	bool CanMount() const; // ìºë¦­í„°ê°€ íƒ‘ìŠ¹í•  ìˆ˜ ìˆëŠ” ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool TrySpawnMount(); // íƒˆ ê²ƒ ì†Œí™˜ì„ ì‹œë„í•˜ëŠ” í•¨ìˆ˜
+	void SetMountCollision(); // íƒ‘ìŠ¹ ì‹œ ìºë¦­í„°ì™€ íƒˆ ê²ƒì˜ ì½œë¼ì´ë”ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void MoveToMountSocket(); // íƒ‘ìŠ¹ ì‹œ ìºë¦­í„°ë¥¼ íƒˆ ê²ƒ ì†Œì¼“ìœ¼ë¡œ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
+	void ApplyMountEffect(); // íƒ‘ìŠ¹ ì‹œ íš¨ê³¼ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Å¾½Â ÇØÁ¦*/
-	void OnMountSubmerged(); // Å» °ÍÀ» Á¦°ÅÇÏ´Â ÇÔ¼ö
-	void ResetMountCollision(); // Å¾½Â ÇØÁ¦ ½Ã Ä³¸¯ÅÍ¿Í Å» °ÍÀÇ Äİ¶óÀÌ´õ¸¦ ¸®¼ÂÇÏ´Â ÇÔ¼ö
-	void MoveToGround(); // Å¾½Â ÇØÁ¦ ½Ã Ä³¸¯ÅÍ¸¦ ¶¥À¸·Î ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
-	void DisapplyMountEffect();// Å¾½Â ÇØÁ¦ ½Ã È¿°ú¸¦ º¹±¸½ÃÅ°´Â ÇÔ¼ö
+	/* íƒ‘ìŠ¹ í•´ì œ*/
+	void OnMountSubmerged(); // íƒˆ ê²ƒì„ ì œê±°í•˜ëŠ” í•¨ìˆ˜
+	void ResetMountCollision(); // íƒ‘ìŠ¹ í•´ì œ ì‹œ ìºë¦­í„°ì™€ íƒˆ ê²ƒì˜ ì½œë¼ì´ë”ë¥¼ ë¦¬ì…‹í•˜ëŠ” í•¨ìˆ˜
+	void MoveToGround(); // íƒ‘ìŠ¹ í•´ì œ ì‹œ ìºë¦­í„°ë¥¼ ë•…ìœ¼ë¡œ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
+	void DisapplyMountEffect();// íƒ‘ìŠ¹ í•´ì œ ì‹œ íš¨ê³¼ë¥¼ ë³µêµ¬ì‹œí‚¤ëŠ” í•¨ìˆ˜
 
-	/* Å» °Í ¼³Á¤ */
+	/* íƒˆ ê²ƒ ì„¤ì • */
 	UPROPERTY(EditAnywhere, Category = "Mount")
-	TSubclassOf<ASnakeMount> snakeMountClass; // »ı¼ºÇÒ Å» °Í Å¬·¡½º
-
-	UPROPERTY(EditAnywhere, Category = "Mount")
-	float mountSpeed = 1200.f; // Å¾½Â Áß ÀÌµ¿ ¼Óµµ
+	TSubclassOf<ASnakeMount> snakeMountClass; // ìƒì„±í•  íƒˆ ê²ƒ í´ë˜ìŠ¤
 
 	UPROPERTY(EditAnywhere, Category = "Mount")
-	float mountStepHeightBoost = 10.f; // Å¾½Â Áß ´ÜÂ÷ ³ôÀÌ
+	float mountSpeed = 1200.f; // íƒ‘ìŠ¹ ì¤‘ ì´ë™ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "Mount")
-	FRotator mountMeshRotationOffset = FRotator::ZeroRotator; // Å» °Í È¸Àü ¿ÀÇÁ¼Â
+	float mountStepHeightBoost = 10.f; // íƒ‘ìŠ¹ ì¤‘ ë‹¨ì°¨ ë†’ì´
+
+	UPROPERTY(EditAnywhere, Category = "Mount")
+	FRotator mountMeshRotationOffset = FRotator::ZeroRotator; // íƒˆ ê²ƒ íšŒì „ ì˜¤í”„ì…‹
 
 public:
-	/* º¯¼ö getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ getter í•¨ìˆ˜ */
 	float GetCapsuleHalfHeight() const;
 };

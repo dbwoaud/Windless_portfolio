@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -16,21 +16,21 @@ class WINDLESS_API ABreakableActor : public AActor, public IHitInterface
 public:	
 	ABreakableActor();
 	virtual void Tick(float DeltaTime) override; 
-	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // ÇÇ°İ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö(IHitInterface ¿À¹ö¶óÀÌµå)
-	void SpawnTreasureItem(UWorld* world); // ÆÄ±« ½Ã º¸¹° ¾ÆÀÌÅÛÀ» »ı¼ºÇÏ´Â ÇÔ¼ö
+	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // í”¼ê²© ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜(IHitInterface ì˜¤ë²„ë¼ì´ë“œ)
+	void SpawnTreasureItem(UWorld* world); // íŒŒê´´ ì‹œ ë³´ë¬¼ ì•„ì´í…œì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UGeometryCollectionComponent* geometryCollection; // ÆÄ±« °¡´ÉÇÑ °´Ã¼ÀÇ Áö¿À¸ŞÆ®¸® ÄÃ·º¼Ç ÄÄÆ÷³ÍÆ®
+	UGeometryCollectionComponent* geometryCollection; // íŒŒê´´ ê°€ëŠ¥í•œ ê°ì²´ì˜ ì§€ì˜¤ë©”íŠ¸ë¦¬ ì»¬ë ‰ì…˜ ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UCapsuleComponent* capsule; // Ä¸½¶ Äİ¶óÀÌ´õ ÄÄÆ÷³ÍÆ® 
+	UCapsuleComponent* capsule; // ìº¡ìŠ ì½œë¼ì´ë” ì»´í¬ë„ŒíŠ¸ 
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Breakable Properties")
-	TArray<TSubclassOf<class ATreasure>> treasureClasses; // ¾×ÅÍ ÆÄ±« ½Ã ½ºÆùµÇ´Â º¸¹° ¾ÆÀÌÅÛ ¸ñ·Ï
+	TArray<TSubclassOf<class ATreasure>> treasureClasses; // ì•¡í„° íŒŒê´´ ì‹œ ìŠ¤í°ë˜ëŠ” ë³´ë¬¼ ì•„ì´í…œ ëª©ë¡
 
-	bool bBroken = false; // ÇöÀç ¾×ÅÍ°¡ ÆÄ±«µÈ »óÅÂÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	bool bBroken = false; // í˜„ì¬ ì•¡í„°ê°€ íŒŒê´´ëœ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 };

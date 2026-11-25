@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Characters/BaseCharacter.h"
@@ -35,319 +35,319 @@ class WINDLESS_API AEnemy : public ABaseCharacter
 public:
 	AEnemy();
 	virtual void Tick(float DeltaTime) override;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override; // Àû Ä³¸¯ÅÍ ÇÇ°İ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	virtual void Destroyed() override; // Àû Ä³¸¯ÅÍ ÆÄ±« ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // HitInterface¸¦ ±¸ÇöÇÏ±â À§ÇÑ ÇÔ¼ö
-	virtual bool ReceiveWeaponHit(const FCombatHitInfo& hitInfo) override; // ±â½À ¹× ¾àÁ¡ ¹èÀ²À» Àû¿ëÇÑ µÚ ÇÇ°İ Ã³¸®ÇÏ´Â ÇÔ¼ö
-	virtual float GetTenacity() const override; // °­ÀÎµµ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	virtual void DieByFall() override; // ³«»ç·Î ¿µ±¸ »ç¸ÁÇÏ´Â ÇÔ¼ö
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override; // ì  ìºë¦­í„° í”¼ê²© ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	virtual void Destroyed() override; // ì  ìºë¦­í„° íŒŒê´´ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	virtual void GetHit_Implementation(const FVector& impactPoint, AActor* hitter) override; // HitInterfaceë¥¼ êµ¬í˜„í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
+	virtual bool ReceiveWeaponHit(const FCombatHitInfo& hitInfo) override; // ê¸°ìŠµ ë° ì•½ì  ë°°ìœ¨ì„ ì ìš©í•œ ë’¤ í”¼ê²© ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	virtual float GetTenacity() const override; // ê°•ì¸ë„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	virtual void DieByFall() override; // ë‚™ì‚¬ë¡œ ì˜êµ¬ ì‚¬ë§í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* Àû ¼³Á¤ */
-	void SetPatrolRoute(const TArray<AActor*>& route); // ½ºÆ÷³Ê¿¡¼­ ¼øÂû °æ·Î¸¦ Àü´Ş¹Ş´Â ÇÔ¼ö
-	void SetPlacement(const FDataTableRowHandle& archetype, EEnemyIdleType idleType); // ½ºÆ÷³ÊÀÇ ¹èÄ¡ °ªÀ» ¹Ş´Â ÇÔ¼ö
+	/* ì  ì„¤ì • */
+	void SetPatrolRoute(const TArray<AActor*>& route); // ìŠ¤í¬ë„ˆì—ì„œ ìˆœì°° ê²½ë¡œë¥¼ ì „ë‹¬ë°›ëŠ” í•¨ìˆ˜
+	void SetPlacement(const FDataTableRowHandle& archetype, EEnemyIdleType idleType); // ìŠ¤í¬ë„ˆì˜ ë°°ì¹˜ ê°’ì„ ë°›ëŠ” í•¨ìˆ˜
 	
 	
-	/* µğ¹ö±×¿ë */
-	void DebugForceNextCard(EEnemyCard card); // ´ÙÀ½ Ä«µå ¼±ÅÃÀ» °­Á¦ÇØ µğ¹ö±ëÇÏ´Â ÇÔ¼ö
+	/* ë””ë²„ê·¸ìš© */
+	void DebugForceNextCard(EEnemyCard card); // ë‹¤ìŒ ì¹´ë“œ ì„ íƒì„ ê°•ì œí•´ ë””ë²„ê¹…í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
-	/* Àû »óÅÂ */
+	/* ì  ìƒíƒœ */
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "AI")
-	EEnemyState enemyState = EEnemyState::EES_Idle; // ÇöÀç AI »óÅÂ
+	EEnemyState enemyState = EEnemyState::EES_Idle; // í˜„ì¬ AI ìƒíƒœ
 
 	UPROPERTY(VisibleAnywhere, Transient, BlueprintReadOnly, Category = "AI|Behavior")
-	EEnemyMoveType moveType = EEnemyMoveType::EMT_Wander; // ÀüÅõ Àü ÀÌµ¿ ¹æ½Ä
+	EEnemyMoveType moveType = EEnemyMoveType::EMT_Wander; // ì „íˆ¬ ì „ ì´ë™ ë°©ì‹
 
-	void SetEnemyState(EEnemyState newState); // »óÅÂ¸¦ ÀüÈ¯ÇÏ´Â ÇÔ¼ö
-	bool IsDead() const; // »ç¸Á »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsInCombat() const; // ÀüÅõ »óÅÂÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-
-
-	/* ÀüÅõ ½Ã½ºÅÛ(°ø°İ) */
-	virtual void Attack() override; // °ø°İ 1Å¸¸¦ ½ÇÇàÇÏ´Â ÇÔ¼ö
-	virtual void AttackEnd() override; // °ø°İ 1Å¸°¡ ³¡³µÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual bool CanAttack() override; // °ø°İ °¡´É ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
-	virtual void CancelCurrentAttack() override; // °ø°İÀ» Ãë¼ÒÇÏ´Â ÇÔ¼ö
-	virtual void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled) override; // ¹«±â Ãæµ¹À» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	void SetEnemyState(EEnemyState newState); // ìƒíƒœë¥¼ ì „í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool IsDead() const; // ì‚¬ë§ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsInCombat() const; // ì „íˆ¬ ìƒíƒœì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÇÇ°İ) */
-	virtual void OnDealtWeaponHit() override; // ¹«±â ÇÇ°İ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void OnWeaponHitLanded() override; // ¹«±â °ø°İÀÌ ½ÇÁ¦·Î ´ë¹ÌÁö¸¦ ÀÔÇûÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void HandleDamage(float damageAmount) override; // °ø°İ ´ë¹ÌÁö¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
-	virtual void OnStaggered(const FVector& impactPoint, AActor* hitter) override; // °æÁ÷ ¹ßµ¿ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual void OnEndured() override; // °æÁ÷À» ¹öÅáÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
-	virtual bool IsKnockbackImmune() const override; // ³¯¾Æ°¨ ¸é¿ª ¿©ºÎ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ê³µê²©) */
+	virtual void Attack() override; // ê³µê²© 1íƒ€ë¥¼ ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜
+	virtual void AttackEnd() override; // ê³µê²© 1íƒ€ê°€ ëë‚¬ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual bool CanAttack() override; // ê³µê²© ê°€ëŠ¥ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	virtual void CancelCurrentAttack() override; // ê³µê²©ì„ ì·¨ì†Œí•˜ëŠ” í•¨ìˆ˜
+	virtual void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled) override; // ë¬´ê¸° ì¶©ëŒì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(»ç¸Á) */
-	virtual void Die_Implementation() override; // Àû Ä³¸¯ÅÍ »ç¸Á ½Ã È£ÃâµÇ´Â ÇÔ¼ö
-	void SpawnSouls(); // ¼Ò¿ïÀ» »ı¼ºÇÏ´Â ÇÔ¼ö
-	void GrantDropsToPlayer(); // Àû ³«»ç ½Ã ¾ÆÀÌÅÛ°ú °æÇèÄ¡¸¦ ÇÃ·¹ÀÌ¾î¿¡°Ô ÁÖ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(í”¼ê²©) */
+	virtual void OnDealtWeaponHit() override; // ë¬´ê¸° í”¼ê²© ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void OnWeaponHitLanded() override; // ë¬´ê¸° ê³µê²©ì´ ì‹¤ì œë¡œ ëŒ€ë¯¸ì§€ë¥¼ ì…í˜”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void HandleDamage(float damageAmount) override; // ê³µê²© ëŒ€ë¯¸ì§€ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	virtual void OnStaggered(const FVector& impactPoint, AActor* hitter) override; // ê²½ì§ ë°œë™ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual void OnEndured() override; // ê²½ì§ì„ ë²„í…¼ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	virtual bool IsKnockbackImmune() const override; // ë‚ ì•„ê° ë©´ì—­ ì—¬ë¶€ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+
+
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì‚¬ë§) */
+	virtual void Die_Implementation() override; // ì  ìºë¦­í„° ì‚¬ë§ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	void SpawnSouls(); // ì†Œìš¸ì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
+	void GrantDropsToPlayer(); // ì  ë‚™ì‚¬ ì‹œ ì•„ì´í…œê³¼ ê²½í—˜ì¹˜ë¥¼ í”Œë ˆì´ì–´ì—ê²Œ ì£¼ëŠ” í•¨ìˆ˜
 
 
 	/* UI */
-	virtual void HideHealthBar(); // Àû Ã¼·Â ¹Ù¸¦ ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
-	virtual void ShowHealthBar(); // Àû Ã¼·Â ¹Ù¸¦ È°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+	virtual void HideHealthBar(); // ì  ì²´ë ¥ ë°”ë¥¼ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
+	virtual void ShowHealthBar(); // ì  ì²´ë ¥ ë°”ë¥¼ í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜
 
 private:
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere)
-	UHealthBarComponent* healthBarWidget; // Ã¼·Â¹Ù ÄÄÆ÷³ÍÆ®
+	UHealthBarComponent* healthBarWidget; // ì²´ë ¥ë°” ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemyPerceptionComponent* perception; // °¨Áö ÄÄÆ÷³ÍÆ®
+	UEnemyPerceptionComponent* perception; // ê°ì§€ ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UWeakPointComponent* weakPoints; // ¾àÁ¡ ºÎÀ§ ÄÄÆ÷³ÍÆ®
+	UWeakPointComponent* weakPoints; // ì•½ì  ë¶€ìœ„ ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemyAttackRunner* attackRunner; // °ø°İ ½ÇÇà±â ÄÄÆ÷³ÍÆ®
+	UEnemyAttackRunner* attackRunner; // ê³µê²© ì‹¤í–‰ê¸° ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemyActionSelector* actionSelector; // Çàµ¿ ¼±ÅÃ±â ÄÄÆ÷³ÍÆ®
+	UEnemyActionSelector* actionSelector; // í–‰ë™ ì„ íƒê¸° ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemyInterruptComponent* interrupt; // ³¢¾îµé±â ÄÄÆ÷³ÍÆ®
+	UEnemyInterruptComponent* interrupt; // ë¼ì–´ë“¤ê¸° ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UEnemyCardMover* cardMover; // ºñ°ø°İ Ä«µå ½ÇÇà±â ÄÄÆ÷³ÍÆ®
+	UEnemyCardMover* cardMover; // ë¹„ê³µê²© ì¹´ë“œ ì‹¤í–‰ê¸° ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY()
-	AAIController* enemyController; // Àû AI ÄÁÆ®·Ñ·¯
+	AAIController* enemyController; // ì  AI ì»¨íŠ¸ë¡¤ëŸ¬
 
 
-	/* ÃÊ±âÈ­ */
-	void InitializeEnemy(); // °ÔÀÓ ½ÃÀÛ ½Ã ÀûÀ» ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	void SpawnDefaultWeapon(); // ÀûÀÇ ¹«±â¸¦ ÀåÂø½ÃÅ°´Â ÇÔ¼ö
+	/* ì´ˆê¸°í™” */
+	void InitializeEnemy(); // ê²Œì„ ì‹œì‘ ì‹œ ì ì„ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	void SpawnDefaultWeapon(); // ì ì˜ ë¬´ê¸°ë¥¼ ì¥ì°©ì‹œí‚¤ëŠ” í•¨ìˆ˜
 
 
-	/* Àû »óÅÂ */
-	void UpdateIdle(float DeltaTime); // ´ë±â »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
-	void UpdatePatrolling(); // ¼øÂû »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
-	void UpdateChasing(float DeltaTime); // ÃßÀû »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
-	void UpdateAttacking(float DeltaTime); // °ø°İ ´ë±â »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
-	void UpdateSearching(float DeltaTime); // ¸¶Áö¸· À§Ä¡ Å½»ö »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
-	void UpdateReturning(); // º¹±Í »óÅÂ·Î °»½ÅÇÏ´Â ÇÔ¼ö
+	/* ì  ìƒíƒœ */
+	void UpdateIdle(float DeltaTime); // ëŒ€ê¸° ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void UpdatePatrolling(); // ìˆœì°° ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void UpdateChasing(float DeltaTime); // ì¶”ì  ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void UpdateAttacking(float DeltaTime); // ê³µê²© ëŒ€ê¸° ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void UpdateSearching(float DeltaTime); // ë§ˆì§€ë§‰ ìœ„ì¹˜ íƒìƒ‰ ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void UpdateReturning(); // ë³µê·€ ìƒíƒœë¡œ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* »óÅÂ ÀüÈ¯ */
-	bool TryEngageSightedTarget(bool bRollEncounter); // °¨ÁöµÈ ´ë»óÀÌ ÀÖÀ¸¸é ±³ÀüÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void EngageTarget(AActor* target, bool bRollEncounter); // ÇÃ·¹ÀÌ¾î Á¶¿ì ¹İÀÀÀ» °ÅÃÄ ±³ÀüÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void StartChase(); // ÃßÀûÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void StartSearch(const FVector& location, float waitTime, bool bHesitate); // Å½»öÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void StartReturn(const TCHAR* reason); // ¹èÄ¡ À§Ä¡·Î º¹±Í¸¦ ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void ResetToIdle(); // ´ë±â »óÅÂ·Î ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
-	void HandleNoTarget(); // ´ë»óÀÌ »ç¶óÁ³À» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ìƒíƒœ ì „í™˜ */
+	bool TryEngageSightedTarget(bool bRollEncounter); // ê°ì§€ëœ ëŒ€ìƒì´ ìˆìœ¼ë©´ êµì „ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void EngageTarget(AActor* target, bool bRollEncounter); // í”Œë ˆì´ì–´ ì¡°ìš° ë°˜ì‘ì„ ê±°ì³ êµì „ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void StartChase(); // ì¶”ì ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void StartSearch(const FVector& location, float waitTime, bool bHesitate); // íƒìƒ‰ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void StartReturn(const TCHAR* reason); // ë°°ì¹˜ ìœ„ì¹˜ë¡œ ë³µê·€ë¥¼ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void ResetToIdle(); // ëŒ€ê¸° ìƒíƒœë¡œ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+	void HandleNoTarget(); // ëŒ€ìƒì´ ì‚¬ë¼ì¡Œì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 	UFUNCTION()
-	void HandleTargetLost(FVector lastKnownLocation); // °¨Áö ÄÄÆ÷³ÍÆ®ÀÇ ½Ã¾ß »ó½Ç ÀÌº¥Æ®¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+	void HandleTargetLost(FVector lastKnownLocation); // ê°ì§€ ì»´í¬ë„ŒíŠ¸ì˜ ì‹œì•¼ ìƒì‹¤ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÆÇÁ¤ ÇïÆÛ ÇÔ¼ö */
-	bool IsTargetValid() const; // ÀüÅõ ´ë»óÀÌ À¯È¿ÇÑÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsTargetInSafeZone(const AActor* target) const; // ´ë»óÀÌ ¼¼ÀÌºêÆ÷ÀÎÆ® ¾ÈÀüÁö´ë ¾ÈÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool ShouldGiveUpChase() const; // ÃßÀû Æ÷±â Á¶°ÇÀ» È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool CanReengageWhileReturning() const; //  º¹±Í Áß ÀçÃßÀûÀÌ °¡´ÉÇÑÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsWithin(const AActor* target, float radius) const; // ´ë»óÀÌ ¹İ°æ ¾È¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HasArrived() const; // ÇöÀç ÀÌµ¿ ¿äÃ»ÀÌ ³¡³µ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	float GetNow() const; // ÇöÀç ¿ùµå ½Ã°£À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	bool IsTargetStaggered(); // ´ë»óÀÌ °æÁ÷ ÁßÀÎÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* íŒì • í—¬í¼ í•¨ìˆ˜ */
+	bool IsTargetValid() const; // ì „íˆ¬ ëŒ€ìƒì´ ìœ íš¨í•œì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsTargetInSafeZone(const AActor* target) const; // ëŒ€ìƒì´ ì„¸ì´ë¸Œí¬ì¸íŠ¸ ì•ˆì „ì§€ëŒ€ ì•ˆì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool ShouldGiveUpChase() const; // ì¶”ì  í¬ê¸° ì¡°ê±´ì„ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool CanReengageWhileReturning() const; //  ë³µê·€ ì¤‘ ì¬ì¶”ì ì´ ê°€ëŠ¥í•œì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsWithin(const AActor* target, float radius) const; // ëŒ€ìƒì´ ë°˜ê²½ ì•ˆì— ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HasArrived() const; // í˜„ì¬ ì´ë™ ìš”ì²­ì´ ëë‚¬ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	float GetNow() const; // í˜„ì¬ ì›”ë“œ ì‹œê°„ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	bool IsTargetStaggered(); // ëŒ€ìƒì´ ê²½ì§ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀÌµ¿ */
-	void MoveToActor(AActor* target, float speed); // ¾×ÅÍ¸¦ ÇâÇØ ÀÌµ¿ÇÏ´Â ÇÔ¼ö
-	void MoveToLocation(const FVector& location, float speed); // À§Ä¡·Î ÀÌµ¿ÇÏ´Â ÇÔ¼ö
-	void StopMovement(); // ÀÌµ¿À» ¸ØÃß´Â ÇÔ¼ö
-	void FaceTarget(float DeltaTime); // ÀüÅõ ´ë»óÀ» ¹Ù¶óº¸µµ·Ï È¸ÀüÇÏ´Â ÇÔ¼ö
+	/* ì´ë™ */
+	void MoveToActor(AActor* target, float speed); // ì•¡í„°ë¥¼ í–¥í•´ ì´ë™í•˜ëŠ” í•¨ìˆ˜
+	void MoveToLocation(const FVector& location, float speed); // ìœ„ì¹˜ë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜
+	void StopMovement(); // ì´ë™ì„ ë©ˆì¶”ëŠ” í•¨ìˆ˜
+	void FaceTarget(float DeltaTime); // ì „íˆ¬ ëŒ€ìƒì„ ë°”ë¼ë³´ë„ë¡ íšŒì „í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ¼øÂû/¹èÈ¸ */
-	void StartNextPatrol(); // ´ÙÀ½ ¼øÂû ÁöÁ¡À¸·Î ÀÌµ¿À» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	bool ChooseWanderLocation(FVector& outLocation) const; // ¼øÂû ¸ñÀûÁö¸¦ ¹«ÀÛÀ§·Î °í¸£´Â ÇÔ¼ö
-	AActor* ChooseNextPatrolTarget(); // ¼øÂû °æ·ÎÀÇ ´ÙÀ½ ÁöÁ¡À» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ìˆœì°°/ë°°íšŒ */
+	void StartNextPatrol(); // ë‹¤ìŒ ìˆœì°° ì§€ì ìœ¼ë¡œ ì´ë™ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	bool ChooseWanderLocation(FVector& outLocation) const; // ìˆœì°° ëª©ì ì§€ë¥¼ ë¬´ì‘ìœ„ë¡œ ê³ ë¥´ëŠ” í•¨ìˆ˜
+	AActor* ChooseNextPatrolTarget(); // ìˆœì°° ê²½ë¡œì˜ ë‹¤ìŒ ì§€ì ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* °ø°İ */
-	void BeginAttackSequence(); // ÄŞº¸ °ø°İÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void FinishAttackSequence(); // ÄŞº¸ Á¾·á ÈÄ ÈÄµôÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	bool UsesDataAttacks() const; // ¿øÇü °ø°İ µ¥ÀÌÅÍ·Î °ø°İÇÏ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	void StartDataAttack(); // °ø°İ µ¥ÀÌÅÍ 1°³·Î °ø°İÀ» ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	void OnDataAttackFinished(EEnemyAttackEnd endReason); // °ø°İ µ¥ÀÌÅÍ 1°³·Î °ø°İ ¿Ï·á ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	void SetAttackHitbox(bool bEnable); // ¹«±â È÷Æ® ¹Ú½º¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-	void ApplyAttackHitData(); // ¹«±â¿¡ °ø°İ µ¥ÀÌÅÍ¸¦ Àû¿ëÇÏ´Â ÇÔ¼ö
-	float GetAttackRadius() const; // °ø°İ »ç°Å¸®¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	float GetCombatTurnRate() const; // ÀüÅõ È¸Àü ¼Óµµ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+	/* ê³µê²© */
+	void BeginAttackSequence(); // ì½¤ë³´ ê³µê²©ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void FinishAttackSequence(); // ì½¤ë³´ ì¢…ë£Œ í›„ í›„ë”œì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	bool UsesDataAttacks() const; // ì›í˜• ê³µê²© ë°ì´í„°ë¡œ ê³µê²©í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	void StartDataAttack(); // ê³µê²© ë°ì´í„° 1ê°œë¡œ ê³µê²©ì„ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	void OnDataAttackFinished(EEnemyAttackEnd endReason); // ê³µê²© ë°ì´í„° 1ê°œë¡œ ê³µê²© ì™„ë£Œ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	void SetAttackHitbox(bool bEnable); // ë¬´ê¸° íˆíŠ¸ ë°•ìŠ¤ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+	void ApplyAttackHitData(); // ë¬´ê¸°ì— ê³µê²© ë°ì´í„°ë¥¼ ì ìš©í•˜ëŠ” í•¨ìˆ˜
+	float GetAttackRadius() const; // ê³µê²© ì‚¬ê±°ë¦¬ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	float GetCombatTurnRate() const; // ì „íˆ¬ íšŒì „ ì†ë„ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* °æÁ÷ */
-	void EndStagger(); // °æÁ÷À» ³¡³»°í ÀüÅõ¸¦ Àç°³ÇÏ´Â ÇÔ¼ö
+	/* ê²½ì§ */
+	void EndStagger(); // ê²½ì§ì„ ëë‚´ê³  ì „íˆ¬ë¥¼ ì¬ê°œí•˜ëŠ” í•¨ìˆ˜
 
 
-	/* AI µ¥ÀÌÅÍ */
-	void ResolveArchetypeData(); // Àû¿¡ µû¸¥ ¿øÇü°ú °ø°İ µ¥ÀÌÅÍ¸¦ Ã£¾Æ ÀúÀåÇÏ´Â ÇÔ¼ö
-	void ApplyArchetypeWeakPoints(); // ¿øÇüÀÇ ¾àÁ¡ ±ÔÄ¢À» Àû¿ëÇÏ´Â ÇÔ¼ö
+	/* AI ë°ì´í„° */
+	void ResolveArchetypeData(); // ì ì— ë”°ë¥¸ ì›í˜•ê³¼ ê³µê²© ë°ì´í„°ë¥¼ ì°¾ì•„ ì €ì¥í•˜ëŠ” í•¨ìˆ˜
+	void ApplyArchetypeWeakPoints(); // ì›í˜•ì˜ ì•½ì  ê·œì¹™ì„ ì ìš©í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "AI|Data", meta = (RowType = "/Script/Windless.MonsterArchetypeRow"))
-	FDataTableRowHandle archetypeRow; // ¿øÇü °ã
+	FDataTableRowHandle archetypeRow; // ì›í˜• ê²¹
 
 	UPROPERTY(EditInstanceOnly, Category = "AI|Data")
-	EEnemyIdleType idleTypeOverride = EEnemyIdleType::EIT_None; // ´ë±â À¯Çü Á¾·ù
+	EEnemyIdleType idleTypeOverride = EEnemyIdleType::EIT_None; // ëŒ€ê¸° ìœ í˜• ì¢…ë¥˜
 
-	FMonsterProfile profile; // 5°ã µ¥ÀÌÅÍÀÇ È®Á¤ °á°ú ¹× ÃâÃ³ µ¥ÀÌÅÍ
-	const FMonsterArchetypeRow* archetypeData = nullptr; // ¿øÇü µ¥ÀÌÅÍ
-	TArray<const FEnemyAttackRow*> attackData; // °ø°İ µ¥ÀÌÅÍ
-	TArray<FName> attackDataIds; // °ø°İ µ¥ÀÌÅÍÀÇ Çà ÀÌ¸§
+	FMonsterProfile profile; // 5ê²¹ ë°ì´í„°ì˜ í™•ì • ê²°ê³¼ ë° ì¶œì²˜ ë°ì´í„°
+	const FMonsterArchetypeRow* archetypeData = nullptr; // ì›í˜• ë°ì´í„°
+	TArray<const FEnemyAttackRow*> attackData; // ê³µê²© ë°ì´í„°
+	TArray<FName> attackDataIds; // ê³µê²© ë°ì´í„°ì˜ í–‰ ì´ë¦„
 
 
-	/* AI ¼³Á¤ (Çàµ¿) */
+	/* AI ì„¤ì • (í–‰ë™) */
 	UPROPERTY(EditAnywhere, Category = "AI|Behavior")
-	bool bAggressive = true; // ¼±°øÇü ¿©ºÎ
+	bool bAggressive = true; // ì„ ê³µí˜• ì—¬ë¶€
 
 	UPROPERTY(EditAnywhere, Category = "AI|Behavior", meta = (ClampMin = "0.0", ClampMax = "1.0"))
-	float encounterImmediateChance = 0.85f; // Á¶¿ì ½Ã Áï½Ã °ø°İ È®·ü
+	float encounterImmediateChance = 0.85f; // ì¡°ìš° ì‹œ ì¦‰ì‹œ ê³µê²© í™•ë¥ 
 
 	UPROPERTY(EditAnywhere, Category = "AI|Behavior", meta = (ClampMin = "0.0"))
-	float encounterHesitateMin = 1.f; // °ü¸Á ÃÖ¼Ò ½Ã°£
+	float encounterHesitateMin = 1.f; // ê´€ë§ ìµœì†Œ ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Behavior", meta = (ClampMin = "0.0"))
-	float encounterHesitateMax = 2.f; // °ü¸Á ÃÖ´ë ½Ã°£
+	float encounterHesitateMax = 2.f; // ê´€ë§ ìµœëŒ€ ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Behavior")
-	bool bLogStateChanges = true; // »óÅÂ ÀüÈ¯ ·Î±× Ãâ·Â ¿©ºÎ
+	bool bLogStateChanges = true; // ìƒíƒœ ì „í™˜ ë¡œê·¸ ì¶œë ¥ ì—¬ë¶€
 
 
-	/* AI ¼³Á¤ (¼øÂû) */
+	/* AI ì„¤ì • (ìˆœì°°) */
 	UPROPERTY(EditInstanceOnly, Category = "AI|Patrol", meta = (EditCondition = "moveType == EEnemyMoveType::EMT_Patrol", EditConditionHides))
-	TArray<AActor*> patrolTargets; // ¼øÂû °æ·Î
+	TArray<AActor*> patrolTargets; // ìˆœì°° ê²½ë¡œ
 
 	UPROPERTY(EditAnywhere, Category = "AI|Patrol", meta = (ClampMin = "0.0", EditCondition = "moveType == EEnemyMoveType::EMT_Wander", EditConditionHides))
-	float wanderRadius = 600.f; // ¹èÈ¸ ¹İ°æ
+	float wanderRadius = 600.f; // ë°°íšŒ ë°˜ê²½
 
 	UPROPERTY(EditAnywhere, Category = "AI|Patrol", meta = (ClampMin = "0.0", EditCondition = "moveType != EEnemyMoveType::EMT_Fixed", EditConditionHides))
-	float patrolWaitMin = 2.f; // ÁöÁ¡ µµÂø ÈÄ ÃÖ¼Ò ´ë±â ½Ã°£
+	float patrolWaitMin = 2.f; // ì§€ì  ë„ì°© í›„ ìµœì†Œ ëŒ€ê¸° ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Patrol", meta = (ClampMin = "0.0", EditCondition = "moveType != EEnemyMoveType::EMT_Fixed", EditConditionHides))
-	float patrolWaitMax = 5.f; // ÁöÁ¡ µµÂø ÈÄ ÃÖ´ë ´ë±â ½Ã°£
+	float patrolWaitMax = 5.f; // ì§€ì  ë„ì°© í›„ ìµœëŒ€ ëŒ€ê¸° ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Patrol", meta = (ClampMin = "0.0", EditCondition = "moveType != EEnemyMoveType::EMT_Fixed", EditConditionHides))
-	float patrollingSpeed = 125.f; // ¼øÂû ÀÌµ¿ ¼Óµµ
+	float patrollingSpeed = 125.f; // ìˆœì°° ì´ë™ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Patrol", meta = (ClampMin = "0.0"))
-	float acceptanceRadius = 50.f; // ÀÌµ¿ µµÂø ÆÇÁ¤ ¹İ°æ
+	float acceptanceRadius = 50.f; // ì´ë™ ë„ì°© íŒì • ë°˜ê²½
 
 
-	/* AI ¼³Á¤ (ÃßÀû/Å½»ö) */
+	/* AI ì„¤ì • (ì¶”ì /íƒìƒ‰) */
 	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
-	float chasingSpeed = 300.f; // ÃßÀû ÀÌµ¿ ¼Óµµ
-
-	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
-	float chaseGiveUpDistance = 3000.f; // ´ë»ó°ú ÀÌ °Å¸® ÀÌ»ó ¹ú¾îÁö¸é ÃßÀû Æ÷±â
+	float chasingSpeed = 300.f; // ì¶”ì  ì´ë™ ì†ë„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
-	float leashDistance = 3000.f; // ¹èÄ¡ À§Ä¡¿¡¼­ ÀÌ °Å¸® ÀÌ»ó ¸Ö¾îÁö¸é ÃßÀû Æ÷±â
+	float chaseGiveUpDistance = 3000.f; // ëŒ€ìƒê³¼ ì´ ê±°ë¦¬ ì´ìƒ ë²Œì–´ì§€ë©´ ì¶”ì  í¬ê¸°
 
 	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
-	float searchDuration = 3.f; // ¸¶Áö¸· À§Ä¡ µµÂø ÈÄ Å½»ö ½Ã°£
+	float leashDistance = 3000.f; // ë°°ì¹˜ ìœ„ì¹˜ì—ì„œ ì´ ê±°ë¦¬ ì´ìƒ ë©€ì–´ì§€ë©´ ì¶”ì  í¬ê¸°
 
 	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
-	float faceTargetSpeed = 8.f; // ´ë»ó ¹Ù¶óº¸±â È¸Àü ¼Óµµ
+	float searchDuration = 3.f; // ë§ˆì§€ë§‰ ìœ„ì¹˜ ë„ì°© í›„ íƒìƒ‰ ì‹œê°„
+
+	UPROPERTY(EditAnywhere, Category = "AI|Chase", meta = (ClampMin = "0.0"))
+	float faceTargetSpeed = 8.f; // ëŒ€ìƒ ë°”ë¼ë³´ê¸° íšŒì „ ì†ë„
 
 
-	/* AI ¼³Á¤ (°ø°İ) */
+	/* AI ì„¤ì • (ê³µê²©) */
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "0.0"))
-	float attackRadius = 150.f; // °ø°İ »ç°Å¸®
+	float attackRadius = 150.f; // ê³µê²© ì‚¬ê±°ë¦¬
 
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "1.0"))
-	float attackRangeExitMultiplier = 1.2f; // °ø°İ »óÅÂ À¯Áö ¹İ°æ ¹èÀ²
+	float attackRangeExitMultiplier = 1.2f; // ê³µê²© ìƒíƒœ ìœ ì§€ ë°˜ê²½ ë°°ìœ¨
 
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "0.0"))
-	float attackStartDelay = 0.2f; // »ç°Å¸® ÁøÀÔ ÈÄ Ã¹ °ø°İ±îÁö ´ë±â ½Ã°£
+	float attackStartDelay = 0.2f; // ì‚¬ê±°ë¦¬ ì§„ì… í›„ ì²« ê³µê²©ê¹Œì§€ ëŒ€ê¸° ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "1"))
-	int32 minComboHits = 2; // ÄŞº¸ ÃÖ¼Ò Å¸¼ö
+	int32 minComboHits = 2; // ì½¤ë³´ ìµœì†Œ íƒ€ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "1"))
-	int32 maxComboHits = 3; // ÄŞº¸ ÃÖ´ë Å¸¼ö
+	int32 maxComboHits = 3; // ì½¤ë³´ ìµœëŒ€ íƒ€ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "AI|Attack", meta = (ClampMin = "0.0"))
-	float attackCooldown = 1.5f; // ÄŞº¸ Á¾·á ÈÄ ÈÄµô ½Ã°£
+	float attackCooldown = 1.5f; // ì½¤ë³´ ì¢…ë£Œ í›„ í›„ë”œ ì‹œê°„
 
 
-	/* AI ¼³Á¤ (±â½À) */
+	/* AI ì„¤ì • (ê¸°ìŠµ) */
 	UPROPERTY(EditAnywhere, Category = "AI|Stealth", meta = (ClampMin = "1.0"))
-	float sneakAttackMultiplier = 1.5f; // ºñÀüÅõ »óÅÂ¿¡¼­ ¿õÅ©¸° °ø°İÀÚ¿¡°Ô ¹Ş´Â ±â½À ÇÇÇØ ¹èÀ²
+	float sneakAttackMultiplier = 1.5f; // ë¹„ì „íˆ¬ ìƒíƒœì—ì„œ ì›…í¬ë¦° ê³µê²©ìì—ê²Œ ë°›ëŠ” ê¸°ìŠµ í”¼í•´ ë°°ìœ¨
 
 
-	/* AI ¼³Á¤ (Ä«µå) */
-	bool UsesCardSelection() const; // Ä«µå ¼±ÅÃ±â »ç¿ë ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
-	void UpdateCardCombat(float DeltaTime); // ÀüÅõ Ä«µå¸¦ °»½ÅÇÏ´Â ÇÔ¼ö
-	void SelectNextCard(); // ´ÙÀ½ °ø°İ Ä«µå¸¦ ¼±ÅÃÇÏ°í ½ÇÇàÇÏ´Â ÇÔ¼ö
-	void EndCurrentCard(); // °ø°İÀÌ ¾Æ´Ñ Ä«µå¸¦ ³¡³»´Â ÇÔ¼ö
-	bool TryStartGlare(const FEnemyCardContext& context); // ³ë·Áº¸±â¸¦ ½ÃÀÛÇÏ´Â ÇÔ¼ö
-	bool IsTargetFalling() const; // ´ë»óÀÌ °øÁß¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* AI ì„¤ì • (ì¹´ë“œ) */
+	bool UsesCardSelection() const; // ì¹´ë“œ ì„ íƒê¸° ì‚¬ìš© ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	void UpdateCardCombat(float DeltaTime); // ì „íˆ¬ ì¹´ë“œë¥¼ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜
+	void SelectNextCard(); // ë‹¤ìŒ ê³µê²© ì¹´ë“œë¥¼ ì„ íƒí•˜ê³  ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜
+	void EndCurrentCard(); // ê³µê²©ì´ ì•„ë‹Œ ì¹´ë“œë¥¼ ëë‚´ëŠ” í•¨ìˆ˜
+	bool TryStartGlare(const FEnemyCardContext& context); // ë…¸ë ¤ë³´ê¸°ë¥¼ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+	bool IsTargetFalling() const; // ëŒ€ìƒì´ ê³µì¤‘ì— ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
-	EEnemyCard currentCard = EEnemyCard::EC_Rest; // ½ÇÇà ÁßÀÎ Ä«µå
-	bool bCardRunning = false; // °ø°İÀÌ ¾Æ´Ñ Ä«µå ½ÇÇà ¿©ºÎ
-	EEnemyReach JudgeTargetReach(const FEnemyCardContext& context, UNavigationPath*& outPath); // ´ë»ó±îÁö µµ´Ş °¡´ÉÇÑÁö ÆÇÁ¤ÇÏ´Â ÇÔ¼ö
-	float glareRecheckTimer = 0.f; // ³ë·Áº¸±â Áß °æ·Î ÀçÈ®ÀÎ Å¸ÀÌ¸Ó
-	bool bGlaring = false; // ³ë·Áº¸±â ¿©ºÎ
-	int32 pendingAttackIndex = INDEX_NONE; // ¼±ÅÃ±â°¡ °í¸¥ °ø°İ ÀÎµ¦½º
-	int32 seenSignalSerial = 0; // ¸¶Áö¸·À¸·Î È®ÀÎÇÑ ÇÃ·¹ÀÌ¾î ½ÅÈ£ ¹øÈ£
-	bool bAttackTouched = false; // °ø°İÀÌ ´ê¾Ò´ÂÁö ¿©ºÎ
-	bool bAttackLanded = false; // °ø°İ¿¡ ´ë¹ÌÁö¸¦ ÀÔ¾ú´ÂÁö ¿©ºÎ
-	bool bCurrentAttackHeavy = false; // °­°ø°İ ¿©ºÎ
-	TMap<uint8, float> signalReselectTime; // ½ÅÈ£º° ¸¶Áö¸· Áï½Ã ´Ù½Ã °í¸£±â ½Ã°¢
+	EEnemyCard currentCard = EEnemyCard::EC_Rest; // ì‹¤í–‰ ì¤‘ì¸ ì¹´ë“œ
+	bool bCardRunning = false; // ê³µê²©ì´ ì•„ë‹Œ ì¹´ë“œ ì‹¤í–‰ ì—¬ë¶€
+	EEnemyReach JudgeTargetReach(const FEnemyCardContext& context, UNavigationPath*& outPath); // ëŒ€ìƒê¹Œì§€ ë„ë‹¬ ê°€ëŠ¥í•œì§€ íŒì •í•˜ëŠ” í•¨ìˆ˜
+	float glareRecheckTimer = 0.f; // ë…¸ë ¤ë³´ê¸° ì¤‘ ê²½ë¡œ ì¬í™•ì¸ íƒ€ì´ë¨¸
+	bool bGlaring = false; // ë…¸ë ¤ë³´ê¸° ì—¬ë¶€
+	int32 pendingAttackIndex = INDEX_NONE; // ì„ íƒê¸°ê°€ ê³ ë¥¸ ê³µê²© ì¸ë±ìŠ¤
+	int32 seenSignalSerial = 0; // ë§ˆì§€ë§‰ìœ¼ë¡œ í™•ì¸í•œ í”Œë ˆì´ì–´ ì‹ í˜¸ ë²ˆí˜¸
+	bool bAttackTouched = false; // ê³µê²©ì´ ë‹¿ì•˜ëŠ”ì§€ ì—¬ë¶€
+	bool bAttackLanded = false; // ê³µê²©ì— ëŒ€ë¯¸ì§€ë¥¼ ì…ì—ˆëŠ”ì§€ ì—¬ë¶€
+	bool bCurrentAttackHeavy = false; // ê°•ê³µê²© ì—¬ë¶€
+	TMap<uint8, float> signalReselectTime; // ì‹ í˜¸ë³„ ë§ˆì§€ë§‰ ì¦‰ì‹œ ë‹¤ì‹œ ê³ ë¥´ê¸° ì‹œê°
 
 	
-	/* AI ¼³Á¤(½ÅÈ£) */
-	FEnemyCardContext BuildCardContext(); // Ä«µå »óÈ²À» ¸ğÀ¸´Â ÇÔ¼ö
-	void ExecuteCardChoice(const FEnemyCardChoice& choice); // ¼±ÅÃ Ä«µå¸¦ ½ÇÇàÇÏ´Â ÇÔ¼ö
-	bool CheckPlayerSignals(); // ÇÃ·¹ÀÌ¾î ½ÅÈ£·Î Àç¼±ÅÃÇÏ´Â ÇÔ¼ö
-	void RecordAttackResult(); // °ø°İÀÌ ³¡³µÀ» ¶§ ÀûÁßÀÌ³ª Çê¹æÀ» ±â·ÏÇÏ´Â ÇÔ¼ö
-	UPlayerAISignal* GetTargetSignals() const; // ´ë»óÀÇ ÇÃ·¹ÀÌ¾î ½ÅÈ£ ÄÄÆ÷³ÍÆ®¸¦ Ã£´Â ÇÔ¼ö
+	/* AI ì„¤ì •(ì‹ í˜¸) */
+	FEnemyCardContext BuildCardContext(); // ì¹´ë“œ ìƒí™©ì„ ëª¨ìœ¼ëŠ” í•¨ìˆ˜
+	void ExecuteCardChoice(const FEnemyCardChoice& choice); // ì„ íƒ ì¹´ë“œë¥¼ ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜
+	bool CheckPlayerSignals(); // í”Œë ˆì´ì–´ ì‹ í˜¸ë¡œ ì¬ì„ íƒí•˜ëŠ” í•¨ìˆ˜
+	void RecordAttackResult(); // ê³µê²©ì´ ëë‚¬ì„ ë•Œ ì ì¤‘ì´ë‚˜ í—›ë°©ì„ ê¸°ë¡í•˜ëŠ” í•¨ìˆ˜
+	UPlayerAISignal* GetTargetSignals() const; // ëŒ€ìƒì˜ í”Œë ˆì´ì–´ ì‹ í˜¸ ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ëŠ” í•¨ìˆ˜
 
 
-	/* »ç¸Á */
+	/* ì‚¬ë§ */
 	UPROPERTY(EditAnywhere, Category = "Combat|Death")
-	float deathLifeSpan = 8.f; // »ç¸Á ½Ã ½ÃÃ¼°¡ ³²¾ÆÀÖ´Â ½Ã°£
+	float deathLifeSpan = 8.f; // ì‚¬ë§ ì‹œ ì‹œì²´ê°€ ë‚¨ì•„ìˆëŠ” ì‹œê°„
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Death")
-	TSubclassOf<ASoul> soulClass; // »ç¸Á ½Ã »ı¼ºµÇ´Â ¼Ò¿ï
+	TSubclassOf<ASoul> soulClass; // ì‚¬ë§ ì‹œ ìƒì„±ë˜ëŠ” ì†Œìš¸
 
 
-	/* ¹«±â */
+	/* ë¬´ê¸° */
 	UPROPERTY(EditAnywhere, Category = Combat)
-	TSubclassOf<AWeapon> weaponClass; // ÀåÂø ¹«±â
+	TSubclassOf<AWeapon> weaponClass; // ì¥ì°© ë¬´ê¸°
 
 
-	/* ·±Å¸ÀÓ */
-	FVector homeLocation = FVector::ZeroVector; // ¹èÄ¡ À§Ä¡
-	FRotator homeRotation = FRotator::ZeroRotator; // ¹èÄ¡ È¸Àü
-	int32 patrolIndex = INDEX_NONE; // ÇöÀç ¼øÂû ÁöÁ¡ ÀÎµ¦½º
-	bool bWarnedNoPatrolRoute = false; // ¼øÂû °æ·Î ¾øÀ½ °æ°í Ãâ·Â ¿©ºÎ
-	float idleWaitRemaining = 0.f; // ´ë±â ³²Àº ½Ã°£
-	bool bProvoked = false; // ºñ¼±°øÇüÀÌ °ø°İ¹Ş¾Æ Àû´ë »óÅÂÀÎÁö ¿©ºÎ
-	bool bForcedChase = false; // °­Á¦ ÃßÀû ¿©ºÎ
-	bool bHesitating = false; // Á¶¿ì °ü¸Á ÁßÀÎÁö ¿©ºÎ 
-	float searchWaitRemaining = 0.f; // Å½»ö³²Àº ½Ã°£
-	bool bHasPendingSearch = false; // ½Ã¾ß »ó½Ç·Î Å½»öÀÌ ¿¹¾àµÆ´ÂÁö ¿©ºÎ
-	FVector pendingSearchLocation = FVector::ZeroVector; // ¿¹¾àµÈ Å½»ö À§Ä¡
-	int32 comboHitsRemaining = 0; // ³²Àº ÄŞº¸ Å¸¼ö
-	float nextAttackTime = 0.f; // ´ÙÀ½ °ø°İ °¡´É ½Ã°¢
-	bool bHoldingForTargetStagger = false; // ´ë»ó °æÁ÷À¸·Î »õ °ø°İÀ» º¸·ù ÁßÀÎÁö ¿©ºÎ
-	bool bFellToDeath = false; // ³«»ç ¿©ºÎ
+	/* ëŸ°íƒ€ì„ */
+	FVector homeLocation = FVector::ZeroVector; // ë°°ì¹˜ ìœ„ì¹˜
+	FRotator homeRotation = FRotator::ZeroRotator; // ë°°ì¹˜ íšŒì „
+	int32 patrolIndex = INDEX_NONE; // í˜„ì¬ ìˆœì°° ì§€ì  ì¸ë±ìŠ¤
+	bool bWarnedNoPatrolRoute = false; // ìˆœì°° ê²½ë¡œ ì—†ìŒ ê²½ê³  ì¶œë ¥ ì—¬ë¶€
+	float idleWaitRemaining = 0.f; // ëŒ€ê¸° ë‚¨ì€ ì‹œê°„
+	bool bProvoked = false; // ë¹„ì„ ê³µí˜•ì´ ê³µê²©ë°›ì•„ ì ëŒ€ ìƒíƒœì¸ì§€ ì—¬ë¶€
+	bool bForcedChase = false; // ê°•ì œ ì¶”ì  ì—¬ë¶€
+	bool bHesitating = false; // ì¡°ìš° ê´€ë§ ì¤‘ì¸ì§€ ì—¬ë¶€ 
+	float searchWaitRemaining = 0.f; // íƒìƒ‰ë‚¨ì€ ì‹œê°„
+	bool bHasPendingSearch = false; // ì‹œì•¼ ìƒì‹¤ë¡œ íƒìƒ‰ì´ ì˜ˆì•½ëëŠ”ì§€ ì—¬ë¶€
+	FVector pendingSearchLocation = FVector::ZeroVector; // ì˜ˆì•½ëœ íƒìƒ‰ ìœ„ì¹˜
+	int32 comboHitsRemaining = 0; // ë‚¨ì€ ì½¤ë³´ íƒ€ìˆ˜
+	float nextAttackTime = 0.f; // ë‹¤ìŒ ê³µê²© ê°€ëŠ¥ ì‹œê°
+	bool bHoldingForTargetStagger = false; // ëŒ€ìƒ ê²½ì§ìœ¼ë¡œ ìƒˆ ê³µê²©ì„ ë³´ë¥˜ ì¤‘ì¸ì§€ ì—¬ë¶€
+	bool bFellToDeath = false; // ë‚™ì‚¬ ì—¬ë¶€
 
 
-	/* µğ¹ö±×¿ë */
+	/* ë””ë²„ê·¸ìš© */
 	UPROPERTY(EditInstanceOnly, Category = "AI|Debug")
-	FName debugForcedAttackId = NAME_None; // ½ÇÇàÇÒ °ø°İ
+	FName debugForcedAttackId = NAME_None; // ì‹¤í–‰í•  ê³µê²©
 
 public:
-	/* º¯¼ö Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE UWeakPointComponent* GetWeakPoints() const { return weakPoints; }
 	FORCEINLINE UEnemyPerceptionComponent* GetPerception() const { return perception; }
 	FORCEINLINE UEnemyAttackRunner* GetAttackRunner() const { return attackRunner; }

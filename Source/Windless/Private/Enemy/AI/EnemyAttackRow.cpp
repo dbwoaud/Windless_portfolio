@@ -1,4 +1,4 @@
-#include "Enemy/AI/EnemyAttackRow.h"
+﻿#include "Enemy/AI/EnemyAttackRow.h"
 #include "Enemy/AI/EnemyAIDataValidation.h"
 
 bool FEnemyAttackRow::UsesMultiHitTracking() const

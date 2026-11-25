@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
@@ -16,12 +16,12 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Windless)
-	TSubclassOf<UWindlessOverlay> windlessOverlayClass; // ¿À¹ö·¹ÀÌ À§Á¬ Å¬·¡½º 
+	TSubclassOf<UWindlessOverlay> windlessOverlayClass; // ì˜¤ë²„ë ˆì´ ìœ„ì ¯ í´ë˜ìŠ¤ 
 
 	UPROPERTY()
-	UWindlessOverlay* windlessOverlay; // ¿À¹ö·¹ÀÌ À§Á¬ ÀÎ½ºÅÏ½º
+	UWindlessOverlay* windlessOverlay; // ì˜¤ë²„ë ˆì´ ìœ„ì ¯ ì¸ìŠ¤í„´ìŠ¤
 
 public:
-	/* º¯¼öÀÇ Getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ì˜ Getter í•¨ìˆ˜ */
 	FORCEINLINE UWindlessOverlay* GetWindlessOverlay() const { return windlessOverlay; }
 };

@@ -1,4 +1,4 @@
-#include "Level/DoorCloseTrigger.h"
+﻿#include "Level/DoorCloseTrigger.h"
 #include "Level/BaseDoor.h"
 
 void ADoorCloseTrigger::BeginPlay()

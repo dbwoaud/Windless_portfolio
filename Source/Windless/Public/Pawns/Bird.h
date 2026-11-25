@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -20,35 +20,35 @@ class WINDLESS_API ABird : public APawn
 public:
 	ABird();
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override; // Çâ»óµÈ ÀÔ·Â ±â´ÉÀ» »ç¿ëÇÏ±â À§ÇÑ ÇÔ¼ö
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override; // í–¥ìƒëœ ì…ë ¥ ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
-	/* ÀÌµ¿ ½Ã½ºÅÛ */
-	void Move(const FInputActionValue& value); // ÀÌµ¿ ÀÔ·Â ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
-	void Look(const FInputActionValue& value); // È¸Àü ÀÔ·Â ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ì´ë™ ì‹œìŠ¤í…œ */
+	void Move(const FInputActionValue& value); // ì´ë™ ì…ë ¥ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
+	void Look(const FInputActionValue& value); // íšŒì „ ì…ë ¥ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= Input)
-	UInputMappingContext* birdMappingContext; // ÀÔ·Â ¸ÅÇÎ ÄÁÅØ½ºÆ®
+	UInputMappingContext* birdMappingContext; // ì…ë ¥ ë§¤í•‘ ì»¨í…ìŠ¤íŠ¸
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputAction* moveAction; // ÀÌµ¿ ÀÔ·Â ¾×¼Ç
+	UInputAction* moveAction; // ì´ë™ ì…ë ¥ ì•¡ì…˜
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputAction* lookAction; // È¸Àü ÀÔ·Â ¾×¼Ç
+	UInputAction* lookAction; // íšŒì „ ì…ë ¥ ì•¡ì…˜
 
 private:
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY(VisibleAnywhere)
-	UCapsuleComponent* capsule; // Ä¸½¶ Äİ¶óÀÌ´õ ÄÄÆ÷³ÍÆ®
+	UCapsuleComponent* capsule; // ìº¡ìŠ ì½œë¼ì´ë” ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	USkeletalMeshComponent* birdMesh; // ½ºÄÌ·¹Å» ¸Ş½¬ ÄÄÆ÷³ÍÆ® 
+	USkeletalMeshComponent* birdMesh; // ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‰¬ ì»´í¬ë„ŒíŠ¸ 
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* springArm; // ½ºÇÁ¸µ ¾Ï ÄÄÆ÷³ÍÆ®
+	USpringArmComponent* springArm; // ìŠ¤í”„ë§ ì•” ì»´í¬ë„ŒíŠ¸
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* viewCamera; // Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ®
+	UCameraComponent* viewCamera; // ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸
 };

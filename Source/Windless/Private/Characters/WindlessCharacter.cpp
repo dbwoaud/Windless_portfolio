@@ -169,14 +169,7 @@ void AWindlessCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 	/* 전투 */
 	enhancedInput->BindAction(input.equipAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::EKeyPressed);
-	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::Attack);
-	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::LeftAttackHeld);
-	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::LeftAttackReleased);
 	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightAttack);
-	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::RightAttackHeld);
-	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Completed, this, &AWindlessCharacter::RightAttackReleased);
-	enhancedInput->BindAction(input.leftStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::LeftStrongAttack);
-	enhancedInput->BindAction(input.rightStrongAttackAction, ETriggerEvent::Started, this, &AWindlessCharacter::RightStrongAttack);
 	enhancedInput->BindAction(input.lockOnAction, ETriggerEvent::Started, this, &AWindlessCharacter::OnLockOnPressed);
 	enhancedInput->BindAction(input.switchTargetAction, ETriggerEvent::Triggered, this, &AWindlessCharacter::OnSwitchTargetTriggered);
 
@@ -186,18 +179,12 @@ void AWindlessCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	enhancedInput->BindAction(input.bodyStatusToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleBodyStatus);
 	enhancedInput->BindAction(input.inventoryToggleAction, ETriggerEvent::Started, this, &AWindlessCharacter::ToggleInventory);
 
-	/* 퀵슬롯 */
-	enhancedInput->BindAction(input.quickSlotRecoveryAction, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotRecovery);
-	enhancedInput->BindAction(input.quickSlotRecoveryAction, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotRecovery);
-	enhancedInput->BindAction(input.quickSlotConsume1Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume1);
-	enhancedInput->BindAction(input.quickSlotConsume1Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume1);
-	enhancedInput->BindAction(input.quickSlotConsume2Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume2);
-	enhancedInput->BindAction(input.quickSlotConsume2Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume2);
-	enhancedInput->BindAction(input.quickSlotConsume3Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume3);
-	enhancedInput->BindAction(input.quickSlotConsume3Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume3);
-	enhancedInput->BindAction(input.quickSlotConsume4Action, ETriggerEvent::Started, this, &AWindlessCharacter::PressQuickSlotConsume4);
-	enhancedInput->BindAction(input.quickSlotConsume4Action, ETriggerEvent::Completed, this, &AWindlessCharacter::ReleaseQuickSlotConsume4);
-	enhancedInput->BindAction(input.quickSlotCancelAction, ETriggerEvent::Started, this, &AWindlessCharacter::QuickSlotCancel);
+	/* 컴포넌트 처리 입력 */
+	if (combat)
+		combat->BindCombatInputs(enhancedInput, input);
+
+	if (quickSlots)
+		quickSlots->BindQuickSlotInputs(enhancedInput, input);
 }
 
 void AWindlessCharacter::SetDialogueInputMode(bool bEnable)
@@ -1287,12 +1274,6 @@ void AWindlessCharacter::RefreshRotationMode()
 	movement->bOrientRotationToMovement = !bStrafe && !bAirRotationLocked;
 }
 
-void AWindlessCharacter::Attack()
-{
-	if (combat)
-		combat->HandleAttackPressed(EAttackHand::Left, EAttackType::EAT_Light);
-}
-
 void AWindlessCharacter::AttackEnd()
 {
 	if (aiSignals) 
@@ -1317,18 +1298,6 @@ void AWindlessCharacter::RightAttack()
 		combat->HandleAttackPressed(EAttackHand::Right, EAttackType::EAT_Light);
 }
 
-void AWindlessCharacter::LeftStrongAttack()
-{
-	if (combat)
-		combat->HandleAttackPressed(EAttackHand::Left, EAttackType::EAT_Heavy);
-}
-
-void AWindlessCharacter::RightStrongAttack()
-{
-	if (combat)
-		combat->HandleAttackPressed(EAttackHand::Right, EAttackType::EAT_Heavy);
-}
-
 void AWindlessCharacter::PlayAttackMontageSingle(UAnimMontage* montage, bool bStrong)
 {
 	if (!montage) // 애니메이션 몽타주가 없으면 무시 
@@ -1351,30 +1320,6 @@ void AWindlessCharacter::StopGuard()
 {
 	if (combat)
 		combat->StopGuard();
-}
-
-void AWindlessCharacter::LeftAttackHeld()
-{
-	if (combat)
-		combat->HandleAttackHeld(EAttackHand::Left);
-}
-
-void AWindlessCharacter::RightAttackHeld()
-{
-	if (combat)
-		combat->HandleAttackHeld(EAttackHand::Right);
-}
-
-void AWindlessCharacter::LeftAttackReleased()
-{
-	if (combat)
-		combat->HandleAttackReleased(EAttackHand::Left);
-}
-
-void AWindlessCharacter::RightAttackReleased()
-{
-	if (combat)
-		combat->HandleAttackReleased(EAttackHand::Right);
 }
 
 void AWindlessCharacter::UpdateAttackFacing(float DeltaTime)
@@ -2478,72 +2423,6 @@ void AWindlessCharacter::RefreshQuickSlotCooldownUI()
 		const EQuickSlot quickSlot = (EQuickSlot)i;
 		windlessOverlay->SetQuickSlotCooldown(quickSlot, quickSlots->GetSlotCooldownRatio(quickSlot));
 	}
-}
-
-void AWindlessCharacter::PressQuickSlotRecovery()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotPressed(EQuickSlot::EQS_Recovery);
-}
-
-void AWindlessCharacter::PressQuickSlotConsume1()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotPressed(EQuickSlot::EQS_Consume1);
-}
-
-void AWindlessCharacter::PressQuickSlotConsume2()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotPressed(EQuickSlot::EQS_Consume2);
-}
-
-void AWindlessCharacter::PressQuickSlotConsume3()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotPressed(EQuickSlot::EQS_Consume3);
-}
-
-void AWindlessCharacter::PressQuickSlotConsume4()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotPressed(EQuickSlot::EQS_Consume4);
-}
-
-void AWindlessCharacter::ReleaseQuickSlotRecovery()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotReleased(EQuickSlot::EQS_Recovery);
-}
-
-void AWindlessCharacter::ReleaseQuickSlotConsume1()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotReleased(EQuickSlot::EQS_Consume1);
-}
-
-void AWindlessCharacter::ReleaseQuickSlotConsume2()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotReleased(EQuickSlot::EQS_Consume2);
-}
-
-void AWindlessCharacter::ReleaseQuickSlotConsume3()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotReleased(EQuickSlot::EQS_Consume3);
-}
-
-void AWindlessCharacter::ReleaseQuickSlotConsume4()
-{
-	if (quickSlots)
-		quickSlots->HandleSlotReleased(EQuickSlot::EQS_Consume4);
-}
-
-void AWindlessCharacter::QuickSlotCancel()
-{
-	if (quickSlots)
-		quickSlots->HandleCancelInput();
 }
 
 void AWindlessCharacter::HandleQuickSlotChanged(EQuickSlot quickSlot)

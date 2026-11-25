@@ -1,9 +1,11 @@
-#include "Components/QuickSlotComponent.h"
+﻿#include "Components/QuickSlotComponent.h"
 #include "Characters/WindlessCharacter.h"
 #include "Components/InventoryComponent.h"
 #include "Components/BodyPartComponent.h"
-#include "UI/BodyPartRadialWidget.h"
+#include "EnhancedInputComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "Input/WindlessInputConfig.h"
+#include "UI/BodyPartRadialWidget.h"
 #include "Windless/DebugMacro.h"
 
 UQuickSlotComponent::UQuickSlotComponent()
@@ -25,6 +27,30 @@ void UQuickSlotComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 	if (bRadialOpen)
 		UpdateSelection(DeltaTime);
+}
+
+void UQuickSlotComponent::BindQuickSlotInputs(UEnhancedInputComponent* enhancedInput, const UWindlessInputConfig& input)
+{
+	if (!enhancedInput)
+		return;
+
+	struct FSlotBinding { const UInputAction* action; EQuickSlot quickSlot; };
+	const FSlotBinding slotBindings[] = 
+	{
+		{ input.quickSlotRecoveryAction, EQuickSlot::EQS_Recovery },
+		{ input.quickSlotConsume1Action, EQuickSlot::EQS_Consume1 },
+		{ input.quickSlotConsume2Action, EQuickSlot::EQS_Consume2 },
+		{ input.quickSlotConsume3Action, EQuickSlot::EQS_Consume3 },
+		{ input.quickSlotConsume4Action, EQuickSlot::EQS_Consume4 },
+	};
+
+	for (const FSlotBinding& binding : slotBindings)
+	{
+		enhancedInput->BindAction(binding.action, ETriggerEvent::Started, this, &UQuickSlotComponent::HandleSlotPressed, binding.quickSlot);
+		enhancedInput->BindAction(binding.action, ETriggerEvent::Completed, this, &UQuickSlotComponent::HandleSlotReleased, binding.quickSlot);
+	}
+
+	enhancedInput->BindAction(input.quickSlotCancelAction, ETriggerEvent::Started, this, &UQuickSlotComponent::OnCancelInputTriggered);
 }
 
 void UQuickSlotComponent::HandleSlotPressed(EQuickSlot quickSlot)
@@ -166,6 +192,11 @@ void UQuickSlotComponent::BeginPlay()
 		inventory = character->FindComponentByClass<UInventoryComponent>();
 		bodyParts = character->FindComponentByClass<UBodyPartComponent>();
 	}
+}
+
+void UQuickSlotComponent::OnCancelInputTriggered()
+{
+	HandleCancelInput();
 }
 
 bool UQuickSlotComponent::ValidateSlotCall(EQuickSlot quickSlot, int64& outUID, FItemData& outData) const

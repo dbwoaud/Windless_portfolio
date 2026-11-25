@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -7,6 +7,8 @@
 #include "Items/QuickSlotTypes.h"
 #include "QuickSlotComponent.generated.h"
 
+class UEnhancedInputComponent;
+class UWindlessInputConfig;
 class AWindlessCharacter;
 class UInventoryComponent;
 class UBodyPartComponent;
@@ -25,6 +27,7 @@ public:
 
 
 	/* 입력 */
+	void BindQuickSlotInputs(UEnhancedInputComponent* enhancedInput, const UWindlessInputConfig& input); // 퀵슬롯 관련 입력을 컴포넌트에 바인딩하는 함수
 	void HandleSlotPressed(EQuickSlot quickSlot); // 퀵슬롯 단축키를 눌렀을 때 실행되는 함수
 	void HandleSlotReleased(EQuickSlot quickSlot); // 퀵슬롯 단축키를 뗐을 때 실행되는 함수
 	bool HandleCancelInput(); // 우클릭/ESC 취소 입력을 처리하는 함수
@@ -54,6 +57,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	/* 입력 */
+	void OnCancelInputTriggered(); // 취소 입력 바인딩용 함수
+
+
 	/* 검증 */
 	bool ValidateSlotCall(EQuickSlot quickSlot, int64& outUID, FItemData& outData) const; // 퀵슬롯 호출 검증을 수행하는 함수
 	bool PassesUseCondition(const FItemData& data) const; // 사용 조건 검증값을 판정하는 함수

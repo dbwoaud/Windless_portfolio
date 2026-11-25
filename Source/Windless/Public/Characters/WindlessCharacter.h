@@ -272,17 +272,10 @@ protected:
 
 
 	/* 전투 시스템(공격) */
-	virtual void Attack() override; // 플레이어 캐릭터 좌 공격 입력 시 실행되는 함수
 	virtual void AttackEnd() override; // 공격 완료 시 실행되는 함수
 	void RightAttack(); // 플레이어 캐릭터 우 공격 입력 시 실행되는 함수
-	void LeftStrongAttack(); // 플레이어 캐릭터 좌 강공격 입력 시 실행되는 함수
-	void RightStrongAttack(); // 플레이어 캐릭터 우 강공격 입력 시 실행되는 함수
 	void PlayAttackMontageSingle(UAnimMontage* montage, bool bStrong); // 강공격 여부에 따른 애니메이션을 재생하는 함수
 	void StopGuard(); // 방어를 해제하는 함수
-	void LeftAttackHeld(); // 좌 공격 버튼 유지 시 실행되는 함수
-	void RightAttackHeld(); // 우 공격 버튼 유지 시 실행되는 함수
-	void LeftAttackReleased(); // 좌 공격 버튼 해제 시 실행되는 함수
-	void RightAttackReleased(); // 우 공격 버튼 해제 시 실행되는 함수
 
 	UPROPERTY(EditAnywhere, Category = "Combat", meta = (ClampMin = "0.0"))
 	float combatStateDuration = 8.f; // 피격 후 전투 상태 시간
@@ -712,17 +705,6 @@ private:
 	/* 퀵슬롯 시스템 */
 	void RefreshQuickSlotHUD(); // 퀵슬롯 HUD 전체를 갱신하는 함수
 	void RefreshQuickSlotCooldownUI(); // 퀵슬롯 쿨타임 UI를 갱신하는 함수
-	void PressQuickSlotRecovery(); // 회복 퀵슬롯 버튼 입력 시 실행되는 함수
-	void PressQuickSlotConsume1(); // 소비1 퀵슬롯 버튼 입력 시 실행되는 함수
-	void PressQuickSlotConsume2(); // 소비2 퀵슬롯 버튼 입력 시 실행되는 함수
-	void PressQuickSlotConsume3(); // 소비3 퀵슬롯 버튼 입력 시 실행되는 함수
-	void PressQuickSlotConsume4(); // 소비4 퀵슬롯 버튼 입력 시 실행되는 함수
-	void ReleaseQuickSlotRecovery(); // 회복 퀵슬롯 버튼 입력 해제 시 실행되는 함수
-	void ReleaseQuickSlotConsume1(); // 소비1 퀵슬롯 버튼 입력 해제 시 실행되는 함수
-	void ReleaseQuickSlotConsume2(); // 소비2 퀵슬롯 버튼 입력 해제 시 실행되는 함수
-	void ReleaseQuickSlotConsume3(); // 소비3 퀵슬롯 버튼 입력 해제 시 실행되는 함수
-	void ReleaseQuickSlotConsume4(); // 소비4 퀵슬롯 버튼 입력 해제 시 실행되는 함수
-	void QuickSlotCancel(); // ESC 취소 입력 처리 함수
 
 	UFUNCTION()
 	void HandleQuickSlotChanged(EQuickSlot quickSlot); // 퀵슬롯 등록 변경 시 실행되는 함수

@@ -1,10 +1,12 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Characters/CombatTypes.h"
 #include "CombatComponent.generated.h"
 
+class UEnhancedInputComponent;
+class UWindlessInputConfig;
 class AWindlessCharacter;
 class AWeapon;
 class UAnimMontage;
@@ -15,12 +17,12 @@ enum class EAttackHand : uint8
 	Right
 };
 
-/* °ø°İ ÀÔ·Â ¿äÃ» */
+/* ê³µê²© ì…ë ¥ ìš”ì²­ */
 struct FAttackInputRequest
 {
-	bool bValid = false; // °ø°İ ÀÔ·Â ¿äÃ» À¯È¿ ¿©ºÎ
-	EAttackHand hand = EAttackHand::Right; // °ø°İ ¼Õ
-	EAttackType attackType = EAttackType::EAT_Light; // °ø°İ Á¾·ù
+	bool bValid = false; // ê³µê²© ì…ë ¥ ìš”ì²­ ìœ íš¨ ì—¬ë¶€
+	EAttackHand hand = EAttackHand::Right; // ê³µê²© ì†
+	EAttackType attackType = EAttackType::EAT_Light; // ê³µê²© ì¢…ë¥˜
 
 	void Reset() { bValid = false; }
 };
@@ -31,13 +33,13 @@ struct FAttackProfile
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	UAnimMontage* normalMontage = nullptr; // ¾à°ø°İ ¸ùÅ¸ÁÖ
+	UAnimMontage* normalMontage = nullptr; // ì•½ê³µê²© ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	UAnimMontage* strongMontage = nullptr; // °­°ø°İ ¸ùÅ¸ÁÖ
+	UAnimMontage* strongMontage = nullptr; // ê°•ê³µê²© ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	UAnimMontage* jumpMontage = nullptr; // Á¡ÇÁ °ø°İ ¸ùÅ¸ÁÖ
+	UAnimMontage* jumpMontage = nullptr; // ì í”„ ê³µê²© ëª½íƒ€ì£¼
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -49,114 +51,115 @@ public:
 	UCombatComponent();
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÀÔ·Â) */
-	void HandleAttackPressed(EAttackHand hand, EAttackType attackType); // °ø°İ ¹öÆ°À» ´©¸¥ ¼ø°£À» Ã³¸®ÇÏ´Â ÇÔ¼ö
-	void HandleAttackHeld(EAttackHand hand); // °ø°İ ¹öÆ° À¯Áö¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
-	void HandleAttackReleased(EAttackHand hand); // °ø°İ ¹öÆ° ÇØÁ¦¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì…ë ¥) */
+	void BindCombatInputs(UEnhancedInputComponent* enhancedInput, const UWindlessInputConfig& input); // ê³µê²© ê´€ë ¨ ì…ë ¥ì„ ì»´í¬ë„ŒíŠ¸ì— ë°”ì¸ë”©í•˜ëŠ” í•¨ìˆ˜
+	void HandleAttackPressed(EAttackHand hand, EAttackType attackType); // ê³µê²© ë²„íŠ¼ì„ ëˆ„ë¥¸ ìˆœê°„ì„ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	void HandleAttackHeld(EAttackHand hand); // ê³µê²© ë²„íŠ¼ ìœ ì§€ë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	void HandleAttackReleased(EAttackHand hand); // ê³µê²© ë²„íŠ¼ í•´ì œë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(Á¡ÇÁ °ø°İ) */
-	void OnOwnerLanded(); // Ä³¸¯ÅÍ ÂøÁö ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì í”„ ê³µê²©) */
+	void OnOwnerLanded(); // ìºë¦­í„° ì°©ì§€ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÄŞº¸) */
-	void OpenComboWindow(); // ÄŞº¸ ÀÔ·Â ±¸°£À» ¿©´Â ÇÔ¼ö
-	void CloseComboWindow(); // ÄŞº¸ ÀÔ·Â ±¸°£À» ´İ°í ¿¹¾àµÈ ´ÙÀ½ Å¸¸¦ ½ÇÇàÇÏ´Â ÇÔ¼ö
-	void ResetCombo(); // ÄŞº¸ »óÅÂ¸¦ ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì½¤ë³´) */
+	void OpenComboWindow(); // ì½¤ë³´ ì…ë ¥ êµ¬ê°„ì„ ì—¬ëŠ” í•¨ìˆ˜
+	void CloseComboWindow(); // ì½¤ë³´ ì…ë ¥ êµ¬ê°„ì„ ë‹«ê³  ì˜ˆì•½ëœ ë‹¤ìŒ íƒ€ë¥¼ ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜
+	void ResetCombo(); // ì½¤ë³´ ìƒíƒœë¥¼ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(¹æ¾î) */
-	void StopGuard(); // °¡µå¸¦ ÇØÁ¦ÇÏ´Â ÇÔ¼ö
-	bool IsGuardingAgainst(AActor* hitter) const; // Á¤¸é °¡µå ÆÇÁ¤À» È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool HandleGuard(AActor* attacker, const FCombatHitInfo& hitInfo, FGuardResult& outResult); // °¡µå¸¦ Ã³¸®ÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë°©ì–´) */
+	void StopGuard(); // ê°€ë“œë¥¼ í•´ì œí•˜ëŠ” í•¨ìˆ˜
+	bool IsGuardingAgainst(AActor* hitter) const; // ì •ë©´ ê°€ë“œ íŒì •ì„ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool HandleGuard(AActor* attacker, const FCombatHitInfo& hitInfo, FGuardResult& outResult); // ê°€ë“œë¥¼ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(¹«±â ±³Ã¼) */
-	void OnHandWeaponChanged(AWeapon* removedWeapon); // ¹«±â º¯°æ ½Ã ½ÇÇàµÇ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë¬´ê¸° êµì²´) */
+	void OnHandWeaponChanged(AWeapon* removedWeapon); // ë¬´ê¸° ë³€ê²½ ì‹œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 
 
-	/* »óÅÂ È®ÀÎ */
-	bool IsGuardOnLeftHand() const; // ÇöÀç ¿ŞÂÊ ÆÈ·Î °¡µåÇÏ°í ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+	/* ìƒíƒœ í™•ì¸ */
+	bool IsGuardOnLeftHand() const; // í˜„ì¬ ì™¼ìª½ íŒ”ë¡œ ê°€ë“œí•˜ê³  ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	/* ÄÄÆ÷³ÍÆ® */
+	/* ì»´í¬ë„ŒíŠ¸ */
 	UPROPERTY()
-	AWindlessCharacter* character = nullptr; // ¼ÒÀ¯ Ä³¸¯ÅÍ
+	AWindlessCharacter* character = nullptr; // ì†Œìœ  ìºë¦­í„°
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÀÔ·Â) */
-	void ResolvePendingAttack(); // °°Àº ÇÁ·¹ÀÓ¿¡ µé¾î¿Â ÀÔ·ÂÀ» Ã³¸®ÇÏ´Â ÇÔ¼ö
-	EAttackHand ResolveAttackHand(EAttackHand hand) const; // ¾ç¼Õ¹«±â ÀåÂø ½Ã ÁÂ/¿ì ÀÔ·ÂÀ» ÇÏ³ª·Î ÅëÇÕÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì…ë ¥) */
+	void ResolvePendingAttack(); // ê°™ì€ í”„ë ˆì„ì— ë“¤ì–´ì˜¨ ì…ë ¥ì„ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	EAttackHand ResolveAttackHand(EAttackHand hand) const; // ì–‘ì†ë¬´ê¸° ì¥ì°© ì‹œ ì¢Œ/ìš° ì…ë ¥ì„ í•˜ë‚˜ë¡œ í†µí•©í•˜ëŠ” í•¨ìˆ˜
 
-	FAttackInputRequest pendingInput; // ÀÌ¹ø ÇÁ·¹ÀÓ¿¡ È®Á¤ ´ë±â ÁßÀÎ ÀÔ·Â
+	FAttackInputRequest pendingInput; // ì´ë²ˆ í”„ë ˆì„ì— í™•ì • ëŒ€ê¸° ì¤‘ì¸ ì…ë ¥
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(°ø°İ) */
-	void ExecuteAttack(EAttackHand hand, EAttackType attackType); // ÁÂ/¿ì, ¾à/°­ °ø°İÀ» ÅëÇÕ Ã³¸®ÇÏ´Â ÇÔ¼ö
-	AWeapon* GetHandWeapon(EAttackHand hand) const; // ¼Õ¿¡ µç ¹«±â¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	const FAttackProfile& GetAttackProfile(EAttackHand hand, const AWeapon* weapon) const; // ¹«±â Å¸ÀÔ/¼Õ¿¡ ¸Â´Â ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	UAnimMontage* GetAttackMontage(const FAttackProfile& profile, EAttackType attackType) const; // °ø°İ Á¾·ù¿¡ ¸Â´Â ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-	UAnimMontage* GetShieldJumpMontage(EAttackHand hand) const; // ¹æÆĞ µç ¼Õ¿¡ ¸Â´Â Á¡ÇÁ °ø°İ ¸ùÅ¸ÁÖ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
-
-	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	FAttackProfile leftHandAttacks;  // ¿Ş¼Õ ¾à/°­°ø°İ ¸ùÅ¸ÁÖ
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ê³µê²©) */
+	void ExecuteAttack(EAttackHand hand, EAttackType attackType); // ì¢Œ/ìš°, ì•½/ê°• ê³µê²©ì„ í†µí•© ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
+	AWeapon* GetHandWeapon(EAttackHand hand) const; // ì†ì— ë“  ë¬´ê¸°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	const FAttackProfile& GetAttackProfile(EAttackHand hand, const AWeapon* weapon) const; // ë¬´ê¸° íƒ€ì…/ì†ì— ë§ëŠ” ì• ë‹ˆë©”ì´ì…˜ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	UAnimMontage* GetAttackMontage(const FAttackProfile& profile, EAttackType attackType) const; // ê³µê²© ì¢…ë¥˜ì— ë§ëŠ” ì• ë‹ˆë©”ì´ì…˜ì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+	UAnimMontage* GetShieldJumpMontage(EAttackHand hand) const; // ë°©íŒ¨ ë“  ì†ì— ë§ëŠ” ì í”„ ê³µê²© ëª½íƒ€ì£¼ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	FAttackProfile rightHandAttacks; // ¿À¸¥¼Õ ¾à/°­°ø°İ ¸ùÅ¸ÁÖ
+	FAttackProfile leftHandAttacks;  // ì™¼ì† ì•½/ê°•ê³µê²© ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	FAttackProfile twoHandedAttacks; // ¾ç¼Õ¹«±â ¾à/°­°ø°İ ¸ùÅ¸ÁÖ
+	FAttackProfile rightHandAttacks; // ì˜¤ë¥¸ì† ì•½/ê°•ê³µê²© ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	TObjectPtr<UAnimMontage> leftShieldJumpMontage; // ¿Ş¼Õ ¹æÆĞ Á¡ÇÁ °ø°İ ¸ùÅ¸ÁÖ
+	FAttackProfile twoHandedAttacks; // ì–‘ì†ë¬´ê¸° ì•½/ê°•ê³µê²© ëª½íƒ€ì£¼
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
-	TObjectPtr<UAnimMontage> rightShieldJumpMontage; // ¿À¸¥¼Õ ¹æÆĞ Á¡ÇÁ °ø°İ ¸ùÅ¸ÁÖ
+	TObjectPtr<UAnimMontage> leftShieldJumpMontage; // ì™¼ì† ë°©íŒ¨ ì í”„ ê³µê²© ëª½íƒ€ì£¼
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat|Attack")
+	TObjectPtr<UAnimMontage> rightShieldJumpMontage; // ì˜¤ë¥¸ì† ë°©íŒ¨ ì í”„ ê³µê²© ëª½íƒ€ì£¼
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(Á¡ÇÁ °ø°İ) */
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì í”„ ê³µê²©) */
 	UPROPERTY(EditDefaultsOnly, Category = "Combat|JumpAttack")
-	FName jumpLandSectionName = FName("Land"); // Á¡ÇÁ °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ ÂøÁö ¼½¼Ç ÀÌ¸§
+	FName jumpLandSectionName = FName("Land"); // ì í”„ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì˜ ì°©ì§€ ì„¹ì…˜ ì´ë¦„
 
-	bool bJumpAttackUsed = false; // Á¡ÇÁ °ø°İ »ç¿ë ¿©ºÎ
+	bool bJumpAttackUsed = false; // ì í”„ ê³µê²© ì‚¬ìš© ì—¬ë¶€
 
 
-	/* ÀüÅõ ½Ã½ºÅÛ(ÄŞº¸) */
-	bool TryAdvanceCombo(); // ´ÙÀ½ ÄŞº¸·Î ¿¬°áÀ» ½ÃµµÇÏ´Â ÇÔ¼ö
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ì½¤ë³´) */
+	bool TryAdvanceCombo(); // ë‹¤ìŒ ì½¤ë³´ë¡œ ì—°ê²°ì„ ì‹œë„í•˜ëŠ” í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere, Category = "Combat|Combo", meta = (ClampMin = "1", ClampMax = "3"))
-	int32 maxComboCount = 3; // ÃÖ´ë ÄŞº¸
+	int32 maxComboCount = 3; // ìµœëŒ€ ì½¤ë³´
 
-	FAttackInputRequest activeCombo; // ÁøÇà ÁßÀÎ ÄŞº¸ÀÇ ¼Õ/Á¾·ù
-	int32 comboIndex = 0; // ÇöÀç ÄŞº¸ ÀÎµ¦½º
-	bool bComboWindowOpen = false; // ÄŞº¸ ÀÔ·Â ±¸°£ÀÌ ¿­·Á ÀÖ´ÂÁö ¿©ºÎ
-	bool bComboInputBuffered = false; // ±¸°£ ³» ´ÙÀ½ ÄŞº¸ ÀÔ·Â ¿©ºÎ
-
-	UPROPERTY()
-	UAnimMontage* comboMontage = nullptr; // ÄŞº¸ ¸ùÅ¸ÁÖ
+	FAttackInputRequest activeCombo; // ì§„í–‰ ì¤‘ì¸ ì½¤ë³´ì˜ ì†/ì¢…ë¥˜
+	int32 comboIndex = 0; // í˜„ì¬ ì½¤ë³´ ì¸ë±ìŠ¤
+	bool bComboWindowOpen = false; // ì½¤ë³´ ì…ë ¥ êµ¬ê°„ì´ ì—´ë ¤ ìˆëŠ”ì§€ ì—¬ë¶€
+	bool bComboInputBuffered = false; // êµ¬ê°„ ë‚´ ë‹¤ìŒ ì½¤ë³´ ì…ë ¥ ì—¬ë¶€
 
 	UPROPERTY()
-	AWeapon* comboWeapon = nullptr; // ÄŞº¸ ¹«±â
-
-
-
-	/* ÀüÅõ ½Ã½ºÅÛ(¹æ¾î) */
-	void StartGuardWithHand(AWeapon* handWeapon); // ¹æÆĞ·Î °¡µå¸¦ ½ÃÀÛÇÏ´Â ÇÔ¼ö
+	UAnimMontage* comboMontage = nullptr; // ì½¤ë³´ ëª½íƒ€ì£¼
 
 	UPROPERTY()
-	AWeapon* guardingWeapon = nullptr; // Ä³¸¯ÅÍ°¡ ¼ÒÀ¯ÇÑ ¹æÆĞ ¹«±â
-
-	bool bIsGuarding = false; // °¡µå À¯Áö ÁßÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+	AWeapon* comboWeapon = nullptr; // ì½¤ë³´ ë¬´ê¸°
 
 
-	/* »óÅÂ È®ÀÎ */
-	bool IsAttackArmDisabled(EAttackHand hand, const AWeapon* weapon) const; // °ø°İ¿¡ ÇÊ¿äÇÑ ÆÈ ºÎÀ§°¡ ÆÄ±«µÇ¾ú´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
-	bool IsOwnerInAir() const; // Ä³¸¯ÅÍ°¡ °øÁß¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+
+	/* ì „íˆ¬ ì‹œìŠ¤í…œ(ë°©ì–´) */
+	void StartGuardWithHand(AWeapon* handWeapon); // ë°©íŒ¨ë¡œ ê°€ë“œë¥¼ ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
+
+	UPROPERTY()
+	AWeapon* guardingWeapon = nullptr; // ìºë¦­í„°ê°€ ì†Œìœ í•œ ë°©íŒ¨ ë¬´ê¸°
+
+	bool bIsGuarding = false; // ê°€ë“œ ìœ ì§€ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
+
+
+	/* ìƒíƒœ í™•ì¸ */
+	bool IsAttackArmDisabled(EAttackHand hand, const AWeapon* weapon) const; // ê³µê²©ì— í•„ìš”í•œ íŒ” ë¶€ìœ„ê°€ íŒŒê´´ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
+	bool IsOwnerInAir() const; // ìºë¦­í„°ê°€ ê³µì¤‘ì— ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
 
 public:
-	/* º¯¼ö getter ÇÔ¼ö */
+	/* ë³€ìˆ˜ getter í•¨ìˆ˜ */
 	FORCEINLINE bool IsGuarding() const { return bIsGuarding; }
 };

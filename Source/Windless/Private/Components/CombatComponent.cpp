@@ -3,16 +3,37 @@
 #include "Components/BowComponent.h"
 #include "Characters/WindlessCharacter.h"
 #include "Characters/BodyPartTypes.h"
-#include "Windless/DebugMacro.h"
+#include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Items/Weapons/Weapon.h"
 #include "Items/Weapons/Bow.h"
+#include "Input/WindlessInputConfig.h"
 #include "Animation/AnimMontage.h"
 #include "TimerManager.h"
-#include "GameFramework/CharacterMovementComponent.h" 
+#include "Windless/DebugMacro.h"
 
 UCombatComponent::UCombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+}
+
+void UCombatComponent::BindCombatInputs(UEnhancedInputComponent* enhancedInput, const UWindlessInputConfig& input)
+{
+	if (!enhancedInput)
+		return;
+
+	/* 좌 공격(누름, 유지, 해제) */
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Started, this, &UCombatComponent::HandleAttackPressed, EAttackHand::Left, EAttackType::EAT_Light);
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Triggered, this, &UCombatComponent::HandleAttackHeld, EAttackHand::Left);
+	enhancedInput->BindAction(input.leftAttackAction, ETriggerEvent::Completed, this, &UCombatComponent::HandleAttackReleased, EAttackHand::Left);
+
+	/* 우 공격(유지, 해제)
+	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Triggered, this, &UCombatComponent::HandleAttackHeld, EAttackHand::Right);
+	enhancedInput->BindAction(input.rightAttackAction, ETriggerEvent::Completed, this, &UCombatComponent::HandleAttackReleased, EAttackHand::Right);
+
+	/* 강공격(누름) */
+	enhancedInput->BindAction(input.leftStrongAttackAction, ETriggerEvent::Started, this, &UCombatComponent::HandleAttackPressed, EAttackHand::Left, EAttackType::EAT_Heavy);
+	enhancedInput->BindAction(input.rightStrongAttackAction, ETriggerEvent::Started, this, &UCombatComponent::HandleAttackPressed, EAttackHand::Right, EAttackType::EAT_Heavy);
 }
 
 void UCombatComponent::HandleAttackPressed(EAttackHand hand, EAttackType attackType)

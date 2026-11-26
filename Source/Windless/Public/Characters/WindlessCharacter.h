@@ -28,7 +28,7 @@ class UInventoryComponent;
 class UCharacterDebugComponent;
 class UMaterialInterface;
 class UMaterialInstanceDynamic;
-class UInteractionWidget;
+class UPlayerInteractionComponent;
 class UDialogueComponent;
 class ADropItem;
 class UInventoryWidget;
@@ -64,7 +64,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override; // 향상된 입력 기능을 사용하기 위한 함수
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetDialogueInputMode(bool bEnable); // 대화 입력 모드 컨텍스트를 활성/비활성화하는 함수
-	void SetInteractionInputMode(bool bEnable); // 상호작용 입력 컨텍스트를 활성/비활성화하는 함수
 	void SetInventoryInputMode(bool bEnable); // 인벤토리 입력 컨텍스트를 활성/비활성화하는 함수
 
 
@@ -192,11 +191,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Item|Drop")
 	void SpawnDroppedItem(); // 버린 아이템을 월드에 생성하는 함수
-
-
-	/* 상호작용 시스템 */
-	void RegisterInteractable(AActor* interactable); // 범위 안에 진입한 상호작용 가능 대상을 등록하는 함수
-	void UnregisterInteractable(AActor* interactable); // 범위 밖으로 이탈한 상호작용 가능 대상을 해제하는 함수
 
 	
 	/* 대화 시스템 */
@@ -440,11 +434,6 @@ protected:
 
 	/* 상호작용 시스템 */
 	void Interact(); // 현재 상호작용 가능한 대상과 상호작용하는 함수
-	void UpdateInteractionTarget(); // 현재 상호작용 가능한 대상, 상호작용 텍스트, 상호작용 입력 모드를 업데이트하는 함수
-	void InitializeInteractionText(); // 상호작용 텍스트 위젯을 초기화하는 함수
-
-	UPROPERTY(EditAnywhere, Category = "Interaction")
-	TSubclassOf<UInteractionWidget> interactionTargetClass; // 상호작용 텍스트 위젯 클래스
 
 
 	/* 세이브 시스템 */
@@ -539,6 +528,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = Input)
 	TObjectPtr<UPlayerInputModeComponent> inputMode; // 입력 모드 관리 컴포넌트
+
+	UPROPERTY(VisibleAnywhere, Category = "Interaction")
+	TObjectPtr<UPlayerInteractionComponent> interaction; // 상호작용 컴포넌트
 
 
 	/* 캐시 변수 */
@@ -680,16 +672,7 @@ private:
 
 
 	/* 상호작용 시스템 */
-	void SetInteractionWidgetText(); // 상호작용 위젯 텍스트를 설정하는 함수
-
-	UPROPERTY()
-	UInteractionWidget* interactionWidget = nullptr; // 상호작용 텍스트 위젯 인스턴스
-
-	UPROPERTY()
-	TArray<AActor*> interactableTarget; // 감지 범위 내의 상호작용 가능 대상들
-
-	UPROPERTY()
-	AActor* currentInteractable = nullptr; // 현재 상호작용 가능 대상
+	bool IsInteractionBlocked() const; // 상호작용을 막아야 하는지 확인하는 함수
 
 
 	/* 대화 시스템 */

@@ -6,7 +6,6 @@
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/BoxComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Components/TargetingComponent.h"
 #include "Components/AttributeComponent.h"
 #include "Components/BodyPartComponent.h"
@@ -26,6 +25,7 @@
 #include "Components/PlayerAISignal.h" 
 #include "Components/PlayerStaggerComponent.h"
 #include "Components/PlayerInputModeComponent.h"
+#include "Components/PlayerInteractionComponent.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -42,10 +42,7 @@
 #include "Animation/AnimMontage.h"
 #include "HUD/WindlessHUD.h"
 #include "HUD/WindlessOverlay.h"
-#include "UI/InteractionWidget.h"
 #include "UI/InventoryWidget.h"
-#include "Interfaces/PickupInterface.h"
-#include "Interfaces/InteractableInterface.h" 
 #include "Blueprint/UserWidget.h"
 #include "Windless/DebugMacro.h"
 #include "Camera/CameraShakeBase.h"
@@ -125,6 +122,8 @@ AWindlessCharacter::AWindlessCharacter()
 	aiSignals = CreateDefaultSubobject<UPlayerAISignal>(TEXT("AISignals"));
 
 	inputMode = CreateDefaultSubobject<UPlayerInputModeComponent>(TEXT("InputMode"));
+
+	interaction = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("Interaction"));
 }
 
 void AWindlessCharacter::Tick(float DeltaTime)
@@ -189,55 +188,33 @@ void AWindlessCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AWindlessCharacter::SetDialogueInputMode(bool bEnable)
 {
-	if (bEnable) // 대화 모드
-	{
-		SetInteractionInputMode(false);
-		if (interactionWidget)
-			interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
-
-		if (inputMode)
-			inputMode->SetMode(EPlayerInputMode::EPIM_Dialogue);
-
-		actionState = EActionState::EAS_Unoccupied;
-	}
-	else // 입력 모드
-	{
-		if (inputMode)
-			inputMode->SetMode(EPlayerInputMode::EPIM_Gameplay);
-
-		UpdateInteractionTarget();
-	}
-}
-
-void AWindlessCharacter::SetInteractionInputMode(bool bEnable)
-{
 	if (inputMode)
-		inputMode->SetInteractionContextActive(bEnable);
+		inputMode->SetMode(bEnable ? EPlayerInputMode::EPIM_Dialogue : EPlayerInputMode::EPIM_Gameplay);
+
+	if (bEnable)
+		actionState = EActionState::EAS_Unoccupied;
+
+	if (interaction)
+		interaction->Refresh();
 }
 
 void AWindlessCharacter::SetInventoryInputMode(bool bEnable)
 {
 	if (bEnable) // 인벤토리 조작 모드
 	{
-		SetInteractionInputMode(false);
-		if (interactionWidget)
-			interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
-
 		StopMoving();
 		StopSprinting();
 		StopGuard();
 
 		if (bow)
 			bow->CancelDraw(TEXT("인벤토리"));
+	}
 
-		if (inputMode)
-			inputMode->SetMode(EPlayerInputMode::EPIM_Inventory);
-	}
-	else
-	{
-		if (inputMode)
-			inputMode->SetMode(EPlayerInputMode::EPIM_Gameplay);
-	}
+	if (inputMode)
+		inputMode->SetMode(bEnable ? EPlayerInputMode::EPIM_Inventory : EPlayerInputMode::EPIM_Gameplay);
+
+	if (interaction)
+		interaction->Refresh();
 }
 
 bool AWindlessCharacter::IsOccupied()
@@ -904,21 +881,6 @@ void AWindlessCharacter::SpawnDroppedItem()
 	pendingDropInstance = FItemInstance();
 }
 
-void AWindlessCharacter::RegisterInteractable(AActor* interactable)
-{
-	if (!interactable)
-		return;
-
-	interactableTarget.AddUnique(interactable);
-	UpdateInteractionTarget();
-}
-
-void AWindlessCharacter::UnregisterInteractable(AActor* interactable)
-{
-	interactableTarget.Remove(interactable);
-	UpdateInteractionTarget();
-}
-
 void AWindlessCharacter::CollectSaveData(FInventorySaveRecord& outInventory, FPlayerStatSaveRecord& outStats) const
 {
 	if (inventory)
@@ -1089,7 +1051,12 @@ void AWindlessCharacter::BeginPlay()
 
 	Tags.Add(FName("EngagableTarget"));
 	InitializeWindlessOverlay();
-	InitializeInteractionText();
+	if (interaction)
+	{
+		interaction->blockQuery.BindUObject(this, &AWindlessCharacter::IsInteractionBlocked);
+		interaction->Initialize(Cast<APlayerController>(GetController()));
+	}
+
 	BindCallbacks();
 	if (inventory && inventory->GetQuickSlotInstanceUID(EQuickSlot::EQS_Recovery) == 0) // 처음 시작: 회복 아이템을 줌
 		RefillRecoveryItem();
@@ -1975,81 +1942,11 @@ void AWindlessCharacter::HandleItemDropped(FItemInstance droppedInstance)
 
 void AWindlessCharacter::Interact()
 {
-	if (bQuickSlotActive)
+	if (bQuickSlotActive || bIsMounted)
 		return;
 
-	if (dialogueComponent && dialogueComponent->IsDialogueActive())
-		return;
-
-	if (bIsMounted)
-		return;
-
-	if (!currentInteractable || !currentInteractable->Implements<UInteractableInterface>())
-		return;
-
-	if (!IInteractableInterface::Execute_CanInteract(currentInteractable, this))
-		return;
-
-	UE_LOG(LogWindless, Log, TEXT("상호작용 실행 대상 = %s"), *currentInteractable->GetName());
-	IInteractableInterface::Execute_Interact(currentInteractable, this);
-	UpdateInteractionTarget();
-}
-
-void AWindlessCharacter::UpdateInteractionTarget()
-{
-	const bool bInteractionBlocked =
-		(dialogueComponent && dialogueComponent->IsDialogueActive()) ||
-		(maintenance && maintenance->IsInMaintenance());
-
-	if (bInteractionBlocked)
-	{
-		currentInteractable = nullptr;
-		if (interactionWidget)
-			interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
-		SetInteractionInputMode(false);
-		return;
-	}
-
-	AActor* nearest = nullptr;
-	float nearestDistSq = TNumericLimits<float>::Max();
-	const FVector myLocation = GetActorLocation();
-
-	for (int32 i = interactableTarget.Num() - 1; i >= 0; --i)
-	{
-		AActor* candidate = interactableTarget[i];
-		if (!IsValid(candidate) || !candidate->Implements<UInteractableInterface>())
-		{
-			interactableTarget.RemoveAt(i);
-			continue;
-		}
-
-		if (!IInteractableInterface::Execute_CanInteract(candidate, this))
-			continue;
-
-		const float distSq = FVector::DistSquared(myLocation, candidate->GetActorLocation());
-		if (distSq < nearestDistSq)
-		{
-			nearestDistSq = distSq;
-			nearest = candidate;
-		}
-	}
-
-	currentInteractable = nearest;
-	SetInteractionWidgetText();
-}
-
-void AWindlessCharacter::InitializeInteractionText()
-{
-	APlayerController* playerController = Cast<APlayerController>(GetController());
-	if (!playerController || !interactionTargetClass)
-		return;
-
-	interactionWidget = CreateWidget<UInteractionWidget>(playerController, interactionTargetClass);
-	if (interactionWidget)
-	{
-		interactionWidget->AddToViewport();
-		interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
-	}
+	if (interaction)
+		interaction->TryInteract();
 }
 
 void AWindlessCharacter::HandleAutoLoad()
@@ -2091,7 +1988,8 @@ void AWindlessCharacter::HandleQuickSlotHighlightChanged(EQuickSlot quickSlot)
 
 void AWindlessCharacter::HandleMaintenanceStateChanged(bool bInMaintenance)
 {
-	UpdateInteractionTarget();
+	if (interaction)
+		interaction->Refresh();
 
 	if (windlessOverlay)
 		windlessOverlay->SetRenderOpacity(bInMaintenance ? 0.f : 1.f);
@@ -2368,24 +2266,11 @@ void AWindlessCharacter::CloseInventory(APlayerController* controller)
 	controller->bShowMouseCursor = false;
 }
 
-void AWindlessCharacter::SetInteractionWidgetText()
+bool AWindlessCharacter::IsInteractionBlocked() const
 {
-	if (currentInteractable)
-	{
-		if (interactionWidget)
-		{
-			const FText Text = IInteractableInterface::Execute_GetInteractionText(currentInteractable);
-			interactionWidget->SetActionText(Text);
-			interactionWidget->SetVisibility(ESlateVisibility::HitTestInvisible);
-		}
-		SetInteractionInputMode(true);
-	}
-	else
-	{
-		if (interactionWidget)
-			interactionWidget->SetVisibility(ESlateVisibility::Collapsed);
-		SetInteractionInputMode(false);
-	}
+	return (dialogueComponent && dialogueComponent->IsDialogueActive())
+		|| (maintenance && maintenance->IsInMaintenance())
+		|| IsInventoryOpen();
 }
 
 void AWindlessCharacter::RefreshQuickSlotHUD()

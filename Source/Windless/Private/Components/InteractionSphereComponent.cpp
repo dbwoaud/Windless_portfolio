@@ -1,6 +1,5 @@
 ﻿#include "Components/InteractionSphereComponent.h"
-#include "Windless/DebugMacro.h"
-#include "Characters/WindlessCharacter.h"
+#include "Components/PlayerInteractionComponent.h"
 #include "Interfaces/InteractableInterface.h"
 
 UInteractionSphereComponent::UInteractionSphereComponent()
@@ -25,22 +24,19 @@ void UInteractionSphereComponent::BeginPlay()
 
 void UInteractionSphereComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AWindlessCharacter* player = Cast<AWindlessCharacter>(OtherActor);
-	if (!player)
+	UPlayerInteractionComponent* interaction = OtherActor ? OtherActor->FindComponentByClass<UPlayerInteractionComponent>() : nullptr;
+	if (!interaction)
 		return;
 
 	AActor* owner = GetOwner();
-	if (!owner || !owner->Implements<UInteractableInterface>()) // 소유 액터가 인터페이스 미구현이면 무시
+	if (!owner || !owner->Implements<UInteractableInterface>())
 		return;
 
-	player->RegisterInteractable(owner);
+	interaction->RegisterCandidate(owner);
 }
 
 void UInteractionSphereComponent::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	AWindlessCharacter* player = Cast<AWindlessCharacter>(OtherActor);
-	if (!player)
-		return;
-
-	player->UnregisterInteractable(GetOwner());
+	if (UPlayerInteractionComponent* interaction = OtherActor ? OtherActor->FindComponentByClass<UPlayerInteractionComponent>() : nullptr)
+		interaction->UnregisterCandidate(GetOwner());
 }

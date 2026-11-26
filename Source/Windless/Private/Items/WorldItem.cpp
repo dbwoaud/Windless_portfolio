@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PointLightComponent.h"
+#include "Components/PlayerInteractionComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/StaticMesh.h"
 #include "Kismet/GameplayStatics.h"
@@ -112,7 +113,9 @@ void AWorldItem::Interact_Implementation(AActor* interactor)
 	UE_LOG(LogWindless, Log, TEXT("[월드 아이템] 획득 완료: %s x%d"), *itemId.ToString(), addedCount);
 
 	OnPickedUpBP();
-	player->UnregisterInteractable(this);
+	if (UPlayerInteractionComponent* interaction = player->FindComponentByClass<UPlayerInteractionComponent>())
+		interaction->UnregisterCandidate(this);
+
 	Destroy();
 }
 

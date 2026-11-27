@@ -30,7 +30,7 @@ class UMaterialInterface;
 class UMaterialInstanceDynamic;
 class UPlayerInteractionComponent;
 class UDialogueComponent;
-class ADropItem;
+class UItemDropComponent;
 class UInventoryWidget;
 class UQuickSlotComponent;
 class UMaintenanceComponent;
@@ -188,9 +188,6 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Item")
 	bool IsCastingItem() const { return actionState == EActionState::EAS_UsingItem; } // 현재 아이템 시전 중인지 확인하는 함수
-
-	UFUNCTION(BlueprintCallable, Category = "Item|Drop")
-	void SpawnDroppedItem(); // 버린 아이템을 월드에 생성하는 함수
 
 	
 	/* 대화 시스템 */
@@ -411,27 +408,6 @@ protected:
 	EBodyPart castingTargetPart = EBodyPart::EBP_None; // 시전 대상 부위
 	float castCachedWalkSpeed = 0.f;
 
-
-	/* 아이템 시스템(버리기) */
-	UFUNCTION()
-	void HandleItemDropped(FItemInstance droppedInstance); // 인벤토리에서 아이템 버리기를 처리하는 함수
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop")
-	TSubclassOf<ADropItem> dropItemClass; // 버린 아이템 액터 클래스
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop")
-	TObjectPtr<UAnimMontage> dropMontage; // 버리기 애니메이션 몽타주
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop", meta = (ClampMin = "0.0"))
-	float dropForwardDistance = 50.f; // 버리기 후 아이템 생성 거리
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop")
-	float dropSpawnHeightOffset = 0.f; // 생성 높이 보정
-
-	UPROPERTY(EditAnywhere, Category = "Item|Drop", meta = (ClampMin = "0.1"))
-	float dropFallbackDelay = 1.5f; // 애니메이션 미할당 시 대기 시간
-
-
 	/* 상호작용 시스템 */
 	void Interact(); // 현재 상호작용 가능한 대상과 상호작용하는 함수
 
@@ -532,10 +508,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Interaction")
 	TObjectPtr<UPlayerInteractionComponent> interaction; // 상호작용 컴포넌트
 
-
-	/* 캐시 변수 */
-	FItemInstance pendingDropInstance; // 생성 대기 중인 버린 아이템 정보
-	FTimerHandle dropFallbackTimer; // 아이템 버리기 대기 타이머
+	UPROPERTY(VisibleAnywhere, Category = "Item|Drop")
+	TObjectPtr<UItemDropComponent> itemDrop; // 아이템 버리기 컴포넌트
 
 
 	/* 이동 시스템 */

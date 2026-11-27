@@ -26,6 +26,7 @@
 #include "Components/PlayerStaggerComponent.h"
 #include "Components/PlayerInputModeComponent.h"
 #include "Components/PlayerInteractionComponent.h"
+#include "Components/ItemDropComponent.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -36,7 +37,6 @@
 #include "Items.h"
 #include "Items/Soul.h"
 #include "Items/Treasure.h"
-#include "Items/DropItem.h"
 #include "Items/Weapons/Weapon.h"
 #include "Input/WindlessInputConfig.h"
 #include "Animation/AnimMontage.h"
@@ -124,6 +124,8 @@ AWindlessCharacter::AWindlessCharacter()
 	inputMode = CreateDefaultSubobject<UPlayerInputModeComponent>(TEXT("InputMode"));
 
 	interaction = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("Interaction"));
+
+	itemDrop = CreateDefaultSubobject<UItemDropComponent>(TEXT("ItemDrop"));
 }
 
 void AWindlessCharacter::Tick(float DeltaTime)
@@ -849,38 +851,6 @@ void AWindlessCharacter::CancelItemCast(bool bConsumeItem)
 	actionState = EActionState::EAS_Unoccupied;
 }
 
-void AWindlessCharacter::SpawnDroppedItem()
-{
-	GetWorldTimerManager().ClearTimer(dropFallbackTimer);
-	if (!pendingDropInstance.IsValid())
-		return;
-
-	UWorld* world = GetWorld();
-	if (!world || !dropItemClass)
-	{
-		pendingDropInstance = FItemInstance();
-		return;
-	}
-
-	const FVector forward = GetActorForwardVector();
-	const FVector spawnLocation = GetActorLocation() + forward * dropForwardDistance + FVector(0.f, 0.f, dropSpawnHeightOffset);
-	const FTransform spawnTransform(GetActorRotation(), spawnLocation);
-
-	ADropItem* drop = world->SpawnActorDeferred<ADropItem>(dropItemClass, spawnTransform, this, this, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-
-	if (!drop)
-	{
-		pendingDropInstance = FItemInstance();
-		return;
-	}
-
-	drop->InitializeItem(pendingDropInstance.itemId, pendingDropInstance.currentStackCount, pendingDropInstance.currentDurability);
-	UGameplayStatics::FinishSpawningActor(drop, spawnTransform);
-
-	drop->DropItem(forward);
-	pendingDropInstance = FItemInstance();
-}
-
 void AWindlessCharacter::CollectSaveData(FInventorySaveRecord& outInventory, FPlayerStatSaveRecord& outStats) const
 {
 	if (inventory)
@@ -1056,6 +1026,9 @@ void AWindlessCharacter::BeginPlay()
 		interaction->blockQuery.BindUObject(this, &AWindlessCharacter::IsInteractionBlocked);
 		interaction->Initialize(Cast<APlayerController>(GetController()));
 	}
+
+	if (itemDrop)
+		itemDrop->canPlayDropMontage.BindWeakLambda(this, [this]() { return !bIsMounted; });
 
 	BindCallbacks();
 	if (inventory && inventory->GetQuickSlotInstanceUID(EQuickSlot::EQS_Recovery) == 0) // 처음 시작: 회복 아이템을 줌
@@ -1926,20 +1899,6 @@ void AWindlessCharacter::ClearCastMovementRestriction()
 	castCachedWalkSpeed = 0.f;
 }
 
-void AWindlessCharacter::HandleItemDropped(FItemInstance droppedInstance)
-{
-	pendingDropInstance = droppedInstance;
-	UAnimInstance* animInstance = GetMesh() ? GetMesh()->GetAnimInstance() : nullptr;
-	if (dropMontage && animInstance && !bIsMounted)
-	{
-		animInstance->Montage_Play(dropMontage);
-		GetWorldTimerManager().SetTimer(dropFallbackTimer, this, &AWindlessCharacter::SpawnDroppedItem, dropFallbackDelay, false);
-		return;
-	}
-
-	SpawnDroppedItem();
-}
-
 void AWindlessCharacter::Interact()
 {
 	if (bQuickSlotActive || bIsMounted)
@@ -2372,7 +2331,6 @@ void AWindlessCharacter::BindCallbacks()
 	/* 인벤토리 관련 콜백을 할당하는 코드 */
 	if (inventory)
 	{
-		inventory->OnItemDropped.AddDynamic(this, &AWindlessCharacter::HandleItemDropped);
 		inventory->OnQuickSlotChanged.RemoveDynamic(this, &AWindlessCharacter::HandleQuickSlotChanged);
 		inventory->OnQuickSlotChanged.AddDynamic(this, &AWindlessCharacter::HandleQuickSlotChanged);
 		inventory->canChangeEquipSlot.BindUObject(this, &AWindlessCharacter::CanChangeEquipSlot);

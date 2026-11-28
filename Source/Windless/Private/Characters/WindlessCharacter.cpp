@@ -1,7 +1,6 @@
 ﻿#include "Characters/WindlessCharacter.h"
 #include "Level/ChaosZoneVolume.h"
 #include "Characters/BodyPartTypes.h"
-#include "Characters/LevelUpTypes.h"
 #include "Characters/CombatTypes.h"
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -27,6 +26,8 @@
 #include "Components/PlayerInputModeComponent.h"
 #include "Components/PlayerInteractionComponent.h"
 #include "Components/ItemDropComponent.h"
+#include "Components/PlayerProgressionComponent.h"
+#include "Components/PlayerSaveComponent.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -48,7 +49,6 @@
 #include "Camera/CameraShakeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInstanceDynamic.h"
-#include "Save/WindlessSaveSubsystem.h"
 #include "Level/StorageContainer.h"
 
 AWindlessCharacter::AWindlessCharacter()
@@ -126,6 +126,10 @@ AWindlessCharacter::AWindlessCharacter()
 	interaction = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("Interaction"));
 
 	itemDrop = CreateDefaultSubobject<UItemDropComponent>(TEXT("ItemDrop"));
+
+	progression = CreateDefaultSubobject<UPlayerProgressionComponent>(TEXT("Progression"));
+
+	saveComponent = CreateDefaultSubobject<UPlayerSaveComponent>(TEXT("Save"));
 }
 
 void AWindlessCharacter::Tick(float DeltaTime)
@@ -639,7 +643,8 @@ void AWindlessCharacter::Revive()
 	if (GetCharacterMovement())
 		GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 
-	RefillRecoveryItem();
+	if (progression)
+		progression->RefillRecoveryItem();
 
 	UE_LOG(LogWindless, Log, TEXT("플레이어 부활"));
 }
@@ -851,69 +856,11 @@ void AWindlessCharacter::CancelItemCast(bool bConsumeItem)
 	actionState = EActionState::EAS_Unoccupied;
 }
 
-void AWindlessCharacter::CollectSaveData(FInventorySaveRecord& outInventory, FPlayerStatSaveRecord& outStats) const
-{
-	if (inventory)
-		inventory->SaveToRecord(outInventory);
-
-	if (attributes)
-		attributes->SaveToRecord(outStats);
-}
-
-void AWindlessCharacter::ApplySaveData(const FInventorySaveRecord& inventoryRecord, const FPlayerStatSaveRecord& statRecord)
-{
-	if (attributes)
-		attributes->LoadFromRecord(statRecord);
-
-	RefreshInventorySizeForLevel();
-
-	if (inventory)
-		inventory->LoadFromRecord(inventoryRecord);
-
-	ApplyLevelToAllStats();
-
-	if (bodyParts)
-		bodyParts->HealAllParts();
-
-	if (bTeleportToSavePointOnLoad)
-		TeleportToLoadedSavePoint();
-
-	RefreshQuickSlotHUD();
-}
-
-bool AWindlessCharacter::RequestSave(FName savePointId, FVector respawnLocation, FRotator respawnRotation)
-{
-	UGameInstance* gameInstance = GetGameInstance();
-	if (!gameInstance)
-		return false;
-
-	UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>();
-	if (!saveSubsystem)
-		return false;
-
-	return saveSubsystem->SaveGameData(this, savePointId, respawnLocation, respawnRotation);
-}
-
 void AWindlessCharacter::CloseInventoryFromUI()
 {
 	if (APlayerController* controller = Cast<APlayerController>(GetController()))
 		if (IsInventoryOpen())
 			CloseInventory(controller);
-}
-
-void AWindlessCharacter::RefillRecoveryItem()
-{
-	if (inventory && attributes) // 시작 3, 5레벨마다 +1, 최대 10 (D-68, D-69 임시 값)
-		inventory->RefillRecoveryItem(FMath::Min(10, 3 + attributes->GetCurrentLevel() / 5));
-}
-
-void AWindlessCharacter::RestAtSavePoint()
-{
-	if (attributes)
-		attributes->ResetChaos();
-	RefillRecoveryItem();
-
-	UE_LOG(LogWindless, Log, TEXT("[세이브] 휴식 완료"));
 }
 
 void AWindlessCharacter::OpenStorage(AStorageContainer* container)
@@ -937,46 +884,6 @@ void AWindlessCharacter::OpenStorage(AStorageContainer* container)
 
 	if (inventoryWidget)
 		inventoryWidget->SetStorageInventory(container->GetStorageInventory());
-}
-
-bool AWindlessCharacter::TryMolt()
-{
-	if (!attributes || !attributes->CanMolt())
-		return false;
-
-	if (!attributes->Molt())
-		return false;
-
-	ApplyLevelToAllStats();
-	return true;
-}
-
-void AWindlessCharacter::ApplyLevelToAllStats()
-{
-	if (!attributes)
-		return;
-
-	const int32 level = attributes->GetCurrentLevel();
-	attributes->ApplyStatsForLevel(level);
-
-	if (bodyParts)
-		bodyParts->ApplyLevelToParts(level);
-
-	RefreshInventorySizeForLevel();
-}
-
-void AWindlessCharacter::RefreshInventorySizeForLevel()
-{
-	if (!attributes || !inventory)
-		return;
-
-	int32 newWidth = 0, newHeight = 0;
-	WindlessLevelUp::GetInventorySizeForLevel(attributes->GetCurrentLevel(), newWidth, newHeight);
-
-	if (newWidth != inventory->GetGridWidth() || newHeight != inventory->GetGridHeight())
-	{
-		inventory->ResizeGrid(newWidth, newHeight);
-	}
 }
 
 FStaggerStatus AWindlessCharacter::GetStaggerStatus() const
@@ -1031,14 +938,18 @@ void AWindlessCharacter::BeginPlay()
 		itemDrop->canPlayDropMontage.BindWeakLambda(this, [this]() { return !bIsMounted; });
 
 	BindCallbacks();
-	if (inventory && inventory->GetQuickSlotInstanceUID(EQuickSlot::EQS_Recovery) == 0) // 처음 시작: 회복 아이템을 줌
-		RefillRecoveryItem();
+	if (progression && inventory && inventory->GetQuickSlotInstanceUID(EQuickSlot::EQS_Recovery) == 0) // 처음 시작: 회복 아이템을 줌
+		progression->RefillRecoveryItem();
 	if (weaponLoadout)
 		weaponLoadout->InitializeLoadout();
 
-	ApplyLevelToAllStats();
+	if (progression)
+		progression->ApplyLevelToAllStats();
+
 	InitializePostProcessingEffect();
-	GetWorldTimerManager().SetTimerForNextTick(this, &AWindlessCharacter::HandleAutoLoad);
+
+	if (saveComponent)
+		saveComponent->onSaveApplied.AddUObject(this, &AWindlessCharacter::RefreshQuickSlotHUD);
 }
 
 void AWindlessCharacter::Move(const FInputActionValue& value)
@@ -1906,37 +1817,6 @@ void AWindlessCharacter::Interact()
 
 	if (interaction)
 		interaction->TryInteract();
-}
-
-void AWindlessCharacter::HandleAutoLoad()
-{
-	if (!bAutoLoadOnStart)
-		return;
-
-	UGameInstance* gameInstance = GetGameInstance();
-	if (!gameInstance)
-		return;
-
-	if (UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>())
-		saveSubsystem->TryContinue(this);
-}
-
-void AWindlessCharacter::TeleportToLoadedSavePoint()
-{
-	UGameInstance* gameInstance = GetGameInstance();
-	if (!gameInstance)
-		return;
-
-	UWindlessSaveSubsystem* saveSubsystem = gameInstance->GetSubsystem<UWindlessSaveSubsystem>();
-	if (!saveSubsystem)
-		return;
-
-	FVector loc = FVector::ZeroVector;
-	FRotator rot = FRotator::ZeroRotator;
-	if (!saveSubsystem->GetLoadedRespawnTransform(loc, rot))
-		return;
-
-	SetActorLocationAndRotation(loc, rot, false, nullptr, ETeleportType::TeleportPhysics);
 }
 
 void AWindlessCharacter::HandleQuickSlotHighlightChanged(EQuickSlot quickSlot)

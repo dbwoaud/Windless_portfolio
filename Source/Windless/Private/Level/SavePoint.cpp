@@ -5,6 +5,8 @@
 #include "Components/BodyPartComponent.h"
 #include "Components/InteractionSphereComponent.h"
 #include "Components/MaintenanceComponent.h"
+#include "Components/PlayerProgressionComponent.h"
+#include "Components/PlayerSaveComponent.h"
 #include "Characters/WindlessCharacter.h"
 #include "NavAreas/NavArea_Null.h"
 #include "Windless/DebugMacro.h"
@@ -200,13 +202,15 @@ void ASavePoint::SetBodyPartRegen(AWindlessCharacter* player, bool bActive) cons
 
 void ASavePoint::ApplyRestEffects(AWindlessCharacter* player)
 {
-	player->RestAtSavePoint();
+	if (UPlayerProgressionComponent* progression = player->FindComponentByClass<UPlayerProgressionComponent>())
+		progression->RestAtSavePoint();
 
 	UWorld* world = GetWorld();
 	if (UEnemyRespawnSubsystem* respawn = world ? world->GetSubsystem<UEnemyRespawnSubsystem>() : nullptr)
 		respawn->RespawnAll();
 
-	player->RequestSave(savePointId, GetRespawnLocation(), GetRespawnRotation());
+	if (UPlayerSaveComponent* saveComponent = player->FindComponentByClass<UPlayerSaveComponent>())
+		saveComponent->RequestSave(savePointId, GetRespawnLocation(), GetRespawnRotation());
 }
 
 USavePointSubsystem* ASavePoint::GetSavePointSubsystem() const

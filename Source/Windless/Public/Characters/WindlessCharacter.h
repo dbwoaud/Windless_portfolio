@@ -9,7 +9,6 @@
 #include "InputActionValue.h"
 #include "Items/ItemTypes.h"
 #include "Interfaces/PickupInterface.h"
-#include "Save/WindlessSaveTypes.h"
 #include "Items/Storage/SharedStorageSubsystem.h"
 #include "WindlessCharacter.generated.h"
 
@@ -42,6 +41,8 @@ class UWeaponLoadoutComponent;
 class UBowComponent;
 class UPlayerStaggerComponent;
 class UPlayerAISignal;
+class UPlayerProgressionComponent;
+class UPlayerSaveComponent;
 class UCameraShakeBase;
 class USoundBase;
 enum class EChaosState : uint8;
@@ -195,18 +196,6 @@ public:
 	UDialogueComponent* GetDialogueComponent() const { return dialogueComponent; } // 대화 컴포넌트를 반환하는 함수
 
 
-	/* 세이브 시스템 */
-	void CollectSaveData(FInventorySaveRecord& outInventory, FPlayerStatSaveRecord& outStats) const; // 컴포넌트 상태를 수집하는 함수
-	void ApplySaveData(const FInventorySaveRecord& inventoryRecord, const FPlayerStatSaveRecord& statRecord); // 저장 데이터를 컴포넌트에 적용하는 함수
-
-	UFUNCTION(BlueprintCallable, Category = "Save")
-	bool RequestSave(FName savePointId, FVector respawnLocation, FRotator respawnRotation); // 세이브 서브 시스템에 저장을 요청하는 함수
-	
-	UFUNCTION(BlueprintCallable, Category = "SavePoint")
-	void RestAtSavePoint(); // 세이브포인트의 자동 효과를 적용하는 함수
-	void RefillRecoveryItem(); // 회복 아이템을 레벨에 맞는 횟수로 다 채우는 함수
-
-
 	/* 창고 시스템 */
 	void OpenStorage(class AStorageContainer* container); // 창고와 함께 인벤토리를 여는 함수
 
@@ -216,17 +205,6 @@ public:
 	bool IsQuickSlotActive() const { return bQuickSlotActive; } // 퀵슬롯 조작 중인지 확인하는 함수
 
 	void SetQuickSlotActive(bool bActive) { bQuickSlotActive = bActive; } // 퀵슬롯 조작 상태를 설정하는 함수
-
-
-	/* 탈피(레벨업) */
-	UFUNCTION(BlueprintCallable, Category = "Molting")
-	bool TryMolt(); // 탈피를 실행하고 성공 여부를 반환하는 함수
-
-	UFUNCTION(BlueprintCallable, Category = "Molting")
-	void ApplyLevelToAllStats(); // 현재 허물에 맞춰 스탯/부위 체력/인벤토리를 재적용하는 함수
-
-	UFUNCTION(BlueprintCallable, Category = "Molting")
-	void RefreshInventorySizeForLevel(); // 현재 허물에 맞춰 인벤토리 크기만 적용하는 함수
 
 
 	/* 강한 경직 */
@@ -412,17 +390,6 @@ protected:
 	void Interact(); // 현재 상호작용 가능한 대상과 상호작용하는 함수
 
 
-	/* 세이브 시스템 */
-	void HandleAutoLoad(); // 시작 시 세이브 자동 불러오기를 수행하는 함수
-	void TeleportToLoadedSavePoint(); // 저장된 세이브 포인트로 이동하는 함수
-
-	UPROPERTY(EditAnywhere, Category = "Save")
-	bool bAutoLoadOnStart = false; // 게임 시작 시 자동으로 세이브를 불러올지 여부
-
-	UPROPERTY(EditAnywhere, Category = "Save")
-	bool bTeleportToSavePointOnLoad = true; // 불러오기 시 저장된 세이브 포인트로 이동할지 여부
-
-
 	/* 퀵슬롯 시스템 */
 	UFUNCTION()
 	void HandleQuickSlotHighlightChanged(EQuickSlot quickSlot); // 하이라이트 대상 변경 시 오버레이를 갱신하는 함수
@@ -510,6 +477,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Item|Drop")
 	TObjectPtr<UItemDropComponent> itemDrop; // 아이템 버리기 컴포넌트
+
+	UPROPERTY(VisibleAnywhere, Category = "Molting")
+	TObjectPtr<UPlayerProgressionComponent> progression; // 성장 및 휴식 컴포넌트
+
+	UPROPERTY(VisibleAnywhere, Category = "Save")
+	TObjectPtr<UPlayerSaveComponent> saveComponent; // 세이브 컴포넌트
 
 
 	/* 이동 시스템 */

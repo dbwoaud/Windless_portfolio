@@ -1,8 +1,8 @@
 ﻿#include "Cheats/StatusCheats.h"
-#include "Characters/WindlessCharacter.h"
 #include "Characters/BodyPartTypes.h"
 #include "Components/AttributeComponent.h"
 #include "Components/BodyPartComponent.h"
+#include "Components/PlayerProgressionComponent.h"
 #include "Windless/DebugMacro.h"
 
 void UStatusCheats::StaAttribute()
@@ -59,8 +59,8 @@ void UStatusCheats::WLChaos(float value)
 
 void UStatusCheats::WLMolt()
 {
-	AWindlessCharacter* character = GetPlayerCharacter();
-	if (!character || character->TryMolt())
+	UPlayerProgressionComponent* progression = GetPlayerComponent<UPlayerProgressionComponent>();
+	if (!progression || progression->TryMolt())
 		return;
 
 	const UAttributeComponent* attributes = GetPlayerComponent<UAttributeComponent>();

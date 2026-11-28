@@ -1,4 +1,5 @@
 ﻿#include "UI/SavePoint/LevelUpWidget.h"
+#include "Components/PlayerProgressionComponent.h"
 #include "Characters/WindlessCharacter.h"
 #include "Characters/LevelUpTypes.h"
 #include "Components/AttributeComponent.h"
@@ -102,7 +103,8 @@ void ULevelUpWidget::NativeConstruct()
 void ULevelUpWidget::HandleMoltClicked()
 {
 	AWindlessCharacter* player = GetPlayer();
-	if (player && player->TryMolt())
+	UPlayerProgressionComponent* progression = player ? player->FindComponentByClass<UPlayerProgressionComponent>() : nullptr;
+	if (progression && progression->TryMolt())
 		OnMoltSucceededBP();
 
 	RefreshDisplay();

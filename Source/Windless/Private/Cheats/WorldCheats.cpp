@@ -1,5 +1,5 @@
 ﻿#include "Cheats/WorldCheats.h"
-#include "Characters/WindlessCharacter.h"
+#include "Components/PlayerSaveComponent.h" 
 #include "Save/WindlessSaveSubsystem.h"
 #include "Level/SavePointSubsystem.h"
 #include "Level/Landmarks/LandmarkSubsystem.h"
@@ -10,16 +10,16 @@
 
 void UWorldCheats::WLSave()
 {
-	if (AWindlessCharacter* character = GetPlayerCharacter())
-		character->RequestSave(FName(TEXT("Debug")), character->GetActorLocation(), character->GetActorRotation());
+	APawn* pawn = GetPlayerPawn();
+	if (UPlayerSaveComponent* saveComponent = GetPlayerComponent<UPlayerSaveComponent>())
+		saveComponent->RequestSave(FName(TEXT("Debug")), pawn->GetActorLocation(), pawn->GetActorRotation());
 }
 
 void UWorldCheats::WLLoad()
 {
 	UWindlessSaveSubsystem* saveSubsystem = GetSaveSubsystem();
-	AWindlessCharacter* character = GetPlayerCharacter();
-	if (saveSubsystem && character)
-		saveSubsystem->TryContinue(character);
+	if (APawn* pawn = GetPlayerPawn(); saveSubsystem && pawn)
+		saveSubsystem->TryContinue(pawn);
 }
 
 void UWorldCheats::WLDeleteSave()

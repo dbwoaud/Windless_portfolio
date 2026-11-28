@@ -1,6 +1,6 @@
 ﻿#include "Save/WindlessSaveSubsystem.h"
 #include "Save/WindlessSaveGame.h"
-#include "Characters/WindlessCharacter.h"
+#include "Components/PlayerSaveComponent.h"
 #include "Windless/DebugMacro.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
@@ -12,7 +12,7 @@
 
 const FString UWindlessSaveSubsystem::saveSlotName = TEXT("WindlessSlot0");
 
-bool UWindlessSaveSubsystem::SaveGameData(AWindlessCharacter* player, FName savePointId, FVector respawnLocation, FRotator respawnRotation)
+bool UWindlessSaveSubsystem::SaveGameData(AActor* player, FName savePointId, FVector respawnLocation, FRotator respawnRotation)
 {
 	if (!player)
 		return false;
@@ -30,7 +30,9 @@ bool UWindlessSaveSubsystem::SaveGameData(AWindlessCharacter* player, FName save
 	if (const UWorld* world = GetWorld())
 		save->levelName = FName(*world->GetMapName());
 
-	player->CollectSaveData(save->inventory, save->stats);
+	if (const UPlayerSaveComponent* saveTarget = player->FindComponentByClass<UPlayerSaveComponent>())
+		saveTarget->CollectSaveData(save->inventory, save->stats);
+
 	save->openedDoors = openedDoors.Array();
 
 	if (const USavePointSubsystem* savePoints = GetSavePointSubsystem(player))
@@ -80,7 +82,7 @@ bool UWindlessSaveSubsystem::LoadGameData()
 	return true;
 }
 
-bool UWindlessSaveSubsystem::ApplyToPlayer(AWindlessCharacter* player)
+bool UWindlessSaveSubsystem::ApplyToPlayer(AActor* player)
 {
 	if (!player || !loadedSave)
 		return false;
@@ -97,14 +99,16 @@ bool UWindlessSaveSubsystem::ApplyToPlayer(AWindlessCharacter* player)
 	if (USoulMarkerSubsystem* markers = GetSoulMarkerSubsystem(player))
 		markers->ApplyRecord(loadedSave->soulMarker);
 
-	player->ApplySaveData(loadedSave->inventory, loadedSave->stats);
+	if (UPlayerSaveComponent* saveTarget = player->FindComponentByClass<UPlayerSaveComponent>())
+		saveTarget->ApplySaveData(loadedSave->inventory, loadedSave->stats);
+
 	openedDoors = TSet<FName>(loadedSave->openedDoors);
 
 	onGameLoaded.Broadcast();
 	return true;
 }
 
-bool UWindlessSaveSubsystem::TryContinue(AWindlessCharacter* player)
+bool UWindlessSaveSubsystem::TryContinue(AActor* player)
 {
 	if (!LoadGameData())
 		return false;

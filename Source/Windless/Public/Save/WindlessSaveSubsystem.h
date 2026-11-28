@@ -5,7 +5,6 @@
 #include "WindlessSaveSubsystem.generated.h"
 
 class UWindlessSaveGame;
-class AWindlessCharacter;
 class USavePointSubsystem;
 class USharedStorageSubsystem;
 class ULandmarkSubsystem;
@@ -22,7 +21,7 @@ class WINDLESS_API UWindlessSaveSubsystem : public UGameInstanceSubsystem
 public:
 	/* 저장 */
 	UFUNCTION(BlueprintCallable, Category = "Save")
-	bool SaveGameData(AWindlessCharacter* player, FName savePointId, FVector respawnLocation, FRotator respawnRotation); // 현재 게임 세이브 데이터를 저장하는 함수
+	bool SaveGameData(AActor* player, FName savePointId, FVector respawnLocation, FRotator respawnRotation); // 현재 게임 세이브 데이터를 저장하는 함수
 
 
 	/* 불러오기 */
@@ -30,10 +29,10 @@ public:
 	bool LoadGameData(); // 게임 세이브 데이터를 로딩하는 함수
 
 	UFUNCTION(BlueprintCallable, Category = "Save")
-	bool ApplyToPlayer(AWindlessCharacter* player); // 게임 세이브 데이터를 캐릭터에 적용하는 함수
+	bool ApplyToPlayer(AActor* player); // 게임 세이브 데이터를 캐릭터에 적용하는 함수
 
 	UFUNCTION(BlueprintCallable, Category = "Save")
-	bool TryContinue(AWindlessCharacter* player); // 게임 세이브 데이터가 있으면 즉시 적용하는 함수
+	bool TryContinue(AActor* player); // 게임 세이브 데이터가 있으면 즉시 적용하는 함수
 
 
 	/* 조회/삭제 */
